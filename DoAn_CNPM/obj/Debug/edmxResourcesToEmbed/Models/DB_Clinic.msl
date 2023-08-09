@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DoAnCNPMModelStoreContainer" CdmEntityContainer="DoAnCNPMEntities1">
+    <EntitySetMapping Name="AdminUsers">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.AdminUser">
+        <MappingFragment StoreEntitySet="AdminUser">
+          <ScalarProperty Name="Username" ColumnName="Username" />
+          <ScalarProperty Name="IdAdminUser" ColumnName="IdAdminUser" />
+          <ScalarProperty Name="NameAdminUser" ColumnName="NameAdminUser" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Categories">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.Category">
+        <MappingFragment StoreEntitySet="Category">
+          <ScalarProperty Name="IdCat" ColumnName="IdCat" />
+          <ScalarProperty Name="NameCat" ColumnName="NameCat" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="IdCus" ColumnName="IdCus" />
+          <ScalarProperty Name="NameCus" ColumnName="NameCus" />
+          <ScalarProperty Name="PhoneCus" ColumnName="PhoneCus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetailForms">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.DetailForm">
+        <MappingFragment StoreEntitySet="DetailForm">
+          <ScalarProperty Name="IsExamined" ColumnName="IsExamined" />
+          <ScalarProperty Name="IsPay" ColumnName="IsPay" />
+          <ScalarProperty Name="IdDetailForm" ColumnName="IdDetailForm" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+          <ScalarProperty Name="IdForm" ColumnName="IdForm" />
+          <ScalarProperty Name="IdPriceList" ColumnName="IdPriceList" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DiseaseStatisticLists">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.DiseaseStatisticList">
+        <MappingFragment StoreEntitySet="DiseaseStatisticList">
+          <ScalarProperty Name="IdDSL" ColumnName="IdDSL" />
+          <ScalarProperty Name="Dianose" ColumnName="Dianose" />
+          <ScalarProperty Name="IdDetailForm" ColumnName="IdDetailForm" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Doctors">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.Doctor">
+        <MappingFragment StoreEntitySet="Doctor">
+          <ScalarProperty Name="IdDoctor" ColumnName="IdDoctor" />
+          <ScalarProperty Name="NameDoctor" ColumnName="NameDoctor" />
+          <ScalarProperty Name="PhoneDoctor" ColumnName="PhoneDoctor" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Forms">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.Form">
+        <MappingFragment StoreEntitySet="Form">
+          <ScalarProperty Name="IdForm" ColumnName="IdForm" />
+          <ScalarProperty Name="ExamDate" ColumnName="ExamDate" />
+          <ScalarProperty Name="IdDoctor" ColumnName="IdDoctor" />
+          <ScalarProperty Name="IdCus" ColumnName="IdCus" />
+          <ScalarProperty Name="IdStaff" ColumnName="IdStaff" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PriceLists">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.PriceList">
+        <MappingFragment StoreEntitySet="PriceList">
+          <ScalarProperty Name="IdPriceList" ColumnName="IdPriceList" />
+          <ScalarProperty Name="NamePriceList" ColumnName="NamePriceList" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="IdCat" ColumnName="IdCat" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Staffs">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.Staff">
+        <MappingFragment StoreEntitySet="Staff">
+          <ScalarProperty Name="IdStaff" ColumnName="IdStaff" />
+          <ScalarProperty Name="NameStaff" ColumnName="NameStaff" />
+          <ScalarProperty Name="PhoneStaff" ColumnName="PhoneStaff" />
+          <ScalarProperty Name="MailStaff" ColumnName="MailStaff" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

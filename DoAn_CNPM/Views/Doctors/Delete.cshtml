@@ -1,0 +1,45 @@
+﻿@model DoAn_CNPM.Models.Doctor
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style=" width: 50%; ">
+    <h2 style="text-align: center">XÓA BÁC SĨ</h2>
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class=" col-sm-4">
+                Họ tên Bác sĩ
+            </dt>
+
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.NameDoctor)
+            </dd>
+
+            <br />
+
+            <dt class=" col-sm-4">
+                Số điện thoại
+            </dt>
+
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.PhoneDoctor)
+            </dd>
+
+            <dd style="text-align:center">
+                <br />
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Xóa" class="btn btn-danger" />
+                }
+            </dd>
+        </dl>
+
+        <div>
+            @Html.ActionLink("Trở về", "Index")
+        </div>
+    </div>
+</div>

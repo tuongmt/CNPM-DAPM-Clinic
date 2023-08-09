@@ -1,0 +1,69 @@
+﻿@model DoAn_CNPM.Models.Form
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container-fluid" style=" width: 50%; ">
+    <h2 style="text-align: center;padding-top:16px">SỬA ĐƠN KHÁM</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.IdForm)
+
+            <div class="row">
+                <div class="col-sm-4">
+                    Ngày khám
+                </div>
+                <div class="col-sm-8">
+                    @Html.EditorFor(model => model.ExamTime, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ExamTime, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-4">
+                     Bác sĩ
+                </div>
+                <div class="col-sm-8">
+                    @Html.DropDownList("IdDoctor", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdDoctor, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-4">
+                     Khách hàng
+                </div>
+                <div class="col-sm-8">
+                    @Html.DropDownList("IdCus", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdCus, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-4">
+                     Nhân viên
+                </div>
+                <div class="col-sm-8">
+                    @Html.DropDownList("IdStaff", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.IdStaff, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="col-12" style="text-align:center">
+                <input type="submit" value="Lưu" class="btn btn-primary" , style="color:white" />
+            </div>
+        </div>
+    }
+    <br />
+    <div>
+        @Html.ActionLink("Trở về", "Index")
+    </div>
+</div>
+

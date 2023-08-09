@@ -1,0 +1,36 @@
+﻿@model DoAn_CNPM.Models.Category
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style=" width: 50%; ">
+    <h2 style="text-align: center">XÓA LOẠI BỆNH</h2>
+    <div>
+
+        <hr />
+        <dl class="row">
+            <dt class=" col-sm-4">
+                Tên loại bệnh
+            </dt>
+
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.NameCat)
+            </dd>
+
+            <dd style="text-align:center">
+                <br />
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Xóa" class="btn btn-danger" />
+                }
+            </dd>
+        </dl>
+
+        <div>
+            @Html.ActionLink("Trở về", "Index")
+        </div>
+    </div>
+</div>

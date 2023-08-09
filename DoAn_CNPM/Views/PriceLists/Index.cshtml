@@ -1,0 +1,70 @@
+﻿@model IEnumerable<DoAn_CNPM.Models.PriceList>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style=" width: 100%; ">
+    <h2 style="text-align: center;padding-top:20px ">BẢNG GIÁ KHÁM</h2>
+    <hr />
+    <div class="form-group form-inline" style="border: 3px solid #00E216; height: 70px; text-align: center; padding: 15px; ">
+        @using (Html.BeginForm("Index", "PriceLists", FormMethod.Get))
+        {
+            <table>
+                <tr>
+                    <td>
+                        @Html.ActionLink("Tạo mới", "Create", null, new { @class = "btn btn-success" })
+                    </td>
+                    <td style="padding-left:30px">
+                        Tìm tên bệnh: <input type="text" name="SearchString" />
+                        <input type="submit" value="Tìm kiếm" class="btn btn-info" style="color:white" />
+                    </td>
+                </tr>
+            </table>
+        }
+    </div>
+    <table class="table table-hover table-striped table-bordered">
+        <tr>
+            <th>
+                STT
+            </th>
+            <th>
+                Tên
+            </th>
+            <th>
+                Giá
+            </th>
+            <th>
+                Tên loại
+            </th>
+            <th>Chức năng Sửa - Xóa</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            decimal price = Convert.ToDecimal(item.Price);
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdPriceList)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NamePriceList)
+                </td>
+                <td>
+                    @price.ToString("#,##0").Replace(',', '.') VNĐ
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category.NameCat)
+                </td>
+
+                <td style="color:white">
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.IdPriceList }, new { @class = "btn btn-warning", style = "color: white" }) |
+                  
+                    @Html.ActionLink("Xóa", "Delete", new { id = item.IdPriceList }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

@@ -1,0 +1,48 @@
+﻿@model DoAn_CNPM.Models.DiseaseStatisticList
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container" style=" width: 50%; ">
+    <h2 style="text-align: center">XÓA CHẨN ĐOÁN BỆNH</h2>
+    <div>
+
+        <hr />
+        <dl class="row">
+            <dt class=" col-sm-4">
+                Id Chi tiết đơn khám
+            </dt>
+
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.IdForm)
+            </dd>
+
+            <br />
+
+            <dt class=" col-sm-4">
+                Chẩn đoán
+            </dt>
+
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Dianose)
+            </dd>
+
+            <br />
+
+            <dd class="col-12" style="text-align:center">
+                <br />
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Xóa" class="btn btn-danger" />
+                }
+            </dd>
+        </dl>
+
+        <div>
+            @Html.ActionLink("Trở về", "Index")
+        </div>
+    </div>
+</div>

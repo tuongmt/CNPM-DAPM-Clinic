@@ -1,0 +1,46 @@
+﻿body {
+    margin: 0;
+}
+/*masterlayout*/
+#div-top {
+    height: 50px;
+    width: 100%;
+    background-color: #1A94FF;
+}
+
+#div-main {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+    width: auto;
+}
+
+
+#div-containt {
+    width: 100%;
+    height: 100%;
+}
+
+#div-footer {
+    height: auto;
+    width: 100%;
+    background-color: forestgreen;
+    bottom: 0px;
+    color: white;
+}
+
+    #div-footer p {
+        text-align: center;
+        left: 50%;
+        padding-top: 15px;
+    }
+.light {
+    width: 10px;
+    height: 10px;
+    background: red;
+    border-radius: 50%;
+    display: inline-block;
+}
+    .light.open {
+        background: green;
+    }

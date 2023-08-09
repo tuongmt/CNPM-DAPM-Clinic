@@ -1,0 +1,71 @@
+﻿@model DoAn_CNPM.Controllers.HomeController
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style=" width: 100%; ">
+    <h2 style="text-align: center; padding-top: 20px; color:orangered"> CHÀO MỪNG TRỞ LẠI!</h2>
+    <hr />
+    <table class="table table-hover table-striped table-bordered" style="width:100%">
+
+        <tr>
+            <th>
+                Số Đơn khám
+            </th>
+            <th>
+                Số Đã thăm khám
+            </th>
+            <th>
+                Số Đã thanh toán
+            </th>
+            <th>
+                Số Khách hàng
+            </th>
+            <th>
+                Số Nhân viên
+            </th>
+            <th>
+                Số Bác sĩ
+            </th>
+            <th>
+                Tổng doanh thu
+            </th>
+        </tr>
+
+        <tr>
+
+            <td>
+                @ViewBag.TotalFormIds
+            </td>
+
+            <td>
+                @ViewBag.ExaminedCount /  @ViewBag.TotalDF
+            </td>
+
+            <td>
+                @ViewBag.PaidCount /  @ViewBag.TotalDF
+            </td>
+
+            <td>
+                @ViewBag.TotalCustomerIds
+            </td>
+
+            <td>
+                @ViewBag.TotalStaffIds
+            </td>
+
+            <td>
+                @ViewBag.TotalDoctorIds
+            </td>
+
+            <td style="color:red; font:bold">
+                @ViewBag.TotalRevenue.ToString("#,##0").Replace(',', '.') VNĐ
+            </td>
+
+
+        </tr>
+
+
+    </table>
+</div>

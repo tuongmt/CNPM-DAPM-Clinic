@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="824579d73b0c4e9599f412ec34f234e3" Name="Diagram1" ZoomLevel="44">
+        <EntityTypeShape EntityType="DoAnCNPMModel.AdminUser" Width="1.5" PointX="8" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.Category" Width="1.5" PointX="8" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.Customer" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.DetailForm" Width="1.5" PointX="5.625" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.DiseaseStatisticList" Width="1.5" PointX="3.875" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.Doctor" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.Form" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.PriceList" Width="1.5" PointX="5.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.Staff" Width="1.5" PointX="0.75" PointY="3" IsExpanded="true" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__PriceList__IdCat__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__Form__IdCus__32E0915F" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__DetailFor__IdFor__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__DetailFor__IdPri__37A5467C" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__DiseaseSt__IdFor__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__Form__IdDoctor__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__Form__IdStaff__33D4B598" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

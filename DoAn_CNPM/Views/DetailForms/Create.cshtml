@@ -1,0 +1,63 @@
+﻿@model DoAn_CNPM.Models.DetailForm
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid" style=" width: 50%; ">
+    <h2 style="text-align: center; padding-top: 16px">TẠO MỚI CHI TIẾT ĐƠN KHÁM</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="col-sm-4">
+            Số lượng
+        </div>
+        <div class="col-sm-8">
+            @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-sm-4">
+            Id Đơn khám
+        </div>
+        <div class="col-sm-8">
+            @Html.DropDownList("IdForm", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IdForm, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br />
+
+    <div class="row">
+        <div class="col-sm-4">
+            Tên bảng giá khám
+        </div>
+        <div class="col-sm-8">
+            @Html.DropDownList("IdPriceList", null, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IdPriceList, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br />
+
+    <div style="text-align:center">
+        <input type="submit" value="Tạo mới" class="btn btn-success" />
+    </div>
+
+</div>
+    }
+    <br />
+    <div>
+        @Html.ActionLink("Trở về", "Index")
+    </div>
+</div>

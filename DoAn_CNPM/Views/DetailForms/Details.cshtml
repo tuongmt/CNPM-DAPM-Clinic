@@ -1,0 +1,51 @@
+﻿@model DoAn_CNPM.Models.DetailForm
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DetailForm</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalMoney)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalMoney)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Form.IdForm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Form.IdForm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PriceList.NamePriceList)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PriceList.NamePriceList)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdDF }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,197 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DoAnCNPMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="BacSi">
+    <Key>
+      <PropertyRef Name="IdBacSi" />
+    </Key>
+    <Property Name="IdBacSi" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="HotenBacSi" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="SDTBacSi" Type="char" MaxLength="11" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BangGiaKham">
+    <Key>
+      <PropertyRef Name="IdBGK" />
+    </Key>
+    <Property Name="IdBGK" Type="char" MaxLength="6" Nullable="false" />
+    <Property Name="LoaiKham" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="TenBGK" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Gia" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DonKham">
+    <Key>
+      <PropertyRef Name="IdDonKham" />
+    </Key>
+    <Property Name="IdDonKham" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="ChanDoan" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="IdTiepTan" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="IdKhachHang" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="IdLichKham" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="IdBGK" Type="char" MaxLength="6" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LichKham">
+    <Key>
+      <PropertyRef Name="IdLichKham" />
+    </Key>
+    <Property Name="IdLichKham" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="GioKham" Type="time" Precision="7" Nullable="false" />
+    <Property Name="NgayKham" Type="date" Nullable="false" />
+    <Property Name="IdTiepTan" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="IdBacSi" Type="char" MaxLength="5" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ThongTinKH">
+    <Key>
+      <PropertyRef Name="IdKhachHang" />
+    </Key>
+    <Property Name="IdKhachHang" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="HoTenKH" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="SDTKH" Type="char" MaxLength="11" Nullable="false" />
+    <Property Name="IdLichKham" Type="char" MaxLength="5" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TiepTan">
+    <Key>
+      <PropertyRef Name="IdTiepTan" />
+    </Key>
+    <Property Name="IdTiepTan" Type="char" MaxLength="5" Nullable="false" />
+    <Property Name="HoTenTiepTan" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="SDTTT" Type="char" MaxLength="11" Nullable="false" />
+    <Property Name="MailTT" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="GioiTinh" Type="nvarchar" MaxLength="3" Nullable="false" />
+    <Property Name="IdBacSi" Type="char" MaxLength="5" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__DonKham__IdBGK__37A5467C">
+    <End Role="BangGiaKham" Type="Self.BangGiaKham" Multiplicity="1" />
+    <End Role="DonKham" Type="Self.DonKham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BangGiaKham">
+        <PropertyRef Name="IdBGK" />
+      </Principal>
+      <Dependent Role="DonKham">
+        <PropertyRef Name="IdBGK" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DonKham__IdKhach__35BCFE0A">
+    <End Role="ThongTinKH" Type="Self.ThongTinKH" Multiplicity="1" />
+    <End Role="DonKham" Type="Self.DonKham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ThongTinKH">
+        <PropertyRef Name="IdKhachHang" />
+      </Principal>
+      <Dependent Role="DonKham">
+        <PropertyRef Name="IdKhachHang" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DonKham__IdLichK__36B12243">
+    <End Role="LichKham" Type="Self.LichKham" Multiplicity="1" />
+    <End Role="DonKham" Type="Self.DonKham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LichKham">
+        <PropertyRef Name="IdLichKham" />
+      </Principal>
+      <Dependent Role="DonKham">
+        <PropertyRef Name="IdLichKham" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DonKham__IdTiepT__34C8D9D1">
+    <End Role="TiepTan" Type="Self.TiepTan" Multiplicity="1" />
+    <End Role="DonKham" Type="Self.DonKham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TiepTan">
+        <PropertyRef Name="IdTiepTan" />
+      </Principal>
+      <Dependent Role="DonKham">
+        <PropertyRef Name="IdTiepTan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LichKham__IdBacS__2E1BDC42">
+    <End Role="BacSi" Type="Self.BacSi" Multiplicity="1" />
+    <End Role="LichKham" Type="Self.LichKham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BacSi">
+        <PropertyRef Name="IdBacSi" />
+      </Principal>
+      <Dependent Role="LichKham">
+        <PropertyRef Name="IdBacSi" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__LichKham__IdTiep__2D27B809">
+    <End Role="TiepTan" Type="Self.TiepTan" Multiplicity="1" />
+    <End Role="LichKham" Type="Self.LichKham" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TiepTan">
+        <PropertyRef Name="IdTiepTan" />
+      </Principal>
+      <Dependent Role="LichKham">
+        <PropertyRef Name="IdTiepTan" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__ThongTinK__IdLic__31EC6D26">
+    <End Role="LichKham" Type="Self.LichKham" Multiplicity="1" />
+    <End Role="ThongTinKH" Type="Self.ThongTinKH" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LichKham">
+        <PropertyRef Name="IdLichKham" />
+      </Principal>
+      <Dependent Role="ThongTinKH">
+        <PropertyRef Name="IdLichKham" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TiepTan__IdBacSi__2A4B4B5E">
+    <End Role="BacSi" Type="Self.BacSi" Multiplicity="1" />
+    <End Role="TiepTan" Type="Self.TiepTan" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BacSi">
+        <PropertyRef Name="IdBacSi" />
+      </Principal>
+      <Dependent Role="TiepTan">
+        <PropertyRef Name="IdBacSi" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DoAnCNPMModelStoreContainer">
+    <EntitySet Name="BacSi" EntityType="Self.BacSi" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BangGiaKham" EntityType="Self.BangGiaKham" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DonKham" EntityType="Self.DonKham" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LichKham" EntityType="Self.LichKham" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ThongTinKH" EntityType="Self.ThongTinKH" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TiepTan" EntityType="Self.TiepTan" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__DonKham__IdBGK__37A5467C" Association="Self.FK__DonKham__IdBGK__37A5467C">
+      <End Role="BangGiaKham" EntitySet="BangGiaKham" />
+      <End Role="DonKham" EntitySet="DonKham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DonKham__IdKhach__35BCFE0A" Association="Self.FK__DonKham__IdKhach__35BCFE0A">
+      <End Role="ThongTinKH" EntitySet="ThongTinKH" />
+      <End Role="DonKham" EntitySet="DonKham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DonKham__IdLichK__36B12243" Association="Self.FK__DonKham__IdLichK__36B12243">
+      <End Role="LichKham" EntitySet="LichKham" />
+      <End Role="DonKham" EntitySet="DonKham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DonKham__IdTiepT__34C8D9D1" Association="Self.FK__DonKham__IdTiepT__34C8D9D1">
+      <End Role="TiepTan" EntitySet="TiepTan" />
+      <End Role="DonKham" EntitySet="DonKham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LichKham__IdBacS__2E1BDC42" Association="Self.FK__LichKham__IdBacS__2E1BDC42">
+      <End Role="BacSi" EntitySet="BacSi" />
+      <End Role="LichKham" EntitySet="LichKham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__LichKham__IdTiep__2D27B809" Association="Self.FK__LichKham__IdTiep__2D27B809">
+      <End Role="TiepTan" EntitySet="TiepTan" />
+      <End Role="LichKham" EntitySet="LichKham" />
+    </AssociationSet>
+    <AssociationSet Name="FK__ThongTinK__IdLic__31EC6D26" Association="Self.FK__ThongTinK__IdLic__31EC6D26">
+      <End Role="LichKham" EntitySet="LichKham" />
+      <End Role="ThongTinKH" EntitySet="ThongTinKH" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TiepTan__IdBacSi__2A4B4B5E" Association="Self.FK__TiepTan__IdBacSi__2A4B4B5E">
+      <End Role="BacSi" EntitySet="BacSi" />
+      <End Role="TiepTan" EntitySet="TiepTan" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

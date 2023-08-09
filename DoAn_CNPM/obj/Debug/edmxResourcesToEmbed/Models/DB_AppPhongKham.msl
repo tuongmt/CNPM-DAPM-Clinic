@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DoAnCNPMModelStoreContainer" CdmEntityContainer="DoAnCNPMEntities">
+    <EntitySetMapping Name="BacSis">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.BacSi">
+        <MappingFragment StoreEntitySet="BacSi">
+          <ScalarProperty Name="IdBacSi" ColumnName="IdBacSi" />
+          <ScalarProperty Name="HotenBacSi" ColumnName="HotenBacSi" />
+          <ScalarProperty Name="SDTBacSi" ColumnName="SDTBacSi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BangGiaKhams">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.BangGiaKham">
+        <MappingFragment StoreEntitySet="BangGiaKham">
+          <ScalarProperty Name="IdBGK" ColumnName="IdBGK" />
+          <ScalarProperty Name="LoaiKham" ColumnName="LoaiKham" />
+          <ScalarProperty Name="TenBGK" ColumnName="TenBGK" />
+          <ScalarProperty Name="Gia" ColumnName="Gia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DonKhams">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.DonKham">
+        <MappingFragment StoreEntitySet="DonKham">
+          <ScalarProperty Name="IdDonKham" ColumnName="IdDonKham" />
+          <ScalarProperty Name="ChanDoan" ColumnName="ChanDoan" />
+          <ScalarProperty Name="IdTiepTan" ColumnName="IdTiepTan" />
+          <ScalarProperty Name="IdKhachHang" ColumnName="IdKhachHang" />
+          <ScalarProperty Name="IdLichKham" ColumnName="IdLichKham" />
+          <ScalarProperty Name="IdBGK" ColumnName="IdBGK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LichKhams">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.LichKham">
+        <MappingFragment StoreEntitySet="LichKham">
+          <ScalarProperty Name="IdLichKham" ColumnName="IdLichKham" />
+          <ScalarProperty Name="GioKham" ColumnName="GioKham" />
+          <ScalarProperty Name="NgayKham" ColumnName="NgayKham" />
+          <ScalarProperty Name="IdTiepTan" ColumnName="IdTiepTan" />
+          <ScalarProperty Name="IdBacSi" ColumnName="IdBacSi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ThongTinKHs">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.ThongTinKH">
+        <MappingFragment StoreEntitySet="ThongTinKH">
+          <ScalarProperty Name="IdKhachHang" ColumnName="IdKhachHang" />
+          <ScalarProperty Name="HoTenKH" ColumnName="HoTenKH" />
+          <ScalarProperty Name="SDTKH" ColumnName="SDTKH" />
+          <ScalarProperty Name="IdLichKham" ColumnName="IdLichKham" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TiepTans">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.TiepTan">
+        <MappingFragment StoreEntitySet="TiepTan">
+          <ScalarProperty Name="IdTiepTan" ColumnName="IdTiepTan" />
+          <ScalarProperty Name="HoTenTiepTan" ColumnName="HoTenTiepTan" />
+          <ScalarProperty Name="SDTTT" ColumnName="SDTTT" />
+          <ScalarProperty Name="MailTT" ColumnName="MailTT" />
+          <ScalarProperty Name="GioiTinh" ColumnName="GioiTinh" />
+          <ScalarProperty Name="IdBacSi" ColumnName="IdBacSi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

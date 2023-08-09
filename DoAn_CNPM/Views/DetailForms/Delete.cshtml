@@ -1,0 +1,60 @@
+﻿@model DoAn_CNPM.Models.DetailForm
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container" style=" width: 50%; ">
+    <h2 style="text-align: center;padding-top:16px">XÓA CHI TIẾT ĐƠN KHÁM </h2>
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class=" col-sm-4">
+                Số lượng
+            </dt>
+
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Quantity)
+            </dd>
+
+            <dt class=" col-sm-4">
+                Tổng tiền
+            </dt>
+
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.TotalMoney)
+            </dd>
+
+            <dt class=" col-sm-4">
+                Id Đơn khám
+            </dt>
+
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Form.IdForm)
+            </dd>
+
+            <dt class=" col-sm-4">
+                Tên Bảng giá khám
+            </dt>
+
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.PriceList.NamePriceList)
+            </dd>
+
+            <dd class="col-12" style="text-align:center">
+                <br />
+                @using (Html.BeginForm())
+                {
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Xóa" class="btn btn-danger" />
+                }
+            </dd>
+        </dl>
+
+        <div>
+            @Html.ActionLink("Trở về", "Index")
+        </div>
+    </div>
+</div>

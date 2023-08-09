@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CLINIC OF HUFLIT</title>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/menu.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" href="~/Content/mystyle.css" />
+    <script src="https://kit.fontawesome.com/bdcac81df8.js" crossorigin="anonymous"></script>
+    <link href="~/Content/fontawesome-free-6.2.1-web/css/fontawesome.css" rel="stylesheet">
+    <link href="~/Content/fontawesome-free-6.2.1-web/css/brands.css" rel="stylesheet">
+    <link href="~/Content/fontawesome-free-6.2.1-web/css/solid.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body style="background-color: #e6e6e6 ">
+    <nav class="navbar navbar-expand-lg container-fluid" style="background-color: #00a713; min-height:80px">
+       
+        <div class="container-fluid" style="width:2500px">
+            <div class="navbar-collapse collapse" id="navbarNavAltMarkup">
+                @if (Session["admin"] != null)
+        {
+                <a style="color:yellow;font-size:24px; padding-left:12px" class="navbar-brand" href="~/Home"><i class="fa-solid fa-house-chimney-medical"></i> <b>CLINIC OF HUFLIT</b></a>
+                <ul class="navbar-nav" style="list-style-type:none;padding-left:10px">
+                    <li class="nav-item" style="padding-top:8px"> <a class="format-banner" href="~/Home" ><b >TRANG CHỦ</b></a></li>
+                    <li class="nav-item" style="padding-top:8px"> <a class="format-banner" href="~/Categories/Index"><b>PHÂN LOẠI BỆNH</b></a></li>
+                    <li class="nav-item" style="padding-top:8px"> <a class="format-banner" href="~/DiseaseStatisticLists/Index"><b>CHẨN ĐOÁN BỆNH</b></a></li>
+                    <li class="nav-item" style="padding-top:8px"> <a class="format-banner" href="~/Staffs/Index"><b>NHÂN VIÊN</b></a></li>
+                    <li class="nav-item" style="padding-top:8px"> <a class="format-banner" href="~/Doctors/Index"><b>BÁC SĨ</b></a></li>
+                    <li class="nav-item" style="padding-top:8px"> <a class="format-banner" href="~/Customers/Index"><b>KHÁCH HÀNG</b></a></li>
+                    <li class="nav-item" style="padding-top:8px"> <a class="format-banner" href="~/PriceLists/Index"><b>BẢNG GIÁ</b></a></li>
+                    <li class="nav-item" style="padding-top:8px"> <a class="format-banner" href="~/Forms/Index"><b>ĐƠN KHÁM</b></a></li>
+                    <li class="nav-item" style="padding-top:8px"> <a class="format-banner" href="~/DetailForms/Index"><b>CHI TIẾT ĐƠN KHÁM</b></a></li>
+                    <li class="format-hello">
+                        @if (Session["name"] == null)
+                        {<span> Hello </span> }
+                        else
+                        { <span> <text> Hello, </text> @Session["name"]</span>}
+                    </li>
+                    <li class="format-hello">
+                        <a href="~/LoginUser/Logout" class="btn btn-danger" style="color:white">Đăng xuất</a>
+                    </li>
+                </ul>
+                }
+            </div>
+        </div>
+    </nav>
+
+
+    <div  style="background-color:white;width:90%;margin:auto;padding:10px;min-height:820px">
+
+            <div  id="div-content" >
+                @RenderBody()
+            </div>
+        @*@Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrap")
+            @RenderSection("scripts", required: false)*@
+    </div>
+
+    <div id="div-footer" style="min-height:120px">
+
+        <ul style="list-style-type: none;float:left; padding-right: 150px;padding-left:20px;height:100%">
+            <li style="font-weight:bolder">Các chính sách</li>
+            <li><div class="text-left"><a class="format-footer" href="~/Home/MedicalExaminationPolicy">Chính sách khám bệnh</a></div></li>
+            <li><div class="text-left"><a class="format-footer" href="~/Home/CustomerPolicy">Chính sách khách hàng</a></div></li>
+            <li><div class="text-left"><a class="format-footer" href="~/Home/ClinicPolicy">Chính sách phòng khám</a></div></li>
+        </ul>
+
+        <ul style="list-style-type: none; float: left; padding-right:150px;height:100%">
+            <li style="font-weight:bolder">Liên hệ</li>
+            <li>
+                <div class="text-left"><i class="fa-solid fa-phone-volume"></i> Hotline: 0999999999</div>
+            </li>
+            <li>
+
+                <div class="text-left"><i class="fa-solid fa-envelope"></i> Email: InternationalClinic@gmail.com</div>
+            </li>
+            <li><div class="text-left"><i class="fa-brands fa-facebook"></i> Facebook: International Clinic</div></li>
+        </ul>
+
+        <ul style="list-style-type: none; float: left; padding-right:150px;height:100%">
+            <li style="font-weight:bolder">Danh mục</li>
+            <li>
+                <div class="text-left"><a class="format-footer" href="~/Home/Index">Trang chủ</a></div>
+            </li>
+            <li>
+                <div class="text-left"><a class="format-footer" href="~">Về chúng tôi</a></div>
+            </li>
+            <li><div class="text-left"><a class="format-footer" href="~">Tin tức</a></div></li>
+        </ul>
+        <ul style="list-style-type: none; float: left; padding-right:150px;height:100%">
+            <li style="font-weight:bolder">Thời gian làm việc</li>
+            <li>
+                <span id="monToSat">Thứ 2 - Thứ 7: 7:00 - 18:00</span>
+            </li>
+            <li>
+                <span id="workStatus"></span>
+            </li>
+
+        </ul>
+
+        <ul style="list-style-type: none; float: left; height:100%">
+            <li>
+                <b>&copy; @DateTime.Now.Year - GROUP 6</b>
+            </li>
+        </ul>
+
+</div>
+
+</body>
+</html>
+
+<style>
+    li.format-hello{
+        padding-left:16px;
+        padding-top:10px;
+        color:white;
+    }
+    a.format-banner {
+        color: white;
+        padding: 10px;
+        font-size: 18px;
+        padding-left: 16px;
+        text-align: center;
+        text-decoration: none;
+        position: relative;
+    }
+    a.format-footer {
+        color:white;
+        text-decoration:none
+    }
+
+</style>
+
+<script>
+    // Lấy thời gian hiện tại
+    var currentTime = new Date();
+    var currentHour = currentTime.getHours();
+
+    // Kiểm tra thời gian và thay đổi màu chữ tương ứng
+    if (currentHour >= 7 && currentHour < 18) {
+        //document.getElementById("monToSat").style.color = "blue"; // Áp dụng màu xanh
+        //document.getElementById("sun").style.color = "blue"; // Áp dụng màu xanh
+        document.getElementById("workStatus").innerHTML = "Đang trong giờ làm việc";
+        document.getElementById("workStatus").style.color = "yellow"; // Áp dụng màu xanh
+    } else {
+        //document.getElementById("monToSat").style.color = "red"; // Áp dụng màu đỏ
+        //document.getElementById("sun").style.color = "red"; // Áp dụng màu đỏ
+        document.getElementById("workStatus").innerHTML = "Đã ngưng làm việc";
+        document.getElementById("workStatus").style.color = "red"; // Áp dụng màu đỏ
+    }
+</script>
