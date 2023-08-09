@@ -1,4 +1,4 @@
-USE MASTER
+﻿USE MASTER
 IF EXISTS (SELECT * FROM SYSDATABASES WHERE NAME = 'DoAnCNPM')
 DROP DATABASE DoAnCNPM
 GO
@@ -135,75 +135,75 @@ END;
 
 --DATA
 INSERT INTO AdminUser(Username,NameAdminUser, Role, Password) VALUES
-('tuong',N'T??ng',N'Nh�n vi�n','123456');
+('tuong',N'Tường',N'Nhân viên','123456');
 
 INSERT INTO Category (NameCat) VALUES 
-(N'Ki?m tra t?ng qu�t - General checkup'), 
-(N'Tim m?ch - Cardiology'), 
-(N'Da li?u - Dermatology'), 
-(N'Th?n kinh - Neurology'), 
+(N'Kiểm tra tổng quát - General checkup'), 
+(N'Tim mạch - Cardiology'), 
+(N'Da liễu - Dermatology'), 
+(N'Thần kinh - Neurology'), 
 (N'Nhi khoa - Pediatrics'),
-(N'R?ng H�m M?t - Dentistry'), 
-(N'Kh�m m?t - Ophthalmology'), 
-(N'H� h?p - Respiratory'), 
-(N'Tai m?i h?ng - Otorhinolaryngology'), 
-(N'Ch?n ?o�n h�nh ?nh - Radiology'),
-(N'N?i ti?t - Endocrinology'), 
-(N'Ung th? - Oncology'), 
-(N'Th� y - Veterinary'), 
-(N'Ti�u h�a - Gastroenterology'), 
-(N'T�m l� - Psychology');
+(N'Răng Hàm Mặt - Dentistry'), 
+(N'Khám mặt - Ophthalmology'), 
+(N'Hô hấp - Respiratory'), 
+(N'Tai mũi họng - Otorhinolaryngology'), 
+(N'Chẩn đoán hình ảnh - Radiology'),
+(N'Nội tiết - Endocrinology'), 
+(N'Ung thư - Oncology'), 
+(N'Thú y - Veterinary'), 
+(N'Tiêu hóa - Gastroenterology'), 
+(N'Tâm lý - Psychology');
 
 INSERT INTO Doctor (NameDoctor, PhoneDoctor) VALUES
-(N'M� Tu?n T??ng','0987123456'),
-(N'L� L�m Ch� D?nh','0987123123'),
-(N'L� Tr?n Quang T�n','0987333456'),
-(N'Nguy?n V?n An', '0987111222'),
-(N'Ph?m Th? Ly', '0987333444'),
-(N'Tr?n Xu�n C??ng', '0987555666'),
-(N'L� Th? Giang', '0987999881'),
-(N'Nguy?n V?n Huy', '0987111992'),
-(N'Ph?m Th? �', '0987222443');
+(N'Mã Tuấn Tường','0987123456'),
+(N'Lê Trần Quang Tín','0987123123'),
+(N'Lê Lâm Chí Dĩnh','0987333456'),
+(N'Nguyễn Văn An', '0987111222'),
+(N'Phạm Thị Ly', '0987333444'),
+(N'Trần Xuân Cường', '0987555666'),
+(N'Lê Thị Giang', '0987999881'),
+(N'Nguyễn Văn Huy', '0987111992'),
+(N'Phạm Thị Ý', '0987222443');
 
 INSERT INTO PriceList (NamePriceList, Price, IdCat) VALUES 
-(N'Ki?m tra s?c kh?e c? b?n - Basic checkup', 1000000, 1),
-(N'Ki?m tra s?c kh?e n�ng cao - Advanced checkup',1500000,1),
-(N'Ki?m tra tim - Heart check',3000000,2),
-(N'T? v?n da - Skin consultation', 1200000, 3), 
-(N'?�nh gi� th?n kinh - Neurological evaluation', 5000000, 4), 
-(N'Kh�m s?c kh?e tr? em - Child wellness exam', 900000, 5),
-(N'Nh? r?ng - Tooth extraction', 200000, 6),
-(N'Th? th? l?c - Vision test', 500000, 7),
-(N'X�t nghi?m ph? qu?n - Bronchoscopy', 3500000, 8),
-(N'Kh�m tai m?i h?ng - ENT examination', 800000, 9), 
+(N'Kiểm tra sức khỏe cơ bản - Basic checkup', 1000000, 1),
+(N'Kiểm tra sức khỏe nâng cao  - Advanced checkup',1500000,1),
+(N'Kiểm tra tim - Heart check',3000000,2),
+(N'Tư vấn da - Skin consultation', 1200000, 3), 
+(N'Đánh giá thần kinh - Neurological evaluation', 5000000, 4), 
+(N'Khám sức khỏe trẻ em - Child wellness exam', 900000, 5),
+(N'Nhổ răng - Tooth extraction', 200000, 6),
+(N'Thử thị lực - Vision test', 500000, 7),
+(N'Xét nghiệm phế quản - Bronchoscopy', 3500000, 8),
+(N'Khám tai mũi họng - ENT examination', 800000, 9), 
 (N'CT scanner', 4500000, 10),
-(N'Kh�m s?c kh?e r?ng mi?ng - Dental checkup', 250000, 11),
-(N'X�t nghi?m ung th? - Cancer screening', 4000000, 12),
-(N'Kh�m th� y c? b?n - Basic veterinary checkup', 150000, 13),
-(N'Kh�m ti�u h�a - Gastrointestinal examination', 1000000, 14), 
-(N'T? v?n t�m l� - Psychological counseling', 800000, 15);
+(N'Khám sức khỏe răng miệng  - Dental checkup', 250000, 11),
+(N'Xét nghiệm ung thư - Cancer screening', 4000000, 12),
+(N'Khám thú y cơ bản - Basic veterinary checkup', 150000, 13),
+(N'Khám tiêu hóa - Gastrointestinal examination', 1000000, 14), 
+(N'Tư vấn tâm lý - Psychological counseling', 800000, 15);
 
 INSERT INTO Staff (NameStaff, PhoneStaff, MailStaff) VALUES
-(N'Ph?m Ng?c Anh','0123789456','giang@gmail.com'),
-(N'Nguy?n Ki?u Trang','0123456456','trang@gmail.com'),
-(N'L� Th? Nhung','0123123456','nhung@gmail.com'),
-(N'Nguy?n V?n B�nh', '0987999888', 'nguyenb@gmail.com'),
-(N'V? Th? Linh', '0987666777', 'vutc@gmail.com'),
-(N'L� Xu�n Duy', '0987444222', 'lexuand@gmail.com'),
-(N'Nguy?n Th? Qu?nh', '0987777888', 'nguyenj@gmail.com'),
-(N'V? V?n Ki�n', '0987555333', 'vuvank@gmail.com'),
-(N'L� Th? Thu', '0987444777', 'lethil@gmail.com');
+(N'Phạm Ngọc Anh','0123789456','giang@gmail.com'),
+(N'Nguyễn Kiều Trang','0123456456','trang@gmail.com'),
+(N'Lê Thị Nhung','0123123456','nhung@gmail.com'),
+(N'Nguyễn Văn Bình', '0987999888', 'nguyenb@gmail.com'),
+(N'Vũ Thị Linh', '0987666777', 'vutc@gmail.com'),
+(N'Lê Xuân Duy', '0987444222', 'lexuand@gmail.com'),
+(N'Nguyễn Thị Quỳnh', '0987777888', 'nguyenj@gmail.com'),
+(N'Vũ Văn Kiên', '0987555333', 'vuvank@gmail.com'),
+(N'Lê Thị Thu', '0987444777', 'lethil@gmail.com');
 
 INSERT INTO Customer (NameCus, PhoneCus) VALUES
-(N'Nguy?n Th? M? Di?u','0945612378'),
-(N'Nguy?n H?ng H?i','0789698478'),
-(N'Tr?n Th? Kim Oanh','0123142362'),
-(N'Ng� V?n Sang', '0987222333'),
-(N'L? Th? Hoa', '0987333111'),
-(N'Ho�ng V?n Th?', '0987555999'),
-(N'Tr?n V?n Minh', '0987222999'),
-(N'L� Th? Nhi', '0987333112'),
-(N'Ho�ng V?n Uy', '0987555111');
+(N'Nguyễn Thị Mỹ Diệu','0945612378'),
+(N'Nguyễn Hồng Hải','0789698478'),
+(N'Trần Thị Kim Oanh','0123142362'),
+(N'Ngô Văn Sang', '0987222333'),
+(N'Lệ Thị Hoa', '0987333111'),
+(N'Hoàng Văn Thụ', '0987555999'),
+(N'Trần Văn Minh', '0987222999'),
+(N'Lê Thị Nhi', '0987333112'),
+(N'Hoàng Văn Uy', '0987555111');
 
 
 INSERT INTO Form (ExamTime,  IdDoctor, IdCus,  IdStaff) VALUES
@@ -229,15 +229,15 @@ INSERT INTO DetailForm (Quantity, IdForm, IdPriceList, IsExamined, IsPaid) VALUE
 (3, 9, 15, 0 , 0);
 
 INSERT INTO DiseaseStatisticList (Dianose, IdForm) VALUES
-(N'Huy?t �p cao - High blood pressure', 1),
-(N'Vi�m da c? ??a - Eczema', 2), 
-(N'?au n?a ??u - Migraine', 3),
-(N'Nh? r?ng m?c l?ch - Crooked tooth extraction', 4),
-(N'M?t c?n th? - Myopia', 5), 
-(N'H?c l�o - Tuberculosis', 6),
-(N'R?i lo?n n?i ti?t - Endocrine disorder', 7),
-(N'Ung th? v� - Breast cancer', 8), 
-(N'B?nh vi�m ???ng h� h?p - Respiratory infection', 9);
+(N'Huyết áp cao - High blood pressure', 1),
+(N'Viêm da cơ địa - Eczema', 2), 
+(N'Đau nửa đầu - Migraine', 3),
+(N'Nhổ răng mọc lệch - Crooked tooth extraction', 4),
+(N'Mắt cận thị - Myopia', 5), 
+(N'Hắc lào - Tuberculosis', 6),
+(N'Rối loạn nội tiết - Endocrine disorder', 7),
+(N'Ung thư vú - Breast cancer', 8), 
+(N'Bệnh viêm đường hô hấp - Respiratory infection', 9);
 
 
 
