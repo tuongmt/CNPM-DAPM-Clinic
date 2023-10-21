@@ -14,9 +14,9 @@ namespace DoAn_CNPM.Models
     
     public partial class DiseaseStatisticList
     {
-        public int IdDSL { get; set; }
+        public int DSLId { get; set; }
         public string Dianose { get; set; }
-        public int IdForm { get; set; }
+        public int FormId { get; set; }
     
         public virtual Form Form { get; set; }
     }

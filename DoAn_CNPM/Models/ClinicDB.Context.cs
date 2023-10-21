@@ -27,11 +27,12 @@ namespace DoAn_CNPM.Models
     
         public virtual DbSet<AdminUser> AdminUsers { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<DetailForm> DetailForms { get; set; }
         public virtual DbSet<DiseaseStatisticList> DiseaseStatisticLists { get; set; }
         public virtual DbSet<Doctor> Doctors { get; set; }
+        public virtual DbSet<DoctorSchedule> DoctorSchedules { get; set; }
         public virtual DbSet<Form> Forms { get; set; }
+        public virtual DbSet<Patient> Patients { get; set; }
         public virtual DbSet<PriceList> PriceLists { get; set; }
         public virtual DbSet<Staff> Staffs { get; set; }
     }

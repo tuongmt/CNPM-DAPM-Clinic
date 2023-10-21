@@ -1,0 +1,80 @@
+﻿@model IEnumerable<DoAn_CNPM.Models.DoctorSchedule>
+
+@{
+    ViewBag.Title = "THÔNG TIN LỊCH KHÁM CỦA BÁC SĨ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="f-index">
+    <div class="tabular--wrapper">
+        <h2 class="h2--title">@ViewData["Title"]</h2>
+        <hr />
+        <div class="nav--search">
+            @using (Html.BeginForm("Index", "DoctorSchedules", FormMethod.Get))
+            {
+                <table>
+                    <tr>
+                        <td>
+                            <a href="@Url.Action("Create")" class="btn btn-createnew"><i class="fa-solid fa-plus"></i></a>
+                        </td>
+                        <td class="search--box">
+                            <input type="text" name="SearchString" placeholder="Nhập thông tin tìm kiếm" />
+                            <button type="submit" value=""><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </td>
+                    </tr>
+                </table>
+            }
+        </div>
+
+        <div class="table-container">
+            <table class="table table-hover table-striped table-bordered">
+                <tr>
+                    <th>
+                        STT
+                    </th>
+                    <th>
+                        Họ tên Bác sĩ
+                    </th>
+                    <th>
+                        Ngày trong tuần
+                    </th>
+                    <th>
+                        Giờ bắt đầu
+                    </th>
+                    <th>
+                        Giờ kết thúc
+                    </th>
+
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DSId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Doctor.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DayOfWeek)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeStart)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeEnd)
+                </td>
+
+                <td>
+                    <a href="@Url.Action("Edit", new { id = item.DSId })" class="btn btn-edit"><i class="fa-regular fa-pen-to-square"></i></a>
+                    <a href="@Url.Action("Delete", new { id = item.DSId })" class="btn btn-del"><i class="fa-regular fa-trash-can"></i></a>
+                </td>
+            </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>

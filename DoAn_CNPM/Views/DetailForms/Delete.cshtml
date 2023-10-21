@@ -1,60 +1,84 @@
 ﻿@model DoAn_CNPM.Models.DetailForm
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "XÓA CHI TIẾT ĐƠN KHÁM";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-<div class="container" style=" width: 50%; ">
-    <h2 style="text-align: center;padding-top:16px">XÓA CHI TIẾT ĐƠN KHÁM </h2>
-    <div>
-        <hr />
-        <dl class="row">
-            <dt class=" col-sm-4">
-                Số lượng
-            </dt>
+<div class="container-fluid f-edit">
+    <div class="tabular--wrapper">
+        <div class="table-container">
+            <h2 class="h2--title">@ViewBag.Title </h2>
+            <hr />
+            <dl class="row">
+                <dt class=" col-sm-4">
+                    Id Đơn khám
+                </dt>
 
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Quantity)
-            </dd>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Form.FormId)
+                </dd>
 
-            <dt class=" col-sm-4">
-                Tổng tiền
-            </dt>
+                <dt class=" col-sm-4">
+                    Tổng tiền
+                </dt>
 
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.TotalMoney)
-            </dd>
+                <dd class="col-sm-8" style="color:red;font-weight:600">
+                    @{
+                        string formattedTotal = string.Format("{0:#,##0}", Model.TotalMoney);
+                        formattedTotal = formattedTotal.Replace(",", ".");
+                    }
 
-            <dt class=" col-sm-4">
-                Id Đơn khám
-            </dt>
+                    @Html.DisplayFor(modelItem => formattedTotal) VNĐ
+                </dd>
 
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Form.IdForm)
-            </dd>
+                <dt class=" col-sm-4">
+                    Trạng thái khám
+                </dt>
 
-            <dt class=" col-sm-4">
-                Tên Bảng giá khám
-            </dt>
-
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.PriceList.NamePriceList)
-            </dd>
-
-            <dd class="col-12" style="text-align:center">
-                <br />
-                @using (Html.BeginForm())
+                @if (Model.IsExamined == true)
                 {
-                    @Html.AntiForgeryToken()
-                    <input type="submit" value="Xóa" class="btn btn-danger" />
+                    <dd class=" col-sm-8 check-true">
+                        Đã thăm khám
+                    </dd>
                 }
-            </dd>
-        </dl>
+                else
+                {
+                    <dd class=" col-sm-8 check-false">
+                        Chưa thăm khám
+                    </dd>
+                }
 
-        <div>
-            @Html.ActionLink("Trở về", "Index")
+                <dt class=" col-sm-4">
+                    Trạng thái thanh toán
+                </dt>
+
+                @if (Model.IsPaid == true)
+                {
+                    <dd class=" col-sm-8 check-true">
+                        Đã thanh toán
+                    </dd>
+                }
+                else
+                {
+                    <dd class=" col-sm-8 check-false">
+                        Chưa thanh toán
+                    </dd>
+                }
+
+                <dd class="col-12" style="text-align:center">
+                    <br />
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="submit" value="Xóa" class="btn btn-del" />
+                    }
+                </dd>
+            </dl>
         </div>
+    </div>
+    <div class="back">
+        <a href="~/DetailForms/Index"><i class="fa-solid fa-arrow-left"></i></a>
     </div>
 </div>

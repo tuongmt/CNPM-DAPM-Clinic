@@ -1,0 +1,84 @@
+﻿@model IEnumerable<DoAn_CNPM.Models.Patient>
+
+@{
+    ViewBag.Title = "THÔNG TIN BỆNH NHÂN";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="f-index">
+    <div class="tabular--wrapper">
+        <h2 class="h2--title">@ViewData["Title"]</h2>
+        <hr />
+        <div class="nav--search">
+            @using (Html.BeginForm("Index", "Patients", FormMethod.Get))
+            {
+                <table>
+                    <tr>
+                        <td class="col sm-4">
+                            <a href="@Url.Action("Create")" class="btn btn-createnew"><i class="fa-solid fa-plus"></i></a>
+                        </td>
+                        <td class="col sm-8 search--box">
+                            <input type="text" name="SearchString" placeholder="Nhập thông tin tìm kiếm" />
+                            <button type="submit" value="Tìm kiếm"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </td>
+
+                    </tr>
+                </table>
+            }
+        </div>
+
+        <div class="table-container">
+            <table class="table table-hover table-striped table-bordered">
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Họ tên Bệnh nhân
+                    </th>
+                    <th>
+                        Giới tính
+                    </th>
+                    <th>
+                        Số điện thoại
+                    </th>
+                    <th>
+                        Ngày sinh
+                    </th>
+                    <th>
+                        Địa chỉ
+                    </th>
+                    <th>Chức năng Sửa - Xóa</th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PatientId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Gender)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DOB)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = item.PatientId })" class="btn btn-edit"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="@Url.Action("Delete", new { id = item.PatientId })" class="btn btn-del"><i class="fa-regular fa-trash-can"></i></a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>

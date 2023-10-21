@@ -14,13 +14,13 @@ namespace DoAn_CNPM.Models
     
     public partial class DetailForm
     {
-        public int IdDF { get; set; }
+        public int DFId { get; set; }
         public int Quantity { get; set; }
-        public int IdForm { get; set; }
-        public int IdPriceList { get; set; }
-        public Nullable<int> TotalMoney { get; set; }
+        public Nullable<double> TotalMoney { get; set; }
         public Nullable<bool> IsExamined { get; set; }
         public Nullable<bool> IsPaid { get; set; }
+        public int FormId { get; set; }
+        public int PriceListId { get; set; }
     
         public virtual Form Form { get; set; }
         public virtual PriceList PriceList { get; set; }

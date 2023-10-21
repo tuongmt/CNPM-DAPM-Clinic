@@ -1,42 +1,45 @@
 ﻿@model DoAn_CNPM.Models.Category
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "CẬP NHẬT LOẠI BỆNH";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container-fluid" style=" width: 50%; ">
-    <h2 style="text-align: center">SỬA LOẠI BỆNH</h2>
+<div class="container-fluid f-edit">
+    <div class="tabular--wrapper">
+        <div class="table-container">
+            <h2 class="h2--title">@ViewData["Title"]</h2>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.IdCat)
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.CatId)
 
-    <div class="row">
-        <div class="control-label col-md-4">
-            Tên loại
-        </div>
+                    <div class="row">
+                        <div class="control-label col-md-4">
+                            Tên loại bệnh
+                        </div>
 
-        <div class="col-md-8">
-            @Html.EditorFor(model => model.NameCat, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.NameCat, "", new { @class = "text-danger" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.CatName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CatName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12" style="text-align:center">
+                            <input type="submit" value="Lưu" class="btn btn-primary" , style="color:white" />
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
-    <br />
-    <div class="form-group">
-        <div class="col-md-12" style="text-align:center">
-            <input type="submit" value="Lưu" class="btn btn-primary" , style="color:white" />
-        </div>
-    </div>
-</div>
-    }
-
-    <div>
-        @Html.ActionLink("Trở về", "Index")
+    <div class="back">
+        <a href="~/Categories/Index"><i class="fa-solid fa-arrow-left"></i></a>
     </div>
 </div>

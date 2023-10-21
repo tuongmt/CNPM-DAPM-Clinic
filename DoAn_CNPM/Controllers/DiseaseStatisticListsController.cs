@@ -16,13 +16,15 @@ namespace DoAn_CNPM.Models
         // GET: DiseaseStatisticLists
         public ActionResult Index(string SearchString)
         {
-            var diseaseStatisticLists = db.DiseaseStatisticLists.Include(d => d.Form);
+            var dSL = db.DiseaseStatisticLists.Include(d => d.Form);
             if (!String.IsNullOrEmpty(SearchString))
             {
-                diseaseStatisticLists = diseaseStatisticLists.Where(s => s.Dianose.ToString().Contains(SearchString));
-                return View(diseaseStatisticLists.ToList());
+                dSL = dSL.Where(d => d.Dianose.Contains(SearchString)
+                || d.Form.FormId.ToString().Contains(SearchString)
+                || d.Form.Patient.FullName.Contains(SearchString)
+                || d.Form.Doctor.FullName.Contains(SearchString));
             }
-            return View(diseaseStatisticLists.ToList());
+            return View(dSL.ToList());
         }
 
         // GET: DiseaseStatisticLists/Details/5
@@ -43,7 +45,7 @@ namespace DoAn_CNPM.Models
         // GET: DiseaseStatisticLists/Create
         public ActionResult Create()
         {
-            ViewBag.IdForm = new SelectList(db.DetailForms, "IdForm", "IdForm");
+            ViewBag.FormId = new SelectList(db.DetailForms, "FormId", "FormId");
             return View();
         }
 
@@ -52,7 +54,7 @@ namespace DoAn_CNPM.Models
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdDSL,Dianose,IdForm")] DiseaseStatisticList diseaseStatisticList)
+        public ActionResult Create([Bind(Include = "DSLId,Dianose,FormId")] DiseaseStatisticList diseaseStatisticList)
         {
             if (ModelState.IsValid)
             {
@@ -61,7 +63,7 @@ namespace DoAn_CNPM.Models
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdForm = new SelectList(db.DetailForms, "IdFormm", "IdForm", diseaseStatisticList.IdForm);
+            ViewBag.FormId = new SelectList(db.DetailForms, "FormIdm", "FormId", diseaseStatisticList.FormId);
             return View(diseaseStatisticList);
         }
 
@@ -77,7 +79,7 @@ namespace DoAn_CNPM.Models
             {
                 return HttpNotFound();
             }
-            ViewBag.IdForm = new SelectList(db.DetailForms, "IdForm", "IdForm", diseaseStatisticList.IdForm);
+            ViewBag.FormId = new SelectList(db.DetailForms, "FormId", "FormId", diseaseStatisticList.FormId);
             return View(diseaseStatisticList);
         }
 
@@ -86,7 +88,7 @@ namespace DoAn_CNPM.Models
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdDSL,Dianose,IdForm")] DiseaseStatisticList diseaseStatisticList)
+        public ActionResult Edit([Bind(Include = "DSLId,Dianose,FormId")] DiseaseStatisticList diseaseStatisticList)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +96,7 @@ namespace DoAn_CNPM.Models
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdForm = new SelectList(db.DetailForms, "IdForm", "IdForm", diseaseStatisticList.IdForm);
+            ViewBag.FormId = new SelectList(db.DetailForms, "FormId", "FormId", diseaseStatisticList.FormId);
             return View(diseaseStatisticList);
         }
 

@@ -1,139 +1,151 @@
-﻿@model IEnumerable<DoAn_CNPM.Models.DetailForm>
+﻿<!-- Thêm thư viện & thay đổi mô hình để sử dụng thư viện phân trang -->
+@using PagedList.Mvc;
+@model PagedList.IPagedList<DoAn_CNPM.Models.DetailForm>
+@*@model IEnumerable<DoAn_CNPM.Models.DetailForm>*@
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "THÔNG TIN CHI TIẾT ĐƠN KHÁM";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div style=" width: 100%; ">
-    <h2 style="text-align: center; padding-top: 20px">CHI TIẾT ĐƠN KHÁM</h2>
-    <hr />
-    <div class="form-group form-inline" style="border: 3px solid #00E216; height: 70px; text-align: center; padding: 15px; ">
+<div class="f-index">
+    <div class="tabular--wrapper">
+        <a href="./Index">  <h2 class="h2--title">@ViewData["Title"]</h2></a>
+        <hr />
         @using (Html.BeginForm("Index", "DetailForms", FormMethod.Get))
         {
-            <table>
-                <tr>
-                    <td>
-                        @Html.ActionLink("Tạo mới", "Create", null, new { @class = "btn btn-success" })
-                    </td>
-                    <td style="padding-left:30px">
-                        Tìm ID Đơn khám: <input type="text" name="SearchString" style="padding-right:8px" />
-                        <span style="padding-right:16px"> </span>
-                        Tìm tên bảng giá khám  : <input type="text" name="SearchString1" />
-                        <input type="submit" value="Tìm kiếm" class="btn btn-info" style="color:white" />
-                    </td>
+            <div class="nav--search d_flex">
+                <div style="text-align:center; margin:3px 0px">
+                    <a href="@Url.Action("Create")" class="btn btn-createnew"><i class="fa-solid fa-plus"></i></a>
+                </div>
+                <div class="search--box">
+                    <input type="text" name="searchString" placeholder="Nhập thông tin tìm kiếm" />
+                    <button type="submit" value="Tìm kiếm"><i class="fa-solid fa-magnifying-glass"></i></button>
+                </div>
+            </div>
+        }
+        <div class="table-container">
+            <table class="table table-hover table-striped table-bordered">
+                <tr style="">
+                    <th>
+                        Id CTĐK
+                    </th>
+                    <th>
+                        Id Đơn khám
+                    </th>
+                    @*<th style=" background: rgb(63,154,129); color: #fff;">
+                            Tên bảng giá khám
+                        </th>
+                         <th>
+                            SL
+                        </th>
+                         <th>
+                            Đơn giá
+                        </th>*@
+                    <th>
+                        Tổng tiền
+                    </th>
+                    <th>
+                        Trạng thái khám
+                    </th>
+                    <th>
+                        Thao tác khám
+                    </th>
+                    <th>
+                        Trạng thái thanh toán
+                    </th>
+                    <th>
+                        Thao tác thanh toán
+                    </th>
+                    <th>Thao tác Sửa - Xóa </th>
                 </tr>
+
+                @foreach (var item in Model)
+                {
+                    decimal total = Convert.ToDecimal(item.Quantity * item.PriceList.Price);
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DFId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FormId)
+                        </td>
+                        @* <td>
+                                 @Html.DisplayFor(modelItem => item.PriceList.NamePriceList)
+                             </td>
+                            <td>
+                                 @Html.DisplayFor(modelItem => item.Quantity)
+                             </td>
+                             <td>
+                                 @{
+                                     string formattedPrice = string.Format("{0:#,##0}", item.PriceList.Price);
+                                     formattedPrice = formattedPrice.Replace(",", ".");
+                                 }
+
+                                 @Html.DisplayFor(modelItem => formattedPrice) VNĐ
+                             </td>*@
+                        <td class="price">
+                            @{
+                                string formattedTotal = string.Format("{0:#,##0}", item.TotalMoney);
+                                formattedTotal = formattedTotal.Replace(",", ".");
+                            }
+
+                            @Html.DisplayFor(modelItem => formattedTotal) VNĐ
+                        </td>
+                        <td>
+                            @if (item.IsExamined == true)
+                            {
+                                <span class="check-true">Đã khám</span>
+                            }
+                            else
+                            {
+                                <span class="check-false">Chưa khám</span>
+                            }
+                        </td>
+                        <td style="color:white">
+                            @using (Html.BeginForm("UpdateExaminedStatus", "DetailForms", new { id = item.DFId }, FormMethod.Post))
+                            {
+                                <input type="submit" value="Xác nhận" class="btn btn-outline-success" />
+                            }
+
+                        </td>
+                        <td>
+                            @if (item.IsPaid == true)
+                            {
+                                <span class="check-true">Đã thanh toán</span>
+                            }
+                            else
+                            {
+                                <span class="check-false">Chưa thanh toán</span>
+                            }
+
+                        </td>
+                        <td style="color:white">
+                            @using (Html.BeginForm("UpdatePaymentStatus", "DetailForms", new { id = item.DFId }, FormMethod.Post))
+                            {
+                                <input type="submit" value="Thanh toán" class="btn btn-outline-success" />
+                            }
+
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Details", new { id = item.DFId })" class="btn btn-details"><i class="fa-solid fa-eye"></i></a>
+                            <a href="@Url.Action("Edit", new { id = item.DFId })" class="btn btn-edit"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="@Url.Action("Delete", new { id = item.DFId })" class="btn btn-del"><i class="fa-regular fa-trash-can"></i></a>
+                        </td>
+                    </tr>
+                }
+
             </table>
-        }
+        </div>
     </div>
-    <table class="table table-hover table-striped table-bordered">
-        <tr>
-            <th>
-                STT
-            </th>
-            <th>
-                ID Đơn khám
-            </th>
-            <th>
-                Tên bảng giá khám
-            </th>
-            <th>
-                SL
-            </th>
-            <th>
-                Đơn giá
-            </th>
-            <th>
-                Tổng tiền
-            </th>
-            <th>
-                Trạng thái khám
-            </th>
-            <th>
-                Chức năng khám
-            </th>
-            <th>
-                Trạng thái thanh toán
-            </th>
-            <th>
-                Chức năng thanh toán
-            </th>
-            <th>Chức năng Sửa - Xóa </th>
-        </tr>
+</div>
+<div class="page">
+    <!-- Thêm đoạn mã để hiển thị số trang và số trang hiện tại -->
+    <span>
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    </span>
+    <!--Control PagedListPager: mô tả mô hình với số trang là liên kết với tham số "Index" và tham
+    số page-->
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 
-        @foreach (var item in Model)
-        {
-            decimal total = Convert.ToDecimal(item.Quantity * item.PriceList.Price);
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdDF)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdForm)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PriceList.NamePriceList)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @{
-                        string formattedPrice = string.Format("{0:#,##0}", item.PriceList.Price);
-                        formattedPrice = formattedPrice.Replace(",", ".");
-                    }
-
-                    @Html.DisplayFor(modelItem => formattedPrice) VNĐ
-                </td>
-                <td style="color:red">
-                    @{
-                        string formattedTotal = string.Format("{0:#,##0}", item.TotalMoney);
-                        formattedTotal = formattedTotal.Replace(",", ".");
-                    }
-
-                    @Html.DisplayFor(modelItem => formattedTotal) VNĐ
-                </td>
-                <td>
-                    @if (item.IsExamined == true)
-                    {
-                        <span style="color:forestgreen; font:italic"> <b>Đã thăm khám</b></span>
-                    }
-                    else
-                    {
-                        <span style="color:red"> <b>Chưa thăm khám</b></span>
-                    }
-                </td>
-                <td style="color:white">
-                    @using (Html.BeginForm("UpdateExaminedStatus", "DetailForms", new { id = item.IdDF }, FormMethod.Post))
-                    {
-                        <input type="submit" value="Xác nhận khám" class="btn btn-outline-success" />
-                    }
-
-                </td>
-                <td>
-                    @if (item.IsPaid == true)
-                    {
-                    <span style="color:forestgreen; font:italic "> <b>Đã thanh toán</b></span>
-                    }
-                    else
-                    {
-                        <span style="color:red"> <b>Chưa thanh toán</b></span>
-                    }
-
-                </td>
-                <td style="color:white">
-                    @using (Html.BeginForm("UpdatePaymentStatus", "DetailForms", new { id = item.IdDF }, FormMethod.Post))
-                    {
-                        <input type="submit" value="Thanh toán" class="btn btn-outline-success" />
-                    }
-
-                </td>
-                <td>
-                    @Html.ActionLink("Sửa", "Edit", new { id = item.IdDF }, new { @class = "btn btn-warning", style = "color: white" })
-                    @Html.ActionLink("Xóa", "Delete", new { id = item.IdDF }, new { @class = "btn btn-danger" })
-                </td>
-            </tr>
-        }
-
-    </table>
 </div>

@@ -17,13 +17,18 @@ namespace DoAn_CNPM.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Doctor()
         {
+            this.DoctorSchedules = new HashSet<DoctorSchedule>();
             this.Forms = new HashSet<Form>();
         }
     
-        public int IdDoctor { get; set; }
-        public string NameDoctor { get; set; }
-        public string PhoneDoctor { get; set; }
+        public int DoctorId { get; set; }
+        public string FullName { get; set; }
+        public string Gender { get; set; }
+        public string Phone { get; set; }
+        public string Specialization { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DoctorSchedule> DoctorSchedules { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Form> Forms { get; set; }
     }

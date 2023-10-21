@@ -24,7 +24,7 @@ namespace DoAn_CNPM.Controllers
             int totalIsExamined = db.DetailForms.Count(f => f.IsExamined == true);
             int totalIsPaid = db.DetailForms.Count(f => f.IsPaid == true);
 
-            int totalCustomerIds = db.Customers.Count();
+            //int totalCustomerIds = db.Customers.Count();
             int totalStaffIds = db.Staffs.Count();
             int totalDoctorIds = db.Doctors.Count();
 
@@ -34,7 +34,6 @@ namespace DoAn_CNPM.Controllers
             ViewBag.TotalDF = toatalDF;
             ViewBag.ExaminedCount = totalIsExamined;
             ViewBag.PaidCount = totalIsPaid;
-            ViewBag.TotalCustomerIds = totalCustomerIds;
             ViewBag.TotalStaffIds = totalStaffIds;
             ViewBag.TotalDoctorIds = totalDoctorIds;
             ViewBag.TotalRevenue = totalRevenue;

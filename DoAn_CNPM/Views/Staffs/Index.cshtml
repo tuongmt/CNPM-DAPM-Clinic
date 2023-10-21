@@ -1,68 +1,83 @@
 ﻿@model IEnumerable<DoAn_CNPM.Models.Staff>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "THÔNG TIN NHÂN VIÊN";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div style=" width: 100%; ">
-    <h2 style="text-align: center;padding-top:20px">THÔNG TIN NHÂN VIÊN</h2>
-    <hr />
-    <div class="form-group form-inline" style="border: 3px solid #00E216; height: 70px; text-align: center; padding: 15px; ">
-        @using (Html.BeginForm("Index", "Staffs", FormMethod.Get))
-        {
-            <table>
+<div class="f-index">
+    <div class="tabular--wrapper">
+        <h2 class="h2--title">@ViewData["Title"]</h2>
+        <hr />
+        <div class="nav--search">
+            @using (Html.BeginForm("Index", "Staffs", FormMethod.Get))
+            {
+                <table>
+                    <tr>
+                        <td>
+                            <a href="@Url.Action("Create")" class="btn btn-createnew"><i class="fa-solid fa-plus"></i></a>
+                        </td>
+                        <td class="search--box">
+                            <input type="text" name="SearchString" placeholder="Nhập thông tin tìm kiếm" />
+                            <button type="submit" value=""><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </td>
+                    </tr>
+                </table>
+            }
+        </div>
+
+        <div class="table-container">
+            <table class="table table-hover table-striped table-bordered">
                 <tr>
-                    <td>
-                        @Html.ActionLink("Tạo mới", "Create", null, new { @class = "btn btn-success" })
-                    </td>
-                    <td style="padding-left:30px; ">
-                        Tìm nhân viên: <input type="text" name="SearchString" />
-                        <input type="submit" value="Tìm kiếm" class="btn btn-info"  style="color:white"/>
-                    </td>
+                    <th>
+                        Id
+                    </th>
+
+                    <th>
+                        Họ tên Nhân viên
+                    </th>
+
+                    <th>
+                        Giới tính
+                    </th>
+
+                    <th>
+                        Số điện thoại
+                    </th>
+
+                    <th>
+                        Chức vụ
+                    </th>
+
+                    <th>Chức năng Sửa - Xóa</th>
                 </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StaffId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Gender)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Phone)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Position)
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = item.StaffId })" class="btn btn-edit"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="@Url.Action("Delete", new { id = item.StaffId })" class="btn btn-del"><i class="fa-regular fa-trash-can"></i></a>
+                        </td>
+                    </tr>
+                }
+
             </table>
-        }
+        </div>
     </div>
-    <table class="table table-hover table-striped table-bordered">
-        <tr>
-            <th>
-                STT
-            </th>
-            <th>
-                Họ tên
-            </th>
-            <th>
-                Số điện thoại
-            </th>
-            <th>
-                Mail
-            </th>
-            <th>Chức năng Sửa - Xóa</th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdStaff)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NameStaff)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneStaff)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MailStaff)
-                </td>
-                <td style="color:white">
-                    @Html.ActionLink("Sửa", "Edit", new { id = item.IdStaff }, new { @class = "btn btn-warning", style = "color: white" }) |
-                   
-                    @Html.ActionLink("Xóa", "Delete", new { id = item.IdStaff }, new { @class = "btn btn-danger" })
-                </td>
-            </tr>
-        }
-
-    </table>
 </div>

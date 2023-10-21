@@ -12,7 +12,7 @@
 <html>
 
 <head>
-    <title>My Awesome Login Page</title>
+    <title>ĐĂNG NHẬP ADMIN</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
@@ -51,15 +51,13 @@
                             <button type="submit" name="button" class="btn login_btn">Đăng nhập quản trị hệ thống</button>
                         </div>
                         <div>
-                            @if(ViewBag.ErrorInfo != null)
-            {
-                <p style="color:red;padding-top:15px"><b> @ViewBag.ErrorInfo </b></p>
-            }
+                            @if (ViewBag.ErrorInfo != null)
+                            {
+                                <p style="color:red;padding-top:15px;font-weight:600"> @ViewBag.ErrorInfo</p>
+                            }
                         </div>
                     </form>
                 </div>
-
-                
             </div>
         </div>
     </div>
@@ -80,7 +78,7 @@
         width: 350px;
         margin-top: auto;
         margin-bottom: auto;
-        background: #0a822f;
+        background: rgb(63,154,129);
         position: relative;
         display: flex;
         justify-content: center;

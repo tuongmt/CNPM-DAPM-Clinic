@@ -1,56 +1,72 @@
 ﻿@model DoAn_CNPM.Models.Doctor
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "CẬP NHẬT THÔNG TIN BÁC SĨ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container-fluid" style=" width: 50%; ">
-    <h2 style="text-align: center">SỬA THÔNG TIN BÁC SĨ</h2>
+<div class="container-fluid f-edit">
+    <div class="tabular--wrapper">
+        <div class="table-container">
+            <h2 class="h2--title">@ViewData["Title"]</h2>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.DoctorId)
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+                    <div class="row">
+                        <div class="control-label col-md-4">
+                            Họ tên Bác sĩ
+                        </div>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-<div class="form-horizontal">
+                    <div class="row">
+                        <div class="control-label col-md-4">
+                            Giới tính
+                        </div>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.IdDoctor)
+                    <div class="row">
+                        <div class="control-label col-md-4">
+                            Số điện thoại
+                        </div>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-    <div class="row">
-        <div class="control-label col-md-4">
-            Họ tên Bác sĩ
-        </div>
-        <div class="col-md-8">
-            @Html.EditorFor(model => model.NameDoctor, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.NameDoctor, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="control-label col-md-4">
+                            Chuyên ngành
+                        </div>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Specialization, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Specialization, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12" style="text-align:center">
+                            <input type="submit" value="Lưu" class="btn btn-primary" , style="color:white" />
+                        </div>
+                    </div>
+                </div>
+            }
         </div>
     </div>
-
-    <br />
-
-    <div class="row">
-        <div class="control-label col-md-4">
-            Số điện thoại
-        </div>
-        <div class="col-md-8">
-            @Html.EditorFor(model => model.PhoneDoctor, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.PhoneDoctor, "", new { @class = "text-danger" })
-        </div>
-    </div>
-
-    <br />
-
-    <div class="row">
-        <div class="col-md-12" style="text-align:center">
-            <input type="submit" value="Lưu" class="btn btn-primary" , style="color:white" />
-        </div>
-    </div>
-</div>
-    }
-
-    <div>
-        @Html.ActionLink("Trở về", "Index")
+    <div class="back">
+        <a href="~/Doctors/Index"><i class="fa-solid fa-arrow-left"></i></a>
     </div>
 </div>

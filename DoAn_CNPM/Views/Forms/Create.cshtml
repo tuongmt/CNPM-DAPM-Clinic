@@ -1,20 +1,18 @@
 ﻿@model DoAn_CNPM.Models.Form
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "TẠO MỚI ĐƠN KHÁM";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/flatpickr@6.2.4/dist/flatpickr.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/flatpickr@6.2.4/dist/flatpickr.min.js"></script>
+<div class="container-fluid f-create">
+    <div class="tabular--wrapper">
+        <div class="table-container">
+            <h2 style="text-align: center">@ViewBag.Title</h2>
 
-<div class="container-fluid" style=" width: 50%; ">
-    <h2 style="text-align: center; padding-top: 16px">TẠO MỚI ĐƠN KHÁM</h2>
-
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
 
@@ -22,7 +20,7 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="row">
                 <div class="col-sm-4">
-                   Thời gian khám
+                    Thời gian khám
                 </div>
                 <div class="col-sm-8">
                     @{
@@ -32,54 +30,49 @@
                     @Html.ValidationMessageFor(model => model.ExamTime, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <br />
+
+            <div class="row">
+                <div class="col-sm-4">
+                    Bệnh nhân
+                </div>
+                <div class="col-sm-8">
+                    @Html.DropDownList("PatientId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.PatientId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-sm-4">
                     Bác sĩ
                 </div>
                 <div class="col-sm-8">
-                    @Html.DropDownList("IdDoctor", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.IdDoctor, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <div class="col-sm-4">
-                    Khách hàng
-                </div>
-                <div class="col-sm-8">
-                    @Html.DropDownList("IdCus", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.IdCus, "", new { @class = "text-danger" })
+                    @Html.DropDownList("DoctorId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.DoctorId, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <br />
             <div class="row">
                 <div class="col-sm-4">
                     Nhân viên
                 </div>
                 <div class="col-sm-8">
-                    @Html.DropDownList("IdStaff", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.IdStaff, "", new { @class = "text-danger" })
+                    @Html.DropDownList("StaffId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.StaffId, "", new { @class = "text-danger" })
                 </div>
             </div>
+
             <br />
+
             <div style="text-align:center">
-                <input type="submit" value="Tạo mới" class="btn btn-success" />
+                <input type="submit" value="Tạo" class="btn btn-createnew" />
             </div>
 
         </div>
-    }
-    <br />
-    <div>
-        @Html.ActionLink("Trở về", "Index")
+            }
+        </div>
+    </div>
+
+    <div class="back">
+        <a href="~/Forms/Index"><i class="fa-solid fa-arrow-left"></i></a>
     </div>
 </div>
-
-<script>
-    flatpickr("#ExamTime", {
-        enableTime: true,
-        dateFormat: "Y-m-d H:i",
-        // Các tùy chọn khác của plugin có thể được thêm ở đây
-    });
-</script>

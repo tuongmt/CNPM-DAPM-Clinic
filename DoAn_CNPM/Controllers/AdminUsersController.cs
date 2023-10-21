@@ -7,8 +7,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DoAn_CNPM.Models;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DoAn_CNPM.Controllers
 {
@@ -16,14 +14,14 @@ namespace DoAn_CNPM.Controllers
     {
         private DoAnCNPMEntities3 db = new DoAnCNPMEntities3();
 
-        // GET: AdminUsers
+        // GET: AdminUsers1
         public ActionResult Index()
         {
             return View(db.AdminUsers.ToList());
         }
 
-        // GET: AdminUsers/Details/5
-        public ActionResult Details(int? id)
+        // GET: AdminUsers1/Details/5
+        public ActionResult Details(string id)
         {
             if (id == null)
             {
@@ -37,18 +35,18 @@ namespace DoAn_CNPM.Controllers
             return View(adminUser);
         }
 
-        // GET: AdminUsers/Create
+        // GET: AdminUsers1/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: AdminUsers/Create
+        // POST: AdminUsers1/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdAdminUser,NameAdminUser,Role,Password")] AdminUser adminUser)
+        public ActionResult Create([Bind(Include = "Username,Password,NameAdminUser,Gender,Image,Role")] AdminUser adminUser)
         {
             if (ModelState.IsValid)
             {
@@ -60,8 +58,8 @@ namespace DoAn_CNPM.Controllers
             return View(adminUser);
         }
 
-        // GET: AdminUsers/Edit/5
-        public ActionResult Edit(int? id)
+        // GET: AdminUsers1/Edit/5
+        public ActionResult Edit(string id)
         {
             if (id == null)
             {
@@ -75,12 +73,12 @@ namespace DoAn_CNPM.Controllers
             return View(adminUser);
         }
 
-        // POST: AdminUsers/Edit/5
+        // POST: AdminUsers1/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdAdminUser,NameAdminUser,Role,Password")] AdminUser adminUser)
+        public ActionResult Edit([Bind(Include = "Username,Password,NameAdminUser,Gender,Image,Role")] AdminUser adminUser)
         {
             if (ModelState.IsValid)
             {
@@ -91,8 +89,8 @@ namespace DoAn_CNPM.Controllers
             return View(adminUser);
         }
 
-        // GET: AdminUsers/Delete/5
-        public ActionResult Delete(int? id)
+        // GET: AdminUsers1/Delete/5
+        public ActionResult Delete(string id)
         {
             if (id == null)
             {
@@ -106,10 +104,10 @@ namespace DoAn_CNPM.Controllers
             return View(adminUser);
         }
 
-        // POST: AdminUsers/Delete/5
+        // POST: AdminUsers1/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(string id)
         {
             AdminUser adminUser = db.AdminUsers.Find(id);
             db.AdminUsers.Remove(adminUser);

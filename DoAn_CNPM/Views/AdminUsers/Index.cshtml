@@ -1,46 +1,46 @@
 ﻿@model IEnumerable<DoAn_CNPM.Models.AdminUser>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Thông tin cá nhân";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.NameAdminUser)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Role)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Password)
-        </th>
-        <th></th>
-    </tr>
+<div class="f-index">
+   
+    <div class="tabular--wrapper">
+        @if (Session["admin"] != null)
+        {
+            <h2 class="h2--title">@ViewData["Title"]</h2>
+            <hr />
+            <div class="d_flex">
+                <div>
+                    <img src="~/Images/@Session["AdminImg"]" class="img-avatar" alt="Hình ảnh" />
+                </div>
+                <div class="table-container">
+                    <ul class="d_flex" style="width:500px">
+                        <li>Username: </li>
+                        <li>@Session["AdminUsr"].ToString()</li>
+                    </ul>
+                    <ul class="d_flex" style="width: 500px">
+                        <li>Tên:</li>
+                        <li>@Session["AdminName"]</li>
+                    </ul>
+                    <ul class="d_flex" style="width:500px">
+                        <li>Vai trò:</li>
+                        <li>@Session["AdminRole"]</li>
+                    </ul>
+                    <ul class="d_flex" style="width:500px">
+                        <li>Giới tính:</li>
+                        <li>@Session["AdminGender"]</li>
+                    </ul>
+                    <ul style="width:500px; text-align:center">
+                        <a href="@Url.Action("Edit", new { id = Session["AdminUsr"].ToString().Trim() })" class="btn btn-edit"><i class="fa-regular fa-pen-to-square"></i></a>
+                    </ul>
+                </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.NameAdminUser)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Role)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Password)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdAdminUser }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdAdminUser }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdAdminUser })
-        </td>
-    </tr>
-}
-
-</table>
+            </div>
+        }
+        </div>
+  
+    </div>

@@ -1,70 +1,81 @@
 ﻿@model DoAn_CNPM.Models.Form
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "XÓA ĐƠN KHÁM";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container" style=" width: 50%; ">
-    <h2 style="text-align: center;padding-top:16px">XÓA ĐƠN KHÁM</h2>
-    <div class="row">
-        <p style="color:red" class=" col-sm-2">Chú ý: </p>
-        <p class="col-sm-8">Để xóa đơn khám phải xóa chi tiết đơn khám và chẩn đoán bệnh trước</p>
-    </div>
-    <div>
+<div class="container-fluid f-edit">
+    <div class="tabular--wrapper">
+        <div class="table-container">
+            <h2 class="h2--title">@ViewBag.Title </h2>
+            <div class="caution">
+                <p>
+                    Chú ý:
+                    <span>
+                        Để xóa đơn khám phải xóa các thông tin liên quan
+                        <span>Chi tiết đơn khám</span> và <span>Chẩn đoán bệnh</span> trước
+                    </span>
+                </p>
+            </div>
+            <div>
+                <hr />
+                <dl class="row">
+                    <dt class=" col-sm-4">
+                        Id đơn khám
+                    </dt>
 
-        <hr />
-        <dl class="row">
-            <dt class=" col-sm-4">
-                Ngày khám
-            </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.FormId)
+                    </dd>
 
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.ExamTime)
-            </dd>
+                    <dt class=" col-sm-4">
+                        Ngày khám
+                    </dt>
 
-            <br />
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.ExamTime)
+                    </dd>
 
-            <dt class=" col-sm-4">
-                Tên Khách hàng 
-            </dt>
+                    <dt class=" col-sm-4">
+                        Khách hàng
+                    </dt>
 
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Customer.NameCus)
-            </dd>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Patient.FullName)
+                    </dd>
 
-            <br />
+                    <dt class=" col-sm-4">
+                        Bác sĩ
+                    </dt>
 
-            <dt class=" col-sm-4">
-                Tên Bác sĩ
-            </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Doctor.FullName)
+                    </dd>
 
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Doctor.NameDoctor)
-            </dd>
+                    <dt class=" col-sm-4">
+                        Nhân viên
+                    </dt>
 
-            <br />
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Staff.FullName)
+                    </dd>
 
-            <dt class=" col-sm-4">
-                Tên Nhân viên
-            </dt>
+                    <dd class="col-12" style="text-align:center">
+                        <br />
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="Xóa" class="btn btn-del" />
+                        }
+                    </dd>
+                </dl>
 
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Staff.NameStaff)
-            </dd>
-
-            <dd class="col-12" style="text-align:center">
-                <br />
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
-                    <input type="submit" value="Xóa" class="btn btn-danger" />
-                }
-            </dd>
-        </dl>
-
-        <div>
-            @Html.ActionLink("Trở về", "Index")
+            </div>
         </div>
     </div>
+    <div class="back">
+        <a href="~/Forms/Index"><i class="fa-solid fa-arrow-left"></i></a>
+    </div>
 </div>
+  

@@ -18,7 +18,7 @@ namespace DoAn_CNPM.Models
         {
             if (!String.IsNullOrEmpty(SearchString))
             {
-                var cat = db.Categories.Where(s => s.NameCat.ToString().Contains(SearchString));
+                var cat = db.Categories.Where(s => s.CatName.ToString().Contains(SearchString));
                 return View(cat.ToList());
             }
             return View(db.Categories.ToList());
@@ -50,7 +50,7 @@ namespace DoAn_CNPM.Models
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdCat,NameCat")] Category category)
+        public ActionResult Create([Bind(Include = "CatId,CatName")] Category category)
         {
             if (ModelState.IsValid)
             {
@@ -82,7 +82,7 @@ namespace DoAn_CNPM.Models
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdCat,NameCat")] Category category)
+        public ActionResult Edit([Bind(Include = "CatId,CatName")] Category category)
         {
             if (ModelState.IsValid)
             {

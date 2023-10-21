@@ -3,55 +3,183 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
+    <title>Dashboard</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link href="~/Content/menu.css" type="text/css" rel="stylesheet" />
+    <link href="~/Content/style.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/fontawesome-free-6.2.1-web/css/fontawesome.css" rel="stylesheet">
     <link href="~/Content/fontawesome-free-6.2.1-web/css/brands.css" rel="stylesheet">
     <link href="~/Content/fontawesome-free-6.2.1-web/css/solid.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
+    <div class="sidebar">
+        @if (Session["admin"] != null)
+        {
+            @*<div class="logo">
+                <a style="color:yellow;font-size:18px" class="navbar-brand" href="~/Home">
+                    <i class="fa-solid fa-house-chimney-medical"></i>
+                    <b>CLINIC OF HUFLIT</b>
+                </a>
+            </div>*@
+            <ul class="menu">
+                <li class="active">
+                    <a href="~/Home">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Trang chủ</span>
+                    </a>
+                </li>
 
-    <div class="navbar navbar-inverse navbar-fixed-top" style="background-color:forestgreen">
-        <a style="color:white" class="navbar-brand" href="~/Home"><i class="fa-solid fa-house-chimney-medical"></i>International Clinic</a>
-        <div class="container">
-            <div class="navbar-collapse collapse-horizontal">
-                <ul class="nav navbar-nav">
-                    <li class="nav-item">  <a style="color: white; padding-top: 20px" class="nav-link" href="~/Home">TRANG CHỦ</a></li>
-                    <li class="nav-item"> <a style="color: white; padding-top: 20px" class="nav-link" href="~/Categories/Index">PHÂN LOẠI BỆNH</a></li>
-                    <li class="nav-item"> <a style="color: white; padding-top: 20px" class="nav-link" href="~/DiseaseStatisticLists/Index">CHẨN ĐOÁN BỆNH</a></li>
-                    <li class="nav-item"> <a style="color: white; padding-top: 20px" class="nav-link" href="~/Staffs/Index">NHÂN VIÊN</a></li>
-                    <li class="nav-item"> <a style="color: white; padding-top: 20px" class="nav-link" href="~/Doctors/Index">BÁC SĨ</a></li>
-                    <li class="nav-item"> <a style="color: white; padding-top: 20px" class="nav-link" href="~/Customers/Index">KHÁCH HÀNG</a></li>
-                    <li class="nav-item"> <a style="color: white; padding-top: 20px" class="nav-link" href="~/PriceLists/Index">BẢNG GIÁ KHÁM</a></li>
-                    <li class="nav-item"> <a style="color: white; padding-top: 20px" class="nav-link" href="~/Forms/Index">ĐƠN KHÁM</a></li>
-                    <li class="nav-item"> <a style="color: white; padding-top: 20px" class="nav-link" href="~/DetailForms/Index">CHI TIẾT ĐƠN KHÁM</a></li>
-
-                </ul>
-            </div>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-user"></i>
+                        <span>Thông tin cá nhân</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Categories/Index">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Phân loại bệnh</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/DiseaseStatisticLists/Index">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Chẩn đoán bệnh</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Staffs/Index">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Nhân viên</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Doctors/Index">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Bác sĩ</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Customers/Index">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Khách hàng</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/PriceLists/Index">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Bảng giá khám</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Forms/Index">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Đơn khám</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/DetailForms/Index">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Đơn khám chi tiết</span>
+                    </a>
+                </li>
+                <li class="logout">
+                    <a href="~/LoginUser/Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Đăng xuất</span>
+                    </a>
+                </li>
+            </ul>
+        }
         </div>
-    </div>
-
     <div class="container-fluid body-content">
         <div class="row">
-            <div class="col-md-12" id="div-content" style="min-height:800px">
+            <div class="col-md-12" id="div-content" style="min-height:auto  ">
                 @RenderBody()
             </div>
         </div>
         @*@Scripts.Render("~/bundles/jquery")
             @Scripts.Render("~/bundles/bootstrap")
             @RenderSection("scripts", required: false)*@
-    </div>
+        <div class="div-footer">
+            <ul>
+                <li style="font-weight:bolder">Các chính sách</li>
+                <li><div class="text-left"><a class="format-footer" href="~/Home/MedicalExaminationPolicy">Chính sách khám bệnh</a></div></li>
+                <li><div class="text-left"><a class="format-footer" href="~/Home/CustomerPolicy">Chính sách khách hàng</a></div></li>
+                <li><div class="text-left"><a class="format-footer" href="~/Home/ClinicPolicy">Chính sách phòng khám</a></div></li>
+            </ul>
 
+            <ul>
+                <li style="font-weight:bolder">Liên hệ</li>
+                <li>
+                    <div class="text-left"><i class="fa-solid fa-phone-volume"></i> Hotline: 0386040650</div>
+                </li>
+                <li>
 
-    <div style="background-color:darkseagreen; height: 100px; text-align: center; padding: 10px;">
-        <h4 style="color:green;">
-            <b>
-                &copy; @DateTime.Now.Year - CONSULTING ROOM APP
-            </b>
-        </h4>
+                    <div class="text-left"><i class="fa-solid fa-envelope"></i> Email: InternationalClinic@gmail.com</div>
+                </li>
+                <li><div class="text-left"><i class="fa-brands fa-facebook"></i> Facebook: International Clinic</div></li>
+            </ul>
+
+            <ul>
+                <li style="font-weight:bolder">Danh mục</li>
+                <li>
+                    <div class="text-left"><a class="format-footer" href="~/Home/Index">Trang chủ</a></div>
+                </li>
+                <li>
+                    <div class="text-left"><a class="format-footer" href="~">Về chúng tôi</a></div>
+                </li>
+                <li><div class="text-left"><a class="format-footer" href="~">Tin tức</a></div></li>
+            </ul>
+            <ul>
+                <li style="font-weight:bolder">Thời gian làm việc</li>
+                <li>
+                    <span id="monToSat">Thứ 2 - Thứ 7: 7:00 AM - 18:00 PM</span>
+                </li>
+                <li>
+                    <span id="workStatus"></span>
+                </li>
+
+            </ul>
+
+            <ul style="list-style-type: none; float: left; height:100%">
+                <li>
+                    <b>&copy; @DateTime.Now.Year - Ma Tuan Tuong</b>
+                </li>
+            </ul>
+
+        </div>
     </div>
 </body>
 </html>
+<style>
+    li.format-hello {
+        padding-left: 32px;
+        padding-top: 10px;
+        color: white;
+    }
+    a.format-footer {
+        color: white;
+        text-decoration: none
+    }
+</style>
+
+<script>
+    // Lấy thời gian hiện tại
+    var currentTime = new Date();
+    var currentHour = currentTime.getHours();
+
+    // Kiểm tra thời gian và thay đổi màu chữ tương ứng
+    if (currentHour >= 7 && currentHour < 18) {
+        //document.getElementById("monToSat").style.color = "blue"; // Áp dụng màu xanh
+        //document.getElementById("sun").style.color = "blue"; // Áp dụng màu xanh
+        document.getElementById("workStatus").innerHTML = "Đang trong giờ làm việc";
+        document.getElementById("workStatus").style.color = "yellow"; // Áp dụng màu xanh
+    } else {
+        //document.getElementById("monToSat").style.color = "red"; // Áp dụng màu đỏ
+        //document.getElementById("sun").style.color = "red"; // Áp dụng màu đỏ
+        document.getElementById("workStatus").innerHTML = "Đã ngưng làm việc";
+        document.getElementById("workStatus").style.color = "red"; // Áp dụng màu đỏ
+    }
+</script>

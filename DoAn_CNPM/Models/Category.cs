@@ -20,8 +20,8 @@ namespace DoAn_CNPM.Models
             this.PriceLists = new HashSet<PriceList>();
         }
     
-        public int IdCat { get; set; }
-        public string NameCat { get; set; }
+        public int CatId { get; set; }
+        public string CatName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PriceList> PriceLists { get; set; }

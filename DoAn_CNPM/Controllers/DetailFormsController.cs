@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using DoAn_CNPM.Models;
+using PagedList;
 
 namespace DoAn_CNPM.Controllers
 {
@@ -47,19 +48,30 @@ namespace DoAn_CNPM.Controllers
         }
 
         // GET: DetailForms
-        public ActionResult Index(string SearchString, string SearchString1)
+        public ActionResult Index(string searchString, int? page, double min = double.MinValue, double max = double.MaxValue, int checkSort = 0)
         {
+            
             var detailForms = db.DetailForms.Include(d => d.Form).Include(d => d.PriceList);
-            if (!String.IsNullOrEmpty(SearchString))
+            //sorting
+            detailForms = detailForms.OrderBy(d => d.DFId);
+            if (!String.IsNullOrEmpty(searchString))
             {
-                detailForms = detailForms.Where(s => s.IdForm.ToString().Contains(SearchString));
+                detailForms = detailForms.Where(d => d.FormId.ToString().Contains(searchString)
+                || d.TotalMoney.ToString().Contains(searchString));
             }
-            if (!String.IsNullOrEmpty(SearchString1))
-            {
-                detailForms = detailForms.Where(s => s.PriceList.NamePriceList.ToString().Contains(SearchString1));
-            }
+            //if (min >= 0 && max > 0)
+            //{
+            //    detailForms = db.DetailForms.OrderByDescending(d => d.TotalMoney).Where(p => (double)p.TotalMoney >= min && (double)p.TotalMoney <= max);
+            //}
 
-            return View(detailForms.ToList());
+            int pageSize = 6;
+
+            int pageNumber = (page ?? 1);
+
+            if (page == null) page = 1;
+
+            //return View(detailForms.ToList());
+            return View("Index",detailForms.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: DetailForms/Details/5
@@ -80,8 +92,10 @@ namespace DoAn_CNPM.Controllers
         // GET: DetailForms/Create
         public ActionResult Create()
         {
-            ViewBag.IdForm = new SelectList(db.Forms, "IdForm", "IdForm");
-            ViewBag.IdPriceList = new SelectList(db.PriceLists, "IdPriceList", "NamePriceList");
+            ViewBag.FormId = new SelectList(db.Forms, "FormId", "FormId");
+            ViewBag.PriceListId = new SelectList(db.PriceLists, "PriceListId", "PriceListName");
+
+            
             return View();
         }
 
@@ -90,16 +104,19 @@ namespace DoAn_CNPM.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdDF,Quantity,IdForm,IdPriceList,TotalMoney")] DetailForm detailForm)
+        public ActionResult Create([Bind(Include = "DFId,Quantity,FormId,PriceListId,TotalMoney")] DetailForm detailForm)
         {
             if (ModelState.IsValid)
             {
+               
                 db.DetailForms.Add(detailForm);
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
-            ViewBag.IdForm = new SelectList(db.Forms, "IdForm", "IdForm", detailForm.IdForm);
-            ViewBag.IdPriceList = new SelectList(db.PriceLists, "IdPriceList", "NamePriceList", detailForm.IdPriceList);
+            ViewBag.FormId = new SelectList(db.Forms, "FormId", "FormId", detailForm.FormId);
+            ViewBag.PriceListId = new SelectList(db.PriceLists, "PriceListId", "PriceListName", detailForm.PriceListId);
+            ViewBag.Price = detailForm.PriceList.Price.ToString();
             return View(detailForm);
         }
 
@@ -115,8 +132,8 @@ namespace DoAn_CNPM.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IdForm = new SelectList(db.Forms, "IdForm", "IdForm", detailForm.IdForm);
-            ViewBag.IdPriceList = new SelectList(db.PriceLists, "IdPriceList", "NamePriceList", detailForm.IdPriceList);
+            ViewBag.FormId = new SelectList(db.Forms, "FormId", "FormId", detailForm.FormId);
+            ViewBag.PriceListId = new SelectList(db.PriceLists, "PriceListId", "PriceListName", detailForm.PriceListId);
             return View(detailForm);
         }
 
@@ -125,7 +142,7 @@ namespace DoAn_CNPM.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdDF,Quantity,IdForm,IdPriceList,TotalMoney")] DetailForm detailForm)
+        public ActionResult Edit([Bind(Include = "DFId,Quantity,FormId,PriceListId,TotalMoney")] DetailForm detailForm)
         {
             if (ModelState.IsValid)
             {
@@ -133,8 +150,8 @@ namespace DoAn_CNPM.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdForm = new SelectList(db.Forms, "IdForm", "IdForm", detailForm.IdForm);
-            ViewBag.IdPriceList = new SelectList(db.PriceLists, "IdPriceList", "NamePriceList", detailForm.IdPriceList);
+            ViewBag.FormId = new SelectList(db.Forms, "FormId", "FormId", detailForm.FormId);
+            ViewBag.PriceListId = new SelectList(db.PriceLists, "PriceListId", "PriceListName", detailForm.PriceListId);
             return View(detailForm);
         }
 

@@ -14,10 +14,11 @@ namespace DoAn_CNPM.Models
     
     public partial class AdminUser
     {
-        public int IdAdminUser { get; set; }
         public string Username { get; set; }
-        public string NameAdminUser { get; set; }
-        public string Role { get; set; }
         public string Password { get; set; }
+        public string NameAdminUser { get; set; }
+        public string Gender { get; set; }
+        public string Image { get; set; }
+        public string Role { get; set; }
     }
 }

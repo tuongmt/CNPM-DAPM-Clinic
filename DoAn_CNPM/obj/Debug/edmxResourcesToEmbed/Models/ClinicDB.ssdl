@@ -2,204 +2,240 @@
 <Schema Namespace="DoAnCNPMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="AdminUser">
     <Key>
-      <PropertyRef Name="IdAdminUser" />
+      <PropertyRef Name="Username" />
     </Key>
-    <Property Name="IdAdminUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Username" Type="char" MaxLength="100" Nullable="false" />
-    <Property Name="NameAdminUser" Type="nvarchar" MaxLength="100" Nullable="false" />
-    <Property Name="Role" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="Password" Type="char" MaxLength="100" Nullable="false" />
+    <Property Name="NameAdminUser" Type="nvarchar" MaxLength="100" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="3" />
+    <Property Name="Image" Type="varchar" MaxLength="100" />
+    <Property Name="Role" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="Category">
     <Key>
-      <PropertyRef Name="IdCat" />
+      <PropertyRef Name="CatId" />
     </Key>
-    <Property Name="IdCat" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="NameCat" Type="nvarchar" MaxLength="100" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Customer">
-    <Key>
-      <PropertyRef Name="IdCus" />
-    </Key>
-    <Property Name="IdCus" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="NameCus" Type="nvarchar" MaxLength="100" Nullable="false" />
-    <Property Name="PhoneCus" Type="char" MaxLength="11" Nullable="false" />
+    <Property Name="CatId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CatName" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
   <EntityType Name="DetailForm">
     <Key>
-      <PropertyRef Name="IdDF" />
+      <PropertyRef Name="DFId" />
     </Key>
-    <Property Name="IdDF" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DFId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Quantity" Type="int" Nullable="false" />
-    <Property Name="TotalMoney" Type="int" />
+    <Property Name="TotalMoney" Type="float" />
     <Property Name="IsExamined" Type="bit" />
     <Property Name="IsPaid" Type="bit" />
-    <Property Name="IdForm" Type="int" Nullable="false" />
-    <Property Name="IdPriceList" Type="int" Nullable="false" />
+    <Property Name="FormId" Type="int" Nullable="false" />
+    <Property Name="PriceListId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="DiseaseStatisticList">
     <Key>
-      <PropertyRef Name="IdDSL" />
+      <PropertyRef Name="DSLId" />
     </Key>
-    <Property Name="IdDSL" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DSLId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Dianose" Type="nvarchar" MaxLength="100" Nullable="false" />
-    <Property Name="IdForm" Type="int" Nullable="false" />
+    <Property Name="FormId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Doctor">
     <Key>
-      <PropertyRef Name="IdDoctor" />
+      <PropertyRef Name="DoctorId" />
     </Key>
-    <Property Name="IdDoctor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="NameDoctor" Type="nvarchar" MaxLength="100" Nullable="false" />
-    <Property Name="PhoneDoctor" Type="char" MaxLength="11" Nullable="false" />
+    <Property Name="DoctorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="3" />
+    <Property Name="Phone" Type="char" MaxLength="11" Nullable="false" />
+    <Property Name="Specialization" Type="nvarchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DoctorSchedule">
+    <Key>
+      <PropertyRef Name="DSId" />
+    </Key>
+    <Property Name="DSId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="DoctorId" Type="int" Nullable="false" />
+    <Property Name="DayOfWeek" Type="nvarchar" MaxLength="100" />
+    <Property Name="TimeStart" Type="time" Precision="7" />
+    <Property Name="TimeEnd" Type="time" Precision="7" />
   </EntityType>
   <EntityType Name="Form">
     <Key>
-      <PropertyRef Name="IdForm" />
+      <PropertyRef Name="FormId" />
     </Key>
-    <Property Name="IdForm" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FormId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ExamTime" Type="datetime" />
-    <Property Name="IdDoctor" Type="int" Nullable="false" />
-    <Property Name="IdCus" Type="int" Nullable="false" />
-    <Property Name="IdStaff" Type="int" Nullable="false" />
+    <Property Name="PatientId" Type="int" Nullable="false" />
+    <Property Name="DoctorId" Type="int" Nullable="false" />
+    <Property Name="StaffId" Type="int" Nullable="false" />
+    <Property Name="CreatedDay" Type="datetime" />
+    <Property Name="ReasonForVisit" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="PatientId" />
+    </Key>
+    <Property Name="PatientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="3" />
+    <Property Name="Phone" Type="char" MaxLength="11" Nullable="false" />
+    <Property Name="DOB" Type="date" />
+    <Property Name="Address" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="PriceList">
     <Key>
-      <PropertyRef Name="IdPriceList" />
+      <PropertyRef Name="PriceListId" />
     </Key>
-    <Property Name="IdPriceList" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="NamePriceList" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="PriceListId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PriceListName" Type="nvarchar" MaxLength="100" Nullable="false" />
     <Property Name="Price" Type="float" Nullable="false" />
-    <Property Name="IdCat" Type="int" Nullable="false" />
+    <Property Name="CatId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Staff">
     <Key>
-      <PropertyRef Name="IdStaff" />
+      <PropertyRef Name="StaffId" />
     </Key>
-    <Property Name="IdStaff" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="NameStaff" Type="nvarchar" MaxLength="100" Nullable="false" />
-    <Property Name="PhoneStaff" Type="char" MaxLength="11" Nullable="false" />
-    <Property Name="MailStaff" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="StaffId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FullName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="Gender" Type="nvarchar" MaxLength="3" />
+    <Property Name="Phone" Type="char" MaxLength="11" Nullable="false" />
+    <Property Name="Position" Type="nvarchar" MaxLength="100" Nullable="false" />
   </EntityType>
-  <Association Name="FK__DetailFor__IdFor__36B12243">
+  <Association Name="FK__DetailFor__FormI__3B75D760">
     <End Role="Form" Type="Self.Form" Multiplicity="1" />
     <End Role="DetailForm" Type="Self.DetailForm" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Form">
-        <PropertyRef Name="IdForm" />
+        <PropertyRef Name="FormId" />
       </Principal>
       <Dependent Role="DetailForm">
-        <PropertyRef Name="IdForm" />
+        <PropertyRef Name="FormId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DetailFor__IdPri__37A5467C">
+  <Association Name="FK__DetailFor__Price__3C69FB99">
     <End Role="PriceList" Type="Self.PriceList" Multiplicity="1" />
     <End Role="DetailForm" Type="Self.DetailForm" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="PriceList">
-        <PropertyRef Name="IdPriceList" />
+        <PropertyRef Name="PriceListId" />
       </Principal>
       <Dependent Role="DetailForm">
-        <PropertyRef Name="IdPriceList" />
+        <PropertyRef Name="PriceListId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__DiseaseSt__IdFor__3A81B327">
+  <Association Name="FK__DiseaseSt__FormI__3F466844">
     <End Role="Form" Type="Self.Form" Multiplicity="1" />
     <End Role="DiseaseStatisticList" Type="Self.DiseaseStatisticList" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Form">
-        <PropertyRef Name="IdForm" />
+        <PropertyRef Name="FormId" />
       </Principal>
       <Dependent Role="DiseaseStatisticList">
-        <PropertyRef Name="IdForm" />
+        <PropertyRef Name="FormId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Form__IdCus__32E0915F">
-    <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-    <End Role="Form" Type="Self.Form" Multiplicity="*" />
+  <Association Name="FK__DoctorSch__Docto__33D4B598">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
+    <End Role="DoctorSchedule" Type="Self.DoctorSchedule" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Customer">
-        <PropertyRef Name="IdCus" />
+      <Principal Role="Doctor">
+        <PropertyRef Name="DoctorId" />
       </Principal>
-      <Dependent Role="Form">
-        <PropertyRef Name="IdCus" />
+      <Dependent Role="DoctorSchedule">
+        <PropertyRef Name="DoctorId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Form__IdDoctor__31EC6D26">
+  <Association Name="FK__Form__DoctorId__37A5467C">
     <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
     <End Role="Form" Type="Self.Form" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Doctor">
-        <PropertyRef Name="IdDoctor" />
+        <PropertyRef Name="DoctorId" />
       </Principal>
       <Dependent Role="Form">
-        <PropertyRef Name="IdDoctor" />
+        <PropertyRef Name="DoctorId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__Form__IdStaff__33D4B598">
+  <Association Name="FK__Form__PatientId__36B12243">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="1" />
+    <End Role="Form" Type="Self.Form" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientId" />
+      </Principal>
+      <Dependent Role="Form">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Form__StaffId__38996AB5">
     <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
     <End Role="Form" Type="Self.Form" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Staff">
-        <PropertyRef Name="IdStaff" />
+        <PropertyRef Name="StaffId" />
       </Principal>
       <Dependent Role="Form">
-        <PropertyRef Name="IdStaff" />
+        <PropertyRef Name="StaffId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__PriceList__IdCat__2A4B4B5E">
+  <Association Name="FK__PriceList__CatId__29572725">
     <End Role="Category" Type="Self.Category" Multiplicity="1" />
     <End Role="PriceList" Type="Self.PriceList" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Category">
-        <PropertyRef Name="IdCat" />
+        <PropertyRef Name="CatId" />
       </Principal>
       <Dependent Role="PriceList">
-        <PropertyRef Name="IdCat" />
+        <PropertyRef Name="CatId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <EntityContainer Name="DoAnCNPMModelStoreContainer">
     <EntitySet Name="AdminUser" EntityType="Self.AdminUser" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DetailForm" EntityType="Self.DetailForm" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="DiseaseStatisticList" EntityType="Self.DiseaseStatisticList" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Doctor" EntityType="Self.Doctor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DoctorSchedule" EntityType="Self.DoctorSchedule" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Form" EntityType="Self.Form" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Patient" EntityType="Self.Patient" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="PriceList" EntityType="Self.PriceList" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__DetailFor__IdFor__36B12243" Association="Self.FK__DetailFor__IdFor__36B12243">
+    <AssociationSet Name="FK__DetailFor__FormI__3B75D760" Association="Self.FK__DetailFor__FormI__3B75D760">
       <End Role="Form" EntitySet="Form" />
       <End Role="DetailForm" EntitySet="DetailForm" />
     </AssociationSet>
-    <AssociationSet Name="FK__DetailFor__IdPri__37A5467C" Association="Self.FK__DetailFor__IdPri__37A5467C">
+    <AssociationSet Name="FK__DetailFor__Price__3C69FB99" Association="Self.FK__DetailFor__Price__3C69FB99">
       <End Role="PriceList" EntitySet="PriceList" />
       <End Role="DetailForm" EntitySet="DetailForm" />
     </AssociationSet>
-    <AssociationSet Name="FK__DiseaseSt__IdFor__3A81B327" Association="Self.FK__DiseaseSt__IdFor__3A81B327">
+    <AssociationSet Name="FK__DiseaseSt__FormI__3F466844" Association="Self.FK__DiseaseSt__FormI__3F466844">
       <End Role="Form" EntitySet="Form" />
       <End Role="DiseaseStatisticList" EntitySet="DiseaseStatisticList" />
     </AssociationSet>
-    <AssociationSet Name="FK__Form__IdCus__32E0915F" Association="Self.FK__Form__IdCus__32E0915F">
-      <End Role="Customer" EntitySet="Customer" />
-      <End Role="Form" EntitySet="Form" />
+    <AssociationSet Name="FK__DoctorSch__Docto__33D4B598" Association="Self.FK__DoctorSch__Docto__33D4B598">
+      <End Role="Doctor" EntitySet="Doctor" />
+      <End Role="DoctorSchedule" EntitySet="DoctorSchedule" />
     </AssociationSet>
-    <AssociationSet Name="FK__Form__IdDoctor__31EC6D26" Association="Self.FK__Form__IdDoctor__31EC6D26">
+    <AssociationSet Name="FK__Form__DoctorId__37A5467C" Association="Self.FK__Form__DoctorId__37A5467C">
       <End Role="Doctor" EntitySet="Doctor" />
       <End Role="Form" EntitySet="Form" />
     </AssociationSet>
-    <AssociationSet Name="FK__Form__IdStaff__33D4B598" Association="Self.FK__Form__IdStaff__33D4B598">
+    <AssociationSet Name="FK__Form__PatientId__36B12243" Association="Self.FK__Form__PatientId__36B12243">
+      <End Role="Patient" EntitySet="Patient" />
+      <End Role="Form" EntitySet="Form" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Form__StaffId__38996AB5" Association="Self.FK__Form__StaffId__38996AB5">
       <End Role="Staff" EntitySet="Staff" />
       <End Role="Form" EntitySet="Form" />
     </AssociationSet>
-    <AssociationSet Name="FK__PriceList__IdCat__2A4B4B5E" Association="Self.FK__PriceList__IdCat__2A4B4B5E">
+    <AssociationSet Name="FK__PriceList__CatId__29572725" Association="Self.FK__PriceList__CatId__29572725">
       <End Role="Category" EntitySet="Category" />
       <End Role="PriceList" EntitySet="PriceList" />
     </AssociationSet>

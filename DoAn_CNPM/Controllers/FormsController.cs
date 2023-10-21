@@ -14,19 +14,16 @@ namespace DoAn_CNPM.Models
         private DoAnCNPMEntities3 db = new DoAnCNPMEntities3();
 
         // GET: Forms
-        public ActionResult Index(string SearchString, string SearchString1)
+        public ActionResult Index(string SearchString)
         {
-            var forms = db.Forms.Include(f => f.Customer).Include(f => f.Doctor).Include(f => f.Staff);
+            var forms = db.Forms.Include(f => f.Patient).Include(f => f.Doctor).Include(f => f.Staff);
             if (!String.IsNullOrEmpty(SearchString))
             {
-                forms = forms.Where(s => s.Customer.NameCus.Contains(SearchString));
+                forms = forms.Where(f => f.FormId.ToString().Contains(SearchString) 
+                || f.Patient.FullName.Contains(SearchString)
+                || f.Doctor.FullName.Contains(SearchString)
+                || f.Staff.FullName.Contains(SearchString));
             }
-            if (!String.IsNullOrEmpty(SearchString1))
-            {
-                forms = forms.Where(s => s.Doctor.NameDoctor.Contains(SearchString1));
-            }
-
-
             return View(forms.ToList());
         }
 
@@ -48,9 +45,9 @@ namespace DoAn_CNPM.Models
         // GET: Forms/Create
         public ActionResult Create()
         {
-            ViewBag.IdCus = new SelectList(db.Customers, "IdCus", "NameCus");
-            ViewBag.IdDoctor = new SelectList(db.Doctors, "IdDoctor", "NameDoctor");
-            ViewBag.IdStaff = new SelectList(db.Staffs, "IdStaff", "NameStaff");
+            ViewBag.PatientId = new SelectList(db.Patients, "PatientId", "FullName");
+            ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FullName");
+            ViewBag.StaffId = new SelectList(db.Staffs, "StaffId", "FullName");
             var defaultExamTime = DateTime.Now;
             return View(new Form { ExamTime = defaultExamTime });
         }
@@ -60,7 +57,7 @@ namespace DoAn_CNPM.Models
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdForm,ExamTime,IdDoctor,IdCus,IdStaff")] Form form)
+        public ActionResult Create([Bind(Include = "FormId,ExamTime,DoctorId,PatientId,StaffId,ReasonForVisit")] Form form)
         {
             if (ModelState.IsValid)
             {
@@ -69,9 +66,9 @@ namespace DoAn_CNPM.Models
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdCus = new SelectList(db.Customers, "IdCus", "NameCus", form.IdCus);
-            ViewBag.IdDoctor = new SelectList(db.Doctors, "IdDoctor", "NameDoctor", form.IdDoctor);
-            ViewBag.IdStaff = new SelectList(db.Staffs, "IdStaff", "NameStaff", form.IdStaff);
+            ViewBag.PatientId = new SelectList(db.Patients, "IdPatient", "NamePatient", form.PatientId);
+            ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FullName", form.DoctorId);
+            ViewBag.StaffId = new SelectList(db.Staffs, "StaffId", "FullName", form.StaffId);
             return View(form);
         }
 
@@ -87,9 +84,9 @@ namespace DoAn_CNPM.Models
             {
                 return HttpNotFound();
             }
-            ViewBag.IdCus = new SelectList(db.Customers, "IdCus", "NameCus", form.IdCus);
-            ViewBag.IdDoctor = new SelectList(db.Doctors, "IdDoctor", "NameDoctor", form.IdDoctor);
-            ViewBag.IdStaff = new SelectList(db.Staffs, "IdStaff", "NameStaff", form.IdStaff);
+            ViewBag.PatientId = new SelectList(db.Patients, "PatientId", "FullName", form.PatientId);
+            ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FullName", form.DoctorId);
+            ViewBag.StaffId = new SelectList(db.Staffs, "StaffId", "FullName", form.StaffId);
             return View(form);
         }
 
@@ -98,7 +95,7 @@ namespace DoAn_CNPM.Models
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdForm,ExamTime,IdDoctor,IdCus,IdStaff")] Form form)
+        public ActionResult Edit([Bind(Include = "FormId,ExamTime,DoctorId,PatientId,StaffId,ReasonForVisit")] Form form)
         {
             if (ModelState.IsValid)
             {
@@ -106,9 +103,9 @@ namespace DoAn_CNPM.Models
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdCus = new SelectList(db.Customers, "IdCus", "NameCus", form.IdCus);
-            ViewBag.IdDoctor = new SelectList(db.Doctors, "IdDoctor", "NameDoctor", form.IdDoctor);
-            ViewBag.IdStaff = new SelectList(db.Staffs, "IdStaff", "NameStaff", form.IdStaff);
+            ViewBag.PatientId = new SelectList(db.Patients, "PatientId", "FullName", form.PatientId);
+            ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FullName", form.DoctorId);
+            ViewBag.StaffId = new SelectList(db.Staffs, "StaffId", "FullName", form.StaffId);
             return View(form);
         }
 

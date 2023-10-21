@@ -12,17 +12,20 @@ namespace DoAn_CNPM.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Customer
+    public partial class Patient
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Customer()
+        public Patient()
         {
             this.Forms = new HashSet<Form>();
         }
     
-        public int IdCus { get; set; }
-        public string NameCus { get; set; }
-        public string PhoneCus { get; set; }
+        public int PatientId { get; set; }
+        public string FullName { get; set; }
+        public string Gender { get; set; }
+        public string Phone { get; set; }
+        public Nullable<System.DateTime> DOB { get; set; }
+        public string Address { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Form> Forms { get; set; }

@@ -13,14 +13,15 @@ namespace DoAn_CNPM.Controllers
     public class PriceListsController : Controller
     {
         private DoAnCNPMEntities3 db = new DoAnCNPMEntities3();
-
         // GET: PriceLists
         public ActionResult Index(string SearchString)
         {
             var priceLists = db.PriceLists.Include(p => p.Category);
             if (!String.IsNullOrEmpty(SearchString))
             {
-                priceLists = priceLists.Where(s => s.NamePriceList.Contains(SearchString));
+                priceLists = priceLists.Where(p => p.PriceListName.Contains(SearchString)
+                || p.Category.CatName.Contains(SearchString)
+                || p.Price.ToString().Contains(SearchString));
             }
 
             return View(priceLists.ToList());
@@ -44,7 +45,7 @@ namespace DoAn_CNPM.Controllers
         // GET: PriceLists/Create
         public ActionResult Create()
         {
-            ViewBag.IdCat = new SelectList(db.Categories, "IdCat", "NameCat");
+            ViewBag.CatId = new SelectList(db.Categories, "CatId", "CatName");
             return View();
         }
 
@@ -53,7 +54,7 @@ namespace DoAn_CNPM.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdPriceList,NamePriceList,Price,IdCat")] PriceList priceList)
+        public ActionResult Create([Bind(Include = "PriceListId,PriceListName,Price,CatId")] PriceList priceList)
         {
             if (ModelState.IsValid)
             {
@@ -62,7 +63,7 @@ namespace DoAn_CNPM.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdCat = new SelectList(db.Categories, "IdCat", "NameCat", priceList.IdCat);
+            ViewBag.CatId = new SelectList(db.Categories, "CatId", "CatName", priceList.CatId);
             return View(priceList);
         }
 
@@ -78,7 +79,7 @@ namespace DoAn_CNPM.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IdCat = new SelectList(db.Categories, "IdCat", "NameCat", priceList.IdCat);
+            ViewBag.CatId = new SelectList(db.Categories, "CatId", "CatName", priceList.CatId);
             return View(priceList);
         }
 
@@ -87,7 +88,7 @@ namespace DoAn_CNPM.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdPriceList,NamePriceList,Price,IdCat")] PriceList priceList)
+        public ActionResult Edit([Bind(Include = "PriceListId,PriceListName,Price,CatId")] PriceList priceList)
         {
             if (ModelState.IsValid)
             {
@@ -95,7 +96,7 @@ namespace DoAn_CNPM.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdCat = new SelectList(db.Categories, "IdCat", "NameCat", priceList.IdCat);
+            ViewBag.CatId = new SelectList(db.Categories, "CatId", "CatName", priceList.CatId);
             return View(priceList);
         }
 

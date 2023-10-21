@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\tuant\OneDrive\Tài liệu\Huflit\CNPM (Software Engineering)\LT\DoAn_CNPM\DoAn_CNPM\Models\ClinicDB.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\tuant\OneDrive\Tài liệu\Huflit\CNPM - CNPMNC\LT\DoAn_CNPM\DoAn_CNPM\Models\ClinicDB.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

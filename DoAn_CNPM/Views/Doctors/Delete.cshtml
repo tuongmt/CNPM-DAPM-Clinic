@@ -1,45 +1,72 @@
 ﻿@model DoAn_CNPM.Models.Doctor
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "XÓA BÁC SĨ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container" style=" width: 50%; ">
-    <h2 style="text-align: center">XÓA BÁC SĨ</h2>
-    <div>
-        <hr />
-        <dl class="row">
-            <dt class=" col-sm-4">
-                Họ tên Bác sĩ
-            </dt>
+<div class="container-fluid f-edit">
+    <div class="tabular--wrapper">
+        <div class="table-container">
+            <h2 class="h2--title">@ViewBag.Title </h2>
+            <div class="caution">
+                <p>
+                    Chú ý:
+                    <span>
+                        Để xóa bác sĩ phải xóa các thông tin liên quan
+                        <span>Đơn khám</span> và  <span>Lịch khám</span> trước
+                    </span>
+                </p>
+            </div>
+            <div>
+                <hr />
+                <dl class="row">
+                    <dt class=" col-sm-4">
+                        Họ tên Bác sĩ
+                    </dt>
 
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.NameDoctor)
-            </dd>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.FullName)
+                    </dd>
 
-            <br />
+                    <dt class=" col-sm-4">
+                        Giới tính
+                    </dt>
 
-            <dt class=" col-sm-4">
-                Số điện thoại
-            </dt>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Gender)
+                    </dd>
 
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.PhoneDoctor)
-            </dd>
+                    <dt class=" col-sm-4">
+                        Số điện thoại
+                    </dt>
 
-            <dd style="text-align:center">
-                <br />
-                @using (Html.BeginForm())
-                {
-                    @Html.AntiForgeryToken()
-                    <input type="submit" value="Xóa" class="btn btn-danger" />
-                }
-            </dd>
-        </dl>
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Phone)
+                    </dd>
 
-        <div>
-            @Html.ActionLink("Trở về", "Index")
+                    <dt class=" col-sm-4">
+                        Chuyên khoa
+                    </dt>
+
+                    <dd class="col-sm-8">
+                        @Html.DisplayFor(model => model.Specialization)
+                    </dd>
+
+                    <dd class="col-12" style="text-align:center">
+                        <br />
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="submit" value="Xóa" class="btn btn-del" />
+                        }
+                    </dd>
+                </dl>
+            </div>
         </div>
     </div>
+    <div class="back">
+        <a href="~/Doctors/Index"><i class="fa-solid fa-arrow-left"></i></a>
+    </div>
+
 </div>

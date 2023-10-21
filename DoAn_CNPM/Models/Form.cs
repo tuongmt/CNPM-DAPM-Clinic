@@ -21,18 +21,20 @@ namespace DoAn_CNPM.Models
             this.DiseaseStatisticLists = new HashSet<DiseaseStatisticList>();
         }
     
-        public int IdForm { get; set; }
-        public int IdDoctor { get; set; }
-        public int IdCus { get; set; }
-        public int IdStaff { get; set; }
+        public int FormId { get; set; }
         public Nullable<System.DateTime> ExamTime { get; set; }
+        public int PatientId { get; set; }
+        public int DoctorId { get; set; }
+        public int StaffId { get; set; }
+        public Nullable<System.DateTime> CreatedDay { get; set; }
+        public string ReasonForVisit { get; set; }
     
-        public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetailForm> DetailForms { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DiseaseStatisticList> DiseaseStatisticLists { get; set; }
         public virtual Doctor Doctor { get; set; }
+        public virtual Patient Patient { get; set; }
         public virtual Staff Staff { get; set; }
     }
 }

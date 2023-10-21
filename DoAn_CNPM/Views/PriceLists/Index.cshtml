@@ -1,70 +1,74 @@
 ﻿@model IEnumerable<DoAn_CNPM.Models.PriceList>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "BẢNG GIÁ KHÁM";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div style=" width: 100%; ">
-    <h2 style="text-align: center;padding-top:20px ">BẢNG GIÁ KHÁM</h2>
-    <hr />
-    <div class="form-group form-inline" style="border: 3px solid #00E216; height: 70px; text-align: center; padding: 15px; ">
-        @using (Html.BeginForm("Index", "PriceLists", FormMethod.Get))
-        {
-            <table>
+<div class="f-index">
+    <div class="tabular--wrapper">
+        <h2 class="h2--title">@ViewData["Title"]</h2>
+        <hr />
+        <div class="nav--search">
+            @using (Html.BeginForm("Index", "PriceLists", FormMethod.Get))
+            {
+                <table>
+                    <tr>
+                        <td class="col sm-4">
+                            <a href="@Url.Action("Create")" class="btn btn-createnew"><i class="fa-solid fa-plus"></i></a>
+                        </td>
+                        <td class="col sm-4 search--box">
+                            <input type="text" name="SearchString" placeholder="Nhập thông tin tìm kiếm" />
+                            <button type="submit" value="Tìm tổng tiền"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </td>
+                    </tr>
+                </table>
+            }
+        </div>
+
+        <div class="table-container">
+            <table class="table table-hover table-striped table-bordered">
                 <tr>
-                    <td>
-                        @Html.ActionLink("Tạo mới", "Create", null, new { @class = "btn btn-success" })
-                    </td>
-                    <td style="padding-left:30px">
-                        Tìm tên bệnh: <input type="text" name="SearchString" />
-                        <input type="submit" value="Tìm kiếm" class="btn btn-info" style="color:white" />
-                    </td>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Tên bảng giá khám
+                    </th>
+                    <th>
+                        Đơn giá
+                    </th>
+                    <th>
+                        Phân loại bệnh
+                    </th>
+                    <th>Chức năng Sửa - Xóa</th>
                 </tr>
+
+                @foreach (var item in Model)
+                {
+                    decimal price = Convert.ToDecimal(item.Price);
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PriceListId)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PriceListName)
+                        </td>
+                        <td class="price">
+                            @price.ToString("#,##0").Replace(',', '.') VNĐ
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Category.CatName)
+                        </td>
+
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = item.PriceListId })" class="btn btn-edit"><i class="fa-regular fa-pen-to-square"></i></a>
+                            <a href="@Url.Action("Delete", new { id = item.PriceListId })" class="btn btn-del"><i class="fa-regular fa-trash-can"></i></a>
+                        </td>
+                    </tr>
+                }
+
             </table>
-        }
+        </div>
     </div>
-    <table class="table table-hover table-striped table-bordered">
-        <tr>
-            <th>
-                STT
-            </th>
-            <th>
-                Tên
-            </th>
-            <th>
-                Giá
-            </th>
-            <th>
-                Tên loại
-            </th>
-            <th>Chức năng Sửa - Xóa</th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            decimal price = Convert.ToDecimal(item.Price);
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdPriceList)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NamePriceList)
-                </td>
-                <td>
-                    @price.ToString("#,##0").Replace(',', '.') VNĐ
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.NameCat)
-                </td>
-
-                <td style="color:white">
-                    @Html.ActionLink("Sửa", "Edit", new { id = item.IdPriceList }, new { @class = "btn btn-warning", style = "color: white" }) |
-                  
-                    @Html.ActionLink("Xóa", "Delete", new { id = item.IdPriceList }, new { @class = "btn btn-danger" })
-                </td>
-            </tr>
-        }
-
-    </table>
 </div>

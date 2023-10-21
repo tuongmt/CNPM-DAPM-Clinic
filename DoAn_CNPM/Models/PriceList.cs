@@ -20,10 +20,10 @@ namespace DoAn_CNPM.Models
             this.DetailForms = new HashSet<DetailForm>();
         }
     
-        public int IdPriceList { get; set; }
-        public string NamePriceList { get; set; }
+        public int PriceListId { get; set; }
+        public string PriceListName { get; set; }
         public double Price { get; set; }
-        public int IdCat { get; set; }
+        public int CatId { get; set; }
     
         public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -1,40 +1,41 @@
 ﻿@model DoAn_CNPM.Models.Category
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "TẠO MỚI LOẠI BỆNH";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container-fluid" style=" width: 50%; ">
-    <h2 style="text-align: center">TẠO MỚI LOẠI BỆNH</h2>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+<div class="container-fluid f-create">
+    <div class="tabular--wrapper">
+        <div class="table-container">
+            <h2 style="text-align: center">@ViewBag.Title</h2>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="row">
-        <div class="control-label col-md-4">
-            Tên loại
-        </div>
-        <div class="col-md-8">
-            @Html.EditorFor(model => model.NameCat, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.NameCat, "", new { @class = "text-danger" })
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="col-md-4">
+                            Tên loại
+                        </div>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.CatName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CatName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div style="text-align:center">
+                        <input type="submit" value="Tạo" class="btn btn-createnew" />
+                    </div>
+                </div>
+            }
         </div>
     </div>
-
     <br />
-
-    <div class="col-md-offset-2 col-md-10" style="text-align:center">
-        <input type="submit" value="Tạo mới" class="btn btn-success" />
+    <div class="back">
+        <a href="~/Categories/Index"><i class="fa-solid fa-arrow-left"></i></a>
     </div>
 </div>
-    }
 
-
-
-    <div>
-        @Html.ActionLink("Trở về", "Index")
-    </div>
-</div>

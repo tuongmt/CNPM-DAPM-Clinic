@@ -19,7 +19,10 @@ namespace DoAn_CNPM.Controllers
         {
             if (!String.IsNullOrEmpty(SearchString))
             {
-                var staff = db.Staffs.Where(s => s.NameStaff.Contains(SearchString));
+                var staff = db.Staffs.Where(s => s.FullName.Contains(SearchString)
+                || s.Gender.Contains(SearchString)
+                || s.Phone.Contains(SearchString)
+                || s.Position.Contains(SearchString));
                 return View(staff.ToList());
 
             }
@@ -52,7 +55,7 @@ namespace DoAn_CNPM.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdStaff,NameStaff,PhoneStaff,MailStaff")] Staff staff)
+        public ActionResult Create([Bind(Include = "StaffId,FullName,Gender,Phone,Position")] Staff staff)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +87,7 @@ namespace DoAn_CNPM.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdStaff,NameStaff,PhoneStaff,MailStaff")] Staff staff)
+        public ActionResult Edit([Bind(Include = "StaffId,FullName,Gender,Phone,Position")] Staff staff)
         {
             if (ModelState.IsValid)
             {

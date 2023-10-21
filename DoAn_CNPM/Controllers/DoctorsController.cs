@@ -18,7 +18,9 @@ namespace DoAn_CNPM.Models
         {
             if (!String.IsNullOrEmpty(SearchString))
             {
-                var doctor = db.Doctors.Where(d => d.NameDoctor.Contains(SearchString));
+                var doctor = db.Doctors.Where(d => d.FullName.Contains(SearchString)
+                || d.Gender.Contains(SearchString)
+                || d.Phone.Contains(SearchString));
                 return View(doctor.ToList());
 
             }
@@ -51,7 +53,7 @@ namespace DoAn_CNPM.Models
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdDoctor,NameDoctor,PhoneDoctor")] Doctor doctor)
+        public ActionResult Create([Bind(Include = "DoctorId,FullName,Gender,Phone,Specialization")] Doctor doctor)
         {
             if (ModelState.IsValid)
             {
@@ -83,7 +85,7 @@ namespace DoAn_CNPM.Models
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdDoctor,NameDoctor,PhoneDoctor")] Doctor doctor)
+        public ActionResult Edit([Bind(Include = "DoctorId,FullName,Gender,Phone,Specialization")] Doctor doctor)
         {
             if (ModelState.IsValid)
             {

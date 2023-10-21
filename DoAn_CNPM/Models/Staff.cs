@@ -20,10 +20,11 @@ namespace DoAn_CNPM.Models
             this.Forms = new HashSet<Form>();
         }
     
-        public int IdStaff { get; set; }
-        public string NameStaff { get; set; }
-        public string PhoneStaff { get; set; }
-        public string MailStaff { get; set; }
+        public int StaffId { get; set; }
+        public string FullName { get; set; }
+        public string Gender { get; set; }
+        public string Phone { get; set; }
+        public string Position { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Form> Forms { get; set; }
