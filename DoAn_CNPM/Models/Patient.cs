@@ -26,6 +26,7 @@ namespace DoAn_CNPM.Models
         public string Phone { get; set; }
         public Nullable<System.DateTime> DOB { get; set; }
         public string Address { get; set; }
+        public string DOBFormatted { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Form> Forms { get; set; }

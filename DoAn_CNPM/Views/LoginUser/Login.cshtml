@@ -1,5 +1,6 @@
 ﻿
 @{
+    ViewBag.Title = "ĐĂNG NHẬP";
     Layout = null;
 }
 
@@ -8,18 +9,32 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
-<!DOCTYPE html>
-<html>
+@if (Session["admin"] != null)
+{
+    <script type="text/javascript">
+        window.location.href = '@Url.Action("Admin_Index", "Users")';
+    </script>
+}
+else if (Session["patient"] != null)
+{
+    <script type="text/javascript">
+        window.location.href = '@Url.Action("Patient_Index", "Users")';
+    </script>
+}
+else
+{
+    <!DOCTYPE html>
+    <html>
 
-<head>
-    <title>ĐĂNG NHẬP ADMIN</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-</head>
-<!--Coded with love by Mutiullah Samim-->
-<body>
-    <div class="container h-100">
+    <head>
+        <title>@ViewBag.Title</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+    </head>
+    <!--Coded with love by Mutiullah Samim-->
+    <body>
+    <div class="container h-100" style="min-height:600px">
         <div class="d-flex justify-content-center h-100">
             <div class="user_card">
                 <div class="d-flex justify-content-center">
@@ -27,19 +42,20 @@
                         <img src="~/Images/clinic.png" class="brand_logo" alt="Logo">
                     </div>
                 </div>
-                <div class="d-flex justify-content-center form_container">
+                <div class="justify-content-center form_container">
+                    <h3 style="padding: 6px; text-align:center">@ViewBag.Title</h3>
                     <form method="post" action="/LoginUser/Login">
                         <div class="input-group mb-3">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
-                            <input type="text" name="username" class="form-control input_user" value="" placeholder="Tài khoản">
+                            <input type="text" name="Username" class="form-control input_user" value="" placeholder="Tài khoản">
                         </div>
                         <div class="input-group mb-2">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
-                            <input type="password" name="password" class="form-control input_pass" value="" placeholder="Mật khẩu">
+                            <input type="password" name="Password" class="form-control input_pass" value="" placeholder="Mật khẩu">
                         </div>
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
@@ -48,29 +64,40 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-center mt-3 login_container">
-                            <button type="submit" name="button" class="btn login_btn">Đăng nhập quản trị hệ thống</button>
+                            <button type="submit" name="button" class="btn login_btn">Đăng nhập</button>
                         </div>
                         <div>
                             @if (ViewBag.ErrorInfo != null)
                             {
-                                <p style="color:red;padding-top:15px;font-weight:600"> @ViewBag.ErrorInfo</p>
+                                <p style="color: #c12321; padding-top: 15px; font-weight: 600; font-size:18px "> @ViewBag.ErrorInfo</p>
                             }
+                            else
+                            {
+                                <p></p>
+                            }
+                        </div>
+                        <div>
+                            <a href="Register" style="color:#fff;text-decoration:none"> Chưa có tài khoản? Đăng ký</a>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-</body>
+    </body>
 </html>
+
+}
 <style>
     /* Coded with love by Mutiullah Samim */
     body,
     html {
         margin: 0;
+        color: #fff;
         padding: 0;
         height: 100%;
         background: #60a3bc !important;
+        font-family: "Poppins", sans-serif;
     }
 
     .user_card {
@@ -114,7 +141,7 @@
 
     .login_btn {
         width: 100%;
-        background: #c0392b !important;
+        background: #c12321 !important;
         color: white !important;
     }
 
@@ -123,12 +150,16 @@
             outline: 0px !important;
         }
 
+        .login_btn:hover {
+            scale: 1.02;
+        }
+
     .login_container {
         padding: 0 2rem;
     }
 
     .input-group-text {
-        background: #c0392b !important;
+        background: #c12321 !important;
         color: white !important;
         border: 0 !important;
         border-radius: 0.25rem 0 0 0.25rem !important;
@@ -141,6 +172,6 @@
     }
 
     .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
-        background-color: #c0392b !important;
+        background-color: #c12321 !important;
     }
 </style>

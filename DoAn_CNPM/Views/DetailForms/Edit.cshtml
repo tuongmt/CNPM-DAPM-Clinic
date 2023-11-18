@@ -6,6 +6,14 @@
 }
 
 <div class="container-fluid f-edit">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/DetailForms/Index">Chi tiết đơn khám</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cập nhật</li>
+            </ol>
+        </nav>
+    </div>
     <div class="tabular--wrapper">
         <div class="table-container">
             <h2 class="h2--title">@ViewData["Title"]</h2>
@@ -19,48 +27,74 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.DFId)
                     <div class="row">
-                        <div class="col-md-4">
-                            Id Đơn khám
-                        </div>
-                        <div class="col-md-8">
+                        <div class="col-6">
+                            <label for="FormId">Id Đơn khám:</label>
                             @Html.EditorFor(model => model.FormId, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.FormId, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-6">
+                            <label for="FOId">Id Đơn khám trực tuyến:</label>
+                            @Html.EditorFor(model => model.FOId, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FOId, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4">
-                            Số lượng
-                        </div>
-                        <div class="col-md-8">
+                        <div class="col-12">
+                            <label>Số lượng</label>
                             @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4">
-                            Tên bảng giá khám
-                        </div>
-                        <div class="col-md-8">
-                            @Html.DropDownList("PriceListId", null, htmlAttributes: new { @class = "form-control" })
+                        <div class="col-12">
+                            <label>Dịch vụ khám</label>
+                            @Html.DropDownList("PriceListId", null, htmlAttributes: new { @class = "form-control", id = "ddlPriceList" })
                             @Html.ValidationMessageFor(model => model.PriceListId, "", new { @class = "text-danger" })
                         </div>
                     </div>
-                    
-                    <br/>
 
                     <div class="row">
-                        <div class="col-12" style="text-align:center">
-                            <input type="submit" value="Lưu" class="btn btn-primary" , style="color:white" />
+                        <div class="col-12">
+                            <label> Giá: </label>
+                            <span id="priceDisplay" style="color:red;font-weight:600">0</span>
                         </div>
+                    </div>
+
+
+
+                    <div class="row input-wrapper">
+                        <input type="submit" value="Lưu" class="btn btn-primary" , style="color:white" />
                     </div>
                 </div>
             }
         </div>
     </div>
-
-    <div class="back">
-        <a href="~/DetailForms/Index"><i class="fa-solid fa-arrow-left"></i></a>
-    </div>
 </div>
+<script>
+    $(function () {
+        // Khi DropDownList thay đổi
+        $('#ddlPriceList').change(function () {
+            console.log("DropDownList thay đổi"); // Kiểm tra xem có được ghi log không
+            var selectedPriceListId = $(this).val();
+            // Gửi yêu cầu Ajax để lấy giá
+            $.ajax({
+                type: 'GET',
+                url: '/DetailForms/GetPrice', // Thay ControllerName bằng tên của controller của bạn
+                data: { priceListId: selectedPriceListId },
+                success: function (data) {
+                    // Định dạng số và thêm "VNĐ"
+                    var formattedPrice = parseFloat(data).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                    // Hiển thị giá trong một thẻ HTML
+                    $('#priceDisplay').text(formattedPrice);
+                    //// Hiển thị giá trong một thẻ HTML
+                    //$('#priceDisplay').text(data);
+                },
+                error: function () {
+                    // Xử lý lỗi nếu cần
+                }
+            });
+        });
+    });
+</script>

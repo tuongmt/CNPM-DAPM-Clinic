@@ -6,6 +6,14 @@
 }
 
 <div class="container-fluid f-edit">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/Patients/Index">Bệnh nhân</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cập nhật</li>
+            </ol>
+        </nav>
+    </div>
     <div class="tabular--wrapper">
         <div class="table-container">
             <h2 class="h2--title">@ViewData["Title"]</h2>
@@ -20,65 +28,46 @@
                     @Html.HiddenFor(model => model.PatientId)
 
                     <div class="row">
-                        <div class="control-label col-md-4">
-                            Họ tên Bệnh nhân
-                        </div>
-                        <div class="col-md-8">
+                        <div class="col-12">
+                            <label>Họ tên Bệnh nhân</label>
                             @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="control-label col-md-4">
-                            Giới tính
-                        </div>
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control" } })
+                        <div class="col-6">
+                            <label>Giới tính</label>
+                            @Html.DropDownList("Gender", ViewBag.Gender as SelectList, new { @class = "form-control" } )
                             @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="control-label col-md-4">
-                            Số điện thoại
-                        </div>
-                        <div class="col-md-8">
+                        <div class="col-6">
+                            <label> Số điện thoại</label>
                             @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="control-label col-md-4">
-                            Ngày sinh
-                        </div>
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control" } })
+                        <div class="col-12">
+                            <label>  Ngày sinh</label>
+                            @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control", @Value = Model.DOBFormatted } })
                             @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
                     <div class="row">
-                        <div class="control-label col-md-4">
-                            Địa chỉ
-                        </div>
-                        <div class="col-md-8">
+                        <div class="col-12">
+                            <label> Địa chỉ</label>
                             @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-12" style="text-align:center">
-                            <input type="submit" value="Lưu" class="btn btn-primary" , style="color:white" />
-                        </div>
+                    <div class="row input-wrapper">
+                        <input type="submit" value="Lưu" class="btn btn-primary" />
                     </div>
                 </div>
             }
         </div>
-    </div>
-    <div class="back">
-        <a href="~/Patients/Index"><i class="fa-solid fa-arrow-left"></i></a>
     </div>
 </div>

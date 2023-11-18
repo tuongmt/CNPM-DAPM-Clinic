@@ -1,77 +1,112 @@
 ﻿@model DoAn_CNPM.Models.DetailForm
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "CHI TIẾT ĐƠN KHÁM";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container" style=" width: 100%; ">
+<div class="f-detail">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/DetailForms/Index">Chi tiết đơn khám</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chi tiết</li>
+            </ol>
+        </nav>
+    </div>
     <div class="tabular--wrapper">
         <div class="table-container">
-            <h2 class="h2--title">CHI TIẾT ĐƠN KHÁM </h2>
+            <h2 class="h2--title">@ViewBag.Title </h2>
             <hr />
             <dl class="row">
-                <dt class=" col-sm-4">
-                    Id đơn khám
-                </dt>
+                @if (Model.FormId != null)
+                {
+                    <dt class=" col-sm-5">
+                        Id Đơn khám
+                    </dt>
 
-                <dd class=" col-sm-8">
-                    @Html.DisplayFor(model => model.FormId)
-                </dd>
+                    <dd class=" col-sm-7">
+                        @Html.DisplayFor(model => model.FormId)
+                    </dd>
 
-                <dt class=" col-sm-4">
+
+                }
+                else
+                {
+                    <dt class=" col-sm-5">
+                        Id Đơn khám Online
+                    </dt>
+
+                    <dd class=" col-sm-7">
+                        @Html.DisplayFor(model => model.FOId)
+                    </dd>
+                }
+                <dt class=" col-sm-5">
                     Bác sĩ
                 </dt>
 
-                <dd class=" col-sm-8">
+                <dd class=" col-sm-7">
                     @Html.DisplayFor(model => model.Form.Doctor.FullName)
+                    @Html.DisplayFor(model => model.FormOnline.Doctor.FullName)
                 </dd>
 
-                <dt class=" col-sm-4">
+                <dt class=" col-sm-5">
                     Bệnh nhân
                 </dt>
 
-                <dd class=" col-sm-8">
+                <dd class=" col-sm-7">
                     @Html.DisplayFor(model => model.Form.Patient.FullName)
+                    @Html.DisplayFor(model => model.FormOnline.FullName)
                 </dd>
 
-                <dt class=" col-sm-4">
+                @*<dt class=" col-sm-5">
                     Thời gian đến khám
                 </dt>
 
-                <dd class=" col-sm-8">
-                    @Html.DisplayFor(model => model.Form.ExamTime)
-                </dd>
+                <dd class=" col-sm-7">
+                    @try
+                    {
+                        if (Model.Form.ExamTime.HasValue)
+                        {
+                            @Model.Form.ExamTime.Value.ToString("dddd, dd-MM-yyyy HH:mm:ss", new System.Globalization.CultureInfo("vi-VN"))
+                        }
+                    }
+                    catch
+                    {
+                        Response.Redirect("~/Error/Index");
+                    }
+                </dd>*@
 
-                <dt class=" col-sm-4">
+                <dt class=" col-sm-5">
                     Nhân viên
                 </dt>
 
-                <dd class=" col-sm-8">
+                <dd class=" col-sm-7">
                     @Html.DisplayFor(model => model.Form.Staff.FullName)
                 </dd>
 
-                <dt class=" col-sm-4">
+                <dt class=" col-sm-5">
                     Ngày tạo đơn
                 </dt>
 
-                <dd class=" col-sm-8">
+                <dd class=" col-sm-7">
                     @Html.DisplayFor(model => model.Form.CreatedDay)
+                    @Html.DisplayFor(model => model.FormOnline.CreatedDay)
                 </dd>
 
-                <dt class=" col-sm-4">
-                    Bảng giá khám
+                <dt class=" col-sm-5">
+                    Dịch vụ khám
                 </dt>
 
-                <dd class=" col-sm-8">
+                <dd class=" col-sm-7">
                     @Html.DisplayFor(model => model.PriceList.PriceListName)
                 </dd>
 
-                <dt class=" col-sm-4">
+                <dt class=" col-sm-5">
                     Đơn giá
                 </dt>
 
-                <dd class=" col-sm-8">
+                <dd class=" col-sm-7">
                     @{
                         string formattedPrice = string.Format("{0:#,##0}", Model.PriceList.Price);
                         formattedPrice = formattedPrice.Replace(",", ".");
@@ -80,21 +115,19 @@
                     @Html.DisplayFor(modelItem => formattedPrice) VNĐ
                 </dd>
 
-                <dt class=" col-sm-4">
+                <dt class=" col-sm-5">
                     Số lượng
                 </dt>
 
-                <dd class=" col-sm-8">
+                <dd class=" col-sm-7">
                     @Html.DisplayFor(model => model.Quantity)
                 </dd>
 
-                <hr />
-
-                <dt class=" col-sm-4">
+                <dt class=" col-sm-5">
                     Tổng tiền
                 </dt>
 
-                <dd class=" col-sm-8" style="color:red;font-weight:500">
+                <dd class=" col-sm-7" style="color:red;font-weight:500">
                     @{
                         string formattedTotal = string.Format("{0:#,##0}", Model.TotalMoney);
                         formattedTotal = formattedTotal.Replace(",", ".");
@@ -103,7 +136,7 @@
                     @Html.DisplayFor(modelItem => formattedTotal) VNĐ
                 </dd>
 
-                <dt class=" col-sm-4">
+                <dt class=" col-sm-5">
                     Trạng thái khám
                 </dt>
 
@@ -112,20 +145,18 @@
                 {
 
 
-                    <dd class=" col-sm-8 check-true">
+                    <dd class=" col-sm-7 check-true">
                         Đã khám
                     </dd>
                 }
                 else
                 {
-                    <dd class=" col-sm-8 check-false">
+                    <dd class=" col-sm-7 check-false">
                         Chưa khám
                     </dd>
                 }
 
-
-
-                <dt class=" col-sm-4">
+                <dt class=" col-sm-5">
                     Trạng thái thanh toán
                 </dt>
 
@@ -133,13 +164,13 @@
                 {
 
 
-                    <dd class=" col-sm-8 check-true">
+                    <dd class=" col-sm-7 check-true">
                         Đã thanh toán
                     </dd>
                 }
                 else
                 {
-                    <dd class=" col-sm-8 check-false">
+                    <dd class=" col-sm-7 check-false">
                         Chưa thanh toán
                     </dd>
                 }
@@ -149,9 +180,6 @@
     </div>
 
     <div style="text-align:center; padding: 8px">
-        <a href="@Url.Action("Edit", new { id = Model.DFId })" class="btn btn-edit"><i class="fa-regular fa-pen-to-square"></i></a>
-    </div>
-    <div class="back">
-        <a href="~/DetailForms/Index" ><i class="fa-solid fa-arrow-left"></i></a>
+        <a href="@Url.Action("Edit", new { id = Model.DFId })" class="btn btn-edit"><i class="fa-solid fa-pen-to-square"></i></a>
     </div>
 </div>

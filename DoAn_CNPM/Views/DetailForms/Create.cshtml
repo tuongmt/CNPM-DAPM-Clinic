@@ -6,6 +6,14 @@
 }
 
 <div class="container-fluid f-create">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/DetailForms/Index">Chi tiết đơn khám</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tạo mới</li>
+            </ol>
+        </nav>
+    </div>
     <div class="tabular--wrapper">
         <div class="table-container">
             <h2 style="text-align: center">@ViewBag.Title</h2>
@@ -17,48 +25,105 @@
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="row">
-                        <div class="col-sm-4">
-                            Id Đơn khám
+                        <div class="col-12">
+                            <label for="ChooseOption">Chọn loại Đơn khám:</label>
+                            <select class="form-control" id="ChooseOption">
+                                <option value="">Chọn loại Đơn khám</option>
+                                <option value="IdDonKham">Đơn khám</option>
+                                <option value="IdDonKhamOnline">Đơn khám trực tuyến</option>
+                            </select>
                         </div>
-                        <div class="col-sm-8">
+                    </div>
+
+                    <div class="selectOption row" id="IdDonKham">
+                        <div class="col-12">
+                            <label for="FormId">Id Đơn khám:</label>
                             @*@Html.EditorFor(model => model.FormId, new { htmlAttributes = new { @class = "form-control" } })*@
-                            @Html.DropDownList("FormId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.DropDownList("FormId", ViewBag.FormId as SelectList, "Chọn Id Đơn khám", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.FormId, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-sm-4">
-                            Số lượng
+                    <div class="selectOption row" id="IdDonKhamOnline">
+                        <div class="col-12">
+                            <label for="FOId">Id Đơn khám trực tuyến:</label>
+                            @*@Html.EditorFor(model => model.FOId, new { htmlAttributes = new { @class = "form-control" } })*@
+                            @Html.DropDownList("FOId", ViewBag.FOId as SelectList, "Chọn Id Đơn khám trực tuyến", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.FOId, "", new { @class = "text-danger" })
                         </div>
-                        <div class="col-sm-8">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <label>Số lượng</label>
                             @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-sm-4">
-                            Tên bảng giá khám
-                        </div>
-                        <div class="col-sm-8">
-                            @Html.DropDownList("PriceListId", null, htmlAttributes: new { @class = "form-control", id = "ddlPriceList" })
+                        <div class="col-12">
+                            <label>Dịch vụ khám</label>
+                            @Html.DropDownList("PriceListId", null, "Chọn Dịch vụ khám", htmlAttributes: new { @class = "form-control", id = "ddlPriceList" })
                             @Html.ValidationMessageFor(model => model.PriceListId, "", new { @class = "text-danger" })
-                            <span> @ViewBag.Price</span>
                         </div>
                     </div>
 
-                    <br />
+                    <div class="row">
+                        <div class="col-12">
+                            <label> Giá: </label>
+                            <span id="priceDisplay" style="color:red;font-weight:600">0</span>
+                        </div>
+                    </div>
 
-                    <div style="text-align:center">
-                        <input type="submit" value="Tạo" class="btn btn-createnew" />
+                    <div class="row input-wrapper">
+                        <input type="submit" value="Tạo" class="btn btn-success" />
                     </div>
 
                 </div>
             }
         </div>
     </div>
-    <div class="back">
-        <a href="~/DetailForms/Index"><i class="fa-solid fa-arrow-left"></i></a>
-    </div>
 </div>
+
+<script>
+    $(function () {
+        // Khi DropDownList thay đổi
+        $('#ddlPriceList').change(function () {
+            console.log("DropDownList thay đổi"); // Kiểm tra xem có được ghi log không
+            var selectedPriceListId = $(this).val();
+            // Gửi yêu cầu Ajax để lấy giá
+            $.ajax({
+                type: 'GET',
+                url: '/DetailForms/GetPrice', // Thay ControllerName bằng tên của controller của bạn
+                data: { priceListId: selectedPriceListId },
+                success: function (data) {
+                    // Định dạng số và thêm "VNĐ"
+                    var formattedPrice = parseFloat(data).toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+                    // Hiển thị giá trong một thẻ HTML
+                    $('#priceDisplay').text(formattedPrice);
+                    //// Hiển thị giá trong một thẻ HTML
+                    //$('#priceDisplay').text(data);
+                },
+                error: function () {
+
+                }
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        // Ẩn ban đầu các trường
+        $(".selectOption").hide();
+
+        // Xử lý sự kiện khi lựa chọn thay đổi
+        $("select#ChooseOption").change(function () {
+            var selectedOption = $(this).val();
+            $(".selectOption").hide(); // Ẩn tất cả các trường trước đó
+
+            // Hiển thị trường tương ứng với lựa chọn
+            $("#" + selectedOption).show();
+        });
+    });
+</script>

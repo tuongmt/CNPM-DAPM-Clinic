@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -13,21 +14,20 @@ namespace DoAn_CNPM.Models
     {
         private DoAnCNPMEntities3 db = new DoAnCNPMEntities3();
 
-        // GET: Doctors
         public ActionResult Index(string SearchString)
         {
             if (!String.IsNullOrEmpty(SearchString))
             {
-                var doctor = db.Doctors.Where(d => d.FullName.Contains(SearchString)
+                var doctor = db.Doctors.Where(d => d.DoctorId.ToString().Contains(SearchString)
+                || d.FullName.Contains(SearchString)
                 || d.Gender.Contains(SearchString)
-                || d.Phone.Contains(SearchString));
+                || d.Phone.Contains(SearchString)
+                || d.Dept.DeptName.Contains(SearchString));
                 return View(doctor.ToList());
-
             }
             return View(db.Doctors.ToList());
         }
 
-        // GET: Doctors/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -42,84 +42,135 @@ namespace DoAn_CNPM.Models
             return View(doctor);
         }
 
-        // GET: Doctors/Create
         public ActionResult Create()
         {
+            ViewBag.Gender = new SelectList(new List<SelectListItem>
+            {
+               new SelectListItem { Text = "Nam", Value = "Nam" },
+               new SelectListItem { Text = "Nữ", Value = "Nữ" }
+            }, "Value", "Text");
+
+            ViewBag.DeptId = new SelectList(db.Depts, "DeptId", "DeptName");
+
             return View();
         }
 
-        // POST: Doctors/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DoctorId,FullName,Gender,Phone,Specialization")] Doctor doctor)
+        public ActionResult Create([Bind(Include = "DoctorId,FullName,Gender,Phone,DeptId,Image")] Doctor doctor, HttpPostedFileBase uploadPhoto)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Doctors.Add(doctor);
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    db.Doctors.Add(doctor);
+                    db.SaveChanges();
+                    if (uploadPhoto != null && uploadPhoto.ContentLength > 0)
+                    {
+                        int id = int.Parse(db.Doctors.ToList().Last().DoctorId.ToString());
+                        string fileName = "";
+                        int index = uploadPhoto.FileName.IndexOf('.');
+                        fileName = "doctor" + id.ToString() + "." + uploadPhoto.FileName.Substring(index + 1);
+                        string path = Path.Combine(Server.MapPath("~/Images/Doctor"), fileName);
+                        uploadPhoto.SaveAs(path);
+
+                        Doctor doctor1 = db.Doctors.FirstOrDefault(x => x.DoctorId == id);
+                        doctor1.Image = fileName;
+                        db.SaveChanges();
+                    }
+                }
+                ViewBag.Gender = new SelectList(doctor.Gender);
+                ViewBag.DeptId = new SelectList(db.Depts, "DeptId", "DeptName", doctor.DeptId);
                 return RedirectToAction("Index");
             }
-
-            return View(doctor);
+            catch
+            {
+                return RedirectToAction("Index","Error");
+            }
         }
 
-        // GET: Doctors/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Doctor doctor = db.Doctors.Find(id);
+
             if (doctor == null)
             {
                 return HttpNotFound();
             }
+
+            if (doctor.Gender.ToString() == "Nam")
+            {
+                ViewBag.Gender = new SelectList(new List<SelectListItem>
+                {
+                 new SelectListItem { Text = "Nam", Value = "Nam" },
+                 new SelectListItem { Text = "Nữ", Value = "Nữ" }
+                }, "Value", "Text");
+            }
+            else
+            {
+                ViewBag.Gender = new SelectList(new List<SelectListItem>
+                {
+                 new SelectListItem { Text = "Nữ", Value = "Nữ" },
+                 new SelectListItem { Text = "Nam", Value = "Nam" }
+
+                }, "Value", "Text");
+            }
+
+            ViewBag.DeptId = new SelectList(db.Depts, "DeptId", "DeptName", doctor.DeptId);
+
             return View(doctor);
         }
 
-        // POST: Doctors/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DoctorId,FullName,Gender,Phone,Specialization")] Doctor doctor)
+        public ActionResult Edit([Bind(Include = "DoctorId,FullName,Gender,Phone,DeptId,Image")] Doctor doctor, HttpPostedFileBase uploadPhoto)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(doctor).State = EntityState.Modified;
+                Doctor doctor1 = db.Doctors.FirstOrDefault(x => x.DoctorId == doctor.DoctorId);
+                doctor1.FullName = doctor.FullName;
+                doctor1.Gender = doctor.Gender;
+                doctor1.Phone = doctor.Phone;
+                doctor1.DeptId = doctor.DeptId;
+                if (uploadPhoto != null && uploadPhoto.ContentLength > 0)
+                {
+                    int id = doctor.DoctorId;
+                    string fileName = "";
+                    int index = uploadPhoto.FileName.IndexOf('.');
+                    fileName = "doctor" + id.ToString() + "." + uploadPhoto.FileName.Substring(index + 1);
+                    string path = Path.Combine(Server.MapPath("~/Images/Doctor"), fileName);
+                    uploadPhoto.SaveAs(path);
+                    doctor1.Image = fileName;
+                }
+                db.SaveChanges();
+                ViewBag.DeptId = new SelectList(db.Depts, "DeptId", "DeptName", doctor.DeptId);
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Index","Error");
+            }
+            
+        }
+
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                Doctor doctor = db.Doctors.Find(id);
+                db.Doctors.Remove(doctor);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(doctor);
-        }
-
-        // GET: Doctors/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
+            catch
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index", "Error");
             }
-            Doctor doctor = db.Doctors.Find(id);
-            if (doctor == null)
-            {
-                return HttpNotFound();
-            }
-            return View(doctor);
-        }
-
-        // POST: Doctors/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Doctor doctor = db.Doctors.Find(id);
-            db.Doctors.Remove(doctor);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

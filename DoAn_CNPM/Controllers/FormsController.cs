@@ -13,13 +13,13 @@ namespace DoAn_CNPM.Models
     {
         private DoAnCNPMEntities3 db = new DoAnCNPMEntities3();
 
-        // GET: Forms
         public ActionResult Index(string SearchString)
         {
             var forms = db.Forms.Include(f => f.Patient).Include(f => f.Doctor).Include(f => f.Staff);
             if (!String.IsNullOrEmpty(SearchString))
             {
                 forms = forms.Where(f => f.FormId.ToString().Contains(SearchString) 
+                || f.ExamTime.ToString().Contains(SearchString)
                 || f.Patient.FullName.Contains(SearchString)
                 || f.Doctor.FullName.Contains(SearchString)
                 || f.Staff.FullName.Contains(SearchString));
@@ -27,7 +27,6 @@ namespace DoAn_CNPM.Models
             return View(forms.ToList());
         }
 
-        // GET: Forms/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -42,7 +41,6 @@ namespace DoAn_CNPM.Models
             return View(form);
         }
 
-        // GET: Forms/Create
         public ActionResult Create()
         {
             ViewBag.PatientId = new SelectList(db.Patients, "PatientId", "FullName");
@@ -52,18 +50,22 @@ namespace DoAn_CNPM.Models
             return View(new Form { ExamTime = defaultExamTime });
         }
 
-        // POST: Forms/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "FormId,ExamTime,DoctorId,PatientId,StaffId,ReasonForVisit")] Form form)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Forms.Add(form);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Forms.Add(form);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch
+            {
+                RedirectToAction("Index", "Error");
             }
 
             ViewBag.PatientId = new SelectList(db.Patients, "IdPatient", "NamePatient", form.PatientId);
@@ -72,7 +74,6 @@ namespace DoAn_CNPM.Models
             return View(form);
         }
 
-        // GET: Forms/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -84,24 +85,29 @@ namespace DoAn_CNPM.Models
             {
                 return HttpNotFound();
             }
+            ViewBag.ExamTime = form.ExamTime.Value.ToString("dddd, dd-MM-yyyy HH:mm:ss", new System.Globalization.CultureInfo("vi-VN"));
             ViewBag.PatientId = new SelectList(db.Patients, "PatientId", "FullName", form.PatientId);
             ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FullName", form.DoctorId);
             ViewBag.StaffId = new SelectList(db.Staffs, "StaffId", "FullName", form.StaffId);
             return View(form);
         }
 
-        // POST: Forms/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "FormId,ExamTime,DoctorId,PatientId,StaffId,ReasonForVisit")] Form form)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(form).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                {
+                    db.Entry(form).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch
+            {
+                RedirectToAction("Index", "Error");
             }
             ViewBag.PatientId = new SelectList(db.Patients, "PatientId", "FullName", form.PatientId);
             ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FullName", form.DoctorId);
@@ -109,37 +115,25 @@ namespace DoAn_CNPM.Models
             return View(form);
         }
 
-        // GET: Forms/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
+            try
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Form form = db.Forms.Find(id);
+                if (form == null)
+                {
+                    return HttpNotFound();
+                }
+                db.Forms.Remove(form);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            Form form = db.Forms.Find(id);
-            if (form == null)
+            catch
             {
-                return HttpNotFound();
+                return RedirectToAction("Index", "Error");
             }
-            return View(form);
         }
 
-        // POST: Forms/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Form form = db.Forms.Find(id);
-            if (form == null)
-            {
-                return HttpNotFound();
-            }
-
-            db.Forms.Remove(form);
-
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
 
         protected override void Dispose(bool disposing)
         {

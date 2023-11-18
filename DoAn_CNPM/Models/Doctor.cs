@@ -19,17 +19,22 @@ namespace DoAn_CNPM.Models
         {
             this.DoctorSchedules = new HashSet<DoctorSchedule>();
             this.Forms = new HashSet<Form>();
+            this.FormOnlines = new HashSet<FormOnline>();
         }
     
         public int DoctorId { get; set; }
         public string FullName { get; set; }
         public string Gender { get; set; }
         public string Phone { get; set; }
-        public string Specialization { get; set; }
+        public string Image { get; set; }
+        public Nullable<int> DeptId { get; set; }
     
+        public virtual Dept Dept { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DoctorSchedule> DoctorSchedules { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Form> Forms { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FormOnline> FormOnlines { get; set; }
     }
 }

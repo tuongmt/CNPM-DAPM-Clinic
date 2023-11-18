@@ -6,10 +6,21 @@
 }
 
 <div class="container-fluid f-edit">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/Doctors/Index">Bác sĩ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cập nhật</li>
+            </ol>
+        </nav>
+    </div>
     <div class="tabular--wrapper">
         <div class="table-container">
             <h2 class="h2--title">@ViewData["Title"]</h2>
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("Edit", "Doctors", FormMethod.Post, new
+            {
+                @enctype = "multipart/form-data"
+            }))
             {
                 @Html.AntiForgeryToken()
                 <div class="form-horizontal">
@@ -18,55 +29,51 @@
                     @Html.HiddenFor(model => model.DoctorId)
 
                     <div class="row">
-                        <div class="control-label col-md-4">
-                            Họ tên Bác sĩ
-                        </div>
-                        <div class="col-md-8">
+                        <div class="col-12">
+                            <label>Họ tên Bác sĩ</label>
                             @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="control-label col-md-4">
-                            Giới tính
-                        </div>
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control" } })
+                        <div class="col-6">
+                            <label>Giới tính</label>
+                            @Html.DropDownList("Gender", ViewBag.Gender as SelectList, new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="control-label col-md-4">
-                            Số điện thoại
-                        </div>
-                        <div class="col-md-8">
+                        <div class="col-6">
+                            <label>Số điện thoại</label>
                             @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="control-label col-md-4">
-                            Chuyên ngành
-                        </div>
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.Specialization, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Specialization, "", new { @class = "text-danger" })
+                        <div>
+                            <label>Chuyên khoa</label>
+                            @Html.DropDownList("DeptId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.DeptId, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-12" style="text-align:center">
-                            <input type="submit" value="Lưu" class="btn btn-primary" , style="color:white" />
+                        <div class="col-6">
+                            <label>Hình</label>
+                            <input type="file" name="uploadPhoto" id="uploadPhoto" class="form-control" />
+                            @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
                         </div>
+                        <div class="col-6">
+                            <img src="~/Images/Doctor/@Model.Image" width="150" class="img-thumbnail" /> (Ảnh hiện tại)
+                        </div>
+                    </div>
+
+                    <div class="row input-wrapper">
+                        <input type="submit" value="Lưu" class="btn btn-primary" />
                     </div>
                 </div>
             }
         </div>
-    </div>
-    <div class="back">
-        <a href="~/Doctors/Index"><i class="fa-solid fa-arrow-left"></i></a>
     </div>
 </div>

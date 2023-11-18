@@ -13,44 +13,29 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Categories">
-      <EntityTypeMapping TypeName="DoAnCNPMModel.Category">
-        <MappingFragment StoreEntitySet="Category">
-          <ScalarProperty Name="CatId" ColumnName="CatId" />
-          <ScalarProperty Name="CatName" ColumnName="CatName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="DetailForms">
       <EntityTypeMapping TypeName="DoAnCNPMModel.DetailForm">
         <MappingFragment StoreEntitySet="DetailForm">
+          <ScalarProperty Name="TotalMoney" ColumnName="TotalMoney" />
           <ScalarProperty Name="DFId" ColumnName="DFId" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-          <ScalarProperty Name="TotalMoney" ColumnName="TotalMoney" />
           <ScalarProperty Name="IsExamined" ColumnName="IsExamined" />
           <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
           <ScalarProperty Name="FormId" ColumnName="FormId" />
+          <ScalarProperty Name="FOId" ColumnName="FOId" />
           <ScalarProperty Name="PriceListId" ColumnName="PriceListId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="DiseaseStatisticLists">
-      <EntityTypeMapping TypeName="DoAnCNPMModel.DiseaseStatisticList">
-        <MappingFragment StoreEntitySet="DiseaseStatisticList">
-          <ScalarProperty Name="DSLId" ColumnName="DSLId" />
-          <ScalarProperty Name="Dianose" ColumnName="Dianose" />
-          <ScalarProperty Name="FormId" ColumnName="FormId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Doctors">
       <EntityTypeMapping TypeName="DoAnCNPMModel.Doctor">
         <MappingFragment StoreEntitySet="Doctor">
+          <ScalarProperty Name="DeptId" ColumnName="DeptId" />
           <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
           <ScalarProperty Name="FullName" ColumnName="FullName" />
           <ScalarProperty Name="Gender" ColumnName="Gender" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
-          <ScalarProperty Name="Specialization" ColumnName="Specialization" />
+          <ScalarProperty Name="Image" ColumnName="Image" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -78,6 +63,23 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="FormOnlines">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.FormOnline">
+        <MappingFragment StoreEntitySet="FormOnline">
+          <ScalarProperty Name="FOId" ColumnName="FOId" />
+          <ScalarProperty Name="FullName" ColumnName="FullName" />
+          <ScalarProperty Name="Gender" ColumnName="Gender" />
+          <ScalarProperty Name="Phone" ColumnName="Phone" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+          <ScalarProperty Name="DoctorId" ColumnName="DoctorId" />
+          <ScalarProperty Name="ExamSession" ColumnName="ExamSession" />
+          <ScalarProperty Name="ExamDate" ColumnName="ExamDate" />
+          <ScalarProperty Name="ReasonForVisit" ColumnName="ReasonForVisit" />
+          <ScalarProperty Name="CreatedDay" ColumnName="CreatedDay" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Patients">
       <EntityTypeMapping TypeName="DoAnCNPMModel.Patient">
         <MappingFragment StoreEntitySet="Patient">
@@ -93,10 +95,10 @@
     <EntitySetMapping Name="PriceLists">
       <EntityTypeMapping TypeName="DoAnCNPMModel.PriceList">
         <MappingFragment StoreEntitySet="PriceList">
+          <ScalarProperty Name="DeptId" ColumnName="DeptId" />
           <ScalarProperty Name="PriceListId" ColumnName="PriceListId" />
           <ScalarProperty Name="PriceListName" ColumnName="PriceListName" />
           <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="CatId" ColumnName="CatId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -108,6 +110,23 @@
           <ScalarProperty Name="Gender" ColumnName="Gender" />
           <ScalarProperty Name="Phone" ColumnName="Phone" />
           <ScalarProperty Name="Position" ColumnName="Position" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Depts">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.Dept">
+        <MappingFragment StoreEntitySet="Dept">
+          <ScalarProperty Name="DeptName" ColumnName="DeptName" />
+          <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DiseaseStatistics">
+      <EntityTypeMapping TypeName="DoAnCNPMModel.DiseaseStatistic">
+        <MappingFragment StoreEntitySet="DiseaseStatistic">
+          <ScalarProperty Name="DFId" ColumnName="DFId" />
+          <ScalarProperty Name="Diagnose" ColumnName="Diagnose" />
+          <ScalarProperty Name="DSLId" ColumnName="DSLId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

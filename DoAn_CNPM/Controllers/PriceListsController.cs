@@ -13,21 +13,21 @@ namespace DoAn_CNPM.Controllers
     public class PriceListsController : Controller
     {
         private DoAnCNPMEntities3 db = new DoAnCNPMEntities3();
-        // GET: PriceLists
+
         public ActionResult Index(string SearchString)
         {
-            var priceLists = db.PriceLists.Include(p => p.Category);
+            var priceLists = db.PriceLists.Include(p => p.Dept);
             if (!String.IsNullOrEmpty(SearchString))
             {
-                priceLists = priceLists.Where(p => p.PriceListName.Contains(SearchString)
-                || p.Category.CatName.Contains(SearchString)
+                priceLists = priceLists.Where(p => p.PriceListId.ToString().Contains(SearchString)
+                || p.PriceListName.Contains(SearchString)
+                || p.Dept.DeptName.Contains(SearchString)
                 || p.Price.ToString().Contains(SearchString));
             }
 
             return View(priceLists.ToList());
         }
 
-        // GET: PriceLists/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -42,32 +42,32 @@ namespace DoAn_CNPM.Controllers
             return View(priceList);
         }
 
-        // GET: PriceLists/Create
         public ActionResult Create()
         {
-            ViewBag.CatId = new SelectList(db.Categories, "CatId", "CatName");
+            ViewBag.DeptId = new SelectList(db.Depts, "DeptId", "DeptName");
             return View();
         }
 
-        // POST: PriceLists/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "PriceListId,PriceListName,Price,CatId")] PriceList priceList)
+        public ActionResult Create([Bind(Include = "PriceListId,PriceListName,Price,DeptId")] PriceList priceList)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.PriceLists.Add(priceList);
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    db.PriceLists.Add(priceList);
+                    db.SaveChanges();                   
+                }
+                ViewBag.DeptId = new SelectList(db.Depts, "DeptId", "DeptName", priceList.DeptId);
                 return RedirectToAction("Index");
             }
-
-            ViewBag.CatId = new SelectList(db.Categories, "CatId", "CatName", priceList.CatId);
-            return View(priceList);
+            catch
+            {
+                return RedirectToAction("Index","Error");
+            }
         }
 
-        // GET: PriceLists/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -79,51 +79,42 @@ namespace DoAn_CNPM.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.CatId = new SelectList(db.Categories, "CatId", "CatName", priceList.CatId);
+            ViewBag.DeptId = new SelectList(db.Depts, "DeptId", "DeptName", priceList.DeptId);
             return View(priceList);
         }
 
-        // POST: PriceLists/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PriceListId,PriceListName,Price,CatId")] PriceList priceList)
+        public ActionResult Edit([Bind(Include = "PriceListId,PriceListName,Price,DeptId")] PriceList priceList)
         {
-            if (ModelState.IsValid)
+            try {
+                if (ModelState.IsValid)
+                {
+                    db.Entry(priceList).State = EntityState.Modified;
+                    db.SaveChanges();                 
+                }
+                ViewBag.DeptId = new SelectList(db.Depts, "DeptId", "DeptName", priceList.DeptId);
+                return RedirectToAction("Index");
+            }
+            catch
             {
-                db.Entry(priceList).State = EntityState.Modified;
+                return RedirectToAction("Index", "Error");
+            }          
+        }
+
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                PriceList priceList = db.PriceLists.Find(id);
+                db.PriceLists.Remove(priceList);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CatId = new SelectList(db.Categories, "CatId", "CatName", priceList.CatId);
-            return View(priceList);
-        }
-
-        // GET: PriceLists/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
+            catch
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index", "Error");
             }
-            PriceList priceList = db.PriceLists.Find(id);
-            if (priceList == null)
-            {
-                return HttpNotFound();
-            }
-            return View(priceList);
-        }
-
-        // POST: PriceLists/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            PriceList priceList = db.PriceLists.Find(id);
-            db.PriceLists.Remove(priceList);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

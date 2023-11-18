@@ -1,0 +1,367 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DoAnCNPMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Dept">
+    <Key>
+      <PropertyRef Name="DeptId" />
+    </Key>
+    <Property Name="DeptId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DeptName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Doctors" Relationship="Self.FK__Doctor__DeptId__3552E9B6" FromRole="Dept" ToRole="Doctor" />
+    <NavigationProperty Name="PriceLists" Relationship="Self.FK__PriceList__DeptI__66EA454A" FromRole="Dept" ToRole="PriceList" />
+  </EntityType>
+  <EntityType Name="DetailForm">
+    <Key>
+      <PropertyRef Name="DFId" />
+    </Key>
+    <Property Name="DFId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="TotalMoney" Type="Int32" />
+    <Property Name="IsExamined" Type="Boolean" Nullable="false" />
+    <Property Name="IsPaid" Type="Boolean" Nullable="false" />
+    <Property Name="FormId" Type="Int32" />
+    <Property Name="FOId" Type="Int32" />
+    <Property Name="PriceListId" Type="Int32" />
+    <NavigationProperty Name="Form" Relationship="Self.FK__DetailFor__FormI__69C6B1F5" FromRole="DetailForm" ToRole="Form" />
+    <NavigationProperty Name="PriceList" Relationship="Self.FK__DetailFor__Price__6BAEFA67" FromRole="DetailForm" ToRole="PriceList" />
+    <NavigationProperty Name="FormOnline" Relationship="Self.FK__DetailForm__FOId__6ABAD62E" FromRole="DetailForm" ToRole="FormOnline" />
+    <NavigationProperty Name="DiseaseStatistics" Relationship="Self.FK__DiseaseSta__DFId__6E8B6712" FromRole="DetailForm" ToRole="DiseaseStatistic" />
+  </EntityType>
+  <EntityType Name="DiseaseStatistic">
+    <Key>
+      <PropertyRef Name="DSLId" />
+    </Key>
+    <Property Name="DSLId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Diagnose" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DFId" Type="Int32" />
+    <NavigationProperty Name="DetailForm" Relationship="Self.FK__DiseaseSta__DFId__6E8B6712" FromRole="DiseaseStatistic" ToRole="DetailForm" />
+  </EntityType>
+  <EntityType Name="Doctor">
+    <Key>
+      <PropertyRef Name="DoctorId" />
+    </Key>
+    <Property Name="DoctorId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="11" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DeptId" Type="Int32" />
+    <NavigationProperty Name="Dept" Relationship="Self.FK__Doctor__DeptId__3552E9B6" FromRole="Doctor" ToRole="Dept" />
+    <NavigationProperty Name="DoctorSchedules" Relationship="Self.FK__DoctorSch__Docto__7849DB76" FromRole="Doctor" ToRole="DoctorSchedule" />
+    <NavigationProperty Name="Forms" Relationship="Self.FK__Form__DoctorId__7C1A6C5A" FromRole="Doctor" ToRole="Form" />
+    <NavigationProperty Name="FormOnlines" Relationship="Self.FK__FormOnlin__Docto__7FEAFD3E" FromRole="Doctor" ToRole="FormOnline" />
+  </EntityType>
+  <EntityType Name="DoctorSchedule">
+    <Key>
+      <PropertyRef Name="DSId" />
+    </Key>
+    <Property Name="DSId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DoctorId" Type="Int32" Nullable="false" />
+    <Property Name="DayOfWeek" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="TimeStart" Type="Time" Precision="7" />
+    <Property Name="TimeEnd" Type="Time" Precision="7" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK__DoctorSch__Docto__7849DB76" FromRole="DoctorSchedule" ToRole="Doctor" />
+  </EntityType>
+  <EntityType Name="Form">
+    <Key>
+      <PropertyRef Name="FormId" />
+    </Key>
+    <Property Name="FormId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ExamTime" Type="DateTime" Precision="3" />
+    <Property Name="PatientId" Type="Int32" />
+    <Property Name="DoctorId" Type="Int32" />
+    <Property Name="StaffId" Type="Int32" />
+    <Property Name="CreatedDay" Type="DateTime" Precision="3" />
+    <Property Name="ReasonForVisit" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="DetailForms" Relationship="Self.FK__DetailFor__FormI__69C6B1F5" FromRole="Form" ToRole="DetailForm" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK__Form__DoctorId__7C1A6C5A" FromRole="Form" ToRole="Doctor" />
+    <NavigationProperty Name="Patient" Relationship="Self.FK__Form__PatientId__7B264821" FromRole="Form" ToRole="Patient" />
+    <NavigationProperty Name="Staff" Relationship="Self.FK__Form__StaffId__7D0E9093" FromRole="Form" ToRole="Staff" />
+  </EntityType>
+  <EntityType Name="FormOnline">
+    <Key>
+      <PropertyRef Name="FOId" />
+    </Key>
+    <Property Name="FOId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Gender" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="11" FixedLength="true" Unicode="false" />
+    <Property Name="DOB" Type="DateTime" Precision="0" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DoctorId" Type="Int32" />
+    <Property Name="ExamSession" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ExamDate" Type="DateTime" Precision="0" />
+    <Property Name="ReasonForVisit" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDay" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="DetailForms" Relationship="Self.FK__DetailForm__FOId__6ABAD62E" FromRole="FormOnline" ToRole="DetailForm" />
+    <NavigationProperty Name="Doctor" Relationship="Self.FK__FormOnlin__Docto__7FEAFD3E" FromRole="FormOnline" ToRole="Doctor" />
+    <Property Name="DOBFormatted" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Patient">
+    <Key>
+      <PropertyRef Name="PatientId" />
+    </Key>
+    <Property Name="PatientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="11" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="DOB" Type="DateTime" Precision="0" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Forms" Relationship="Self.FK__Form__PatientId__7B264821" FromRole="Patient" ToRole="Form" />
+    <Property Name="DOBFormatted" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="PriceList">
+    <Key>
+      <PropertyRef Name="PriceListId" />
+    </Key>
+    <Property Name="PriceListId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PriceListName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Price" Type="Int32" Nullable="false" />
+    <Property Name="DeptId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Dept" Relationship="Self.FK__PriceList__DeptI__66EA454A" FromRole="PriceList" ToRole="Dept" />
+    <NavigationProperty Name="DetailForms" Relationship="Self.FK__DetailFor__Price__6BAEFA67" FromRole="PriceList" ToRole="DetailForm" />
+  </EntityType>
+  <EntityType Name="Staff">
+    <Key>
+      <PropertyRef Name="StaffId" />
+    </Key>
+    <Property Name="StaffId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="Phone" Type="String" MaxLength="11" FixedLength="true" Unicode="false" Nullable="false" />
+    <Property Name="Position" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Forms" Relationship="Self.FK__Form__StaffId__7D0E9093" FromRole="Staff" ToRole="Form" />
+  </EntityType>
+  <Association Name="FK__Doctor__DeptId__3552E9B6">
+    <End Role="Dept" Type="Self.Dept" Multiplicity="0..1" />
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dept">
+        <PropertyRef Name="DeptId" />
+      </Principal>
+      <Dependent Role="Doctor">
+        <PropertyRef Name="DeptId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PriceList__DeptI__66EA454A">
+    <End Role="Dept" Type="Self.Dept" Multiplicity="1" />
+    <End Role="PriceList" Type="Self.PriceList" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Dept">
+        <PropertyRef Name="DeptId" />
+      </Principal>
+      <Dependent Role="PriceList">
+        <PropertyRef Name="DeptId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DetailFor__FormI__69C6B1F5">
+    <End Role="Form" Type="Self.Form" Multiplicity="0..1" />
+    <End Role="DetailForm" Type="Self.DetailForm" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Form">
+        <PropertyRef Name="FormId" />
+      </Principal>
+      <Dependent Role="DetailForm">
+        <PropertyRef Name="FormId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DetailFor__Price__6BAEFA67">
+    <End Role="PriceList" Type="Self.PriceList" Multiplicity="0..1" />
+    <End Role="DetailForm" Type="Self.DetailForm" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PriceList">
+        <PropertyRef Name="PriceListId" />
+      </Principal>
+      <Dependent Role="DetailForm">
+        <PropertyRef Name="PriceListId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DetailForm__FOId__6ABAD62E">
+    <End Role="FormOnline" Type="Self.FormOnline" Multiplicity="0..1" />
+    <End Role="DetailForm" Type="Self.DetailForm" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FormOnline">
+        <PropertyRef Name="FOId" />
+      </Principal>
+      <Dependent Role="DetailForm">
+        <PropertyRef Name="FOId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DiseaseSta__DFId__6E8B6712">
+    <End Role="DetailForm" Type="Self.DetailForm" Multiplicity="0..1" />
+    <End Role="DiseaseStatistic" Type="Self.DiseaseStatistic" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DetailForm">
+        <PropertyRef Name="DFId" />
+      </Principal>
+      <Dependent Role="DiseaseStatistic">
+        <PropertyRef Name="DFId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DoctorSch__Docto__7849DB76">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="1" />
+    <End Role="DoctorSchedule" Type="Self.DoctorSchedule" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="DoctorId" />
+      </Principal>
+      <Dependent Role="DoctorSchedule">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Form__DoctorId__7C1A6C5A">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+    <End Role="Form" Type="Self.Form" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="DoctorId" />
+      </Principal>
+      <Dependent Role="Form">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__FormOnlin__Docto__7FEAFD3E">
+    <End Role="Doctor" Type="Self.Doctor" Multiplicity="0..1" />
+    <End Role="FormOnline" Type="Self.FormOnline" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Doctor">
+        <PropertyRef Name="DoctorId" />
+      </Principal>
+      <Dependent Role="FormOnline">
+        <PropertyRef Name="DoctorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Form__PatientId__7B264821">
+    <End Role="Patient" Type="Self.Patient" Multiplicity="0..1" />
+    <End Role="Form" Type="Self.Form" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Patient">
+        <PropertyRef Name="PatientId" />
+      </Principal>
+      <Dependent Role="Form">
+        <PropertyRef Name="PatientId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Form__StaffId__7D0E9093">
+    <End Role="Staff" Type="Self.Staff" Multiplicity="0..1" />
+    <End Role="Form" Type="Self.Form" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Staff">
+        <PropertyRef Name="StaffId" />
+      </Principal>
+      <Dependent Role="Form">
+        <PropertyRef Name="StaffId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DoAnCNPMEntities3" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Depts" EntityType="Self.Dept" />
+    <EntitySet Name="DetailForms" EntityType="Self.DetailForm" />
+    <EntitySet Name="DiseaseStatistics" EntityType="Self.DiseaseStatistic" />
+    <EntitySet Name="Doctors" EntityType="Self.Doctor" />
+    <EntitySet Name="DoctorSchedules" EntityType="Self.DoctorSchedule" />
+    <EntitySet Name="Forms" EntityType="Self.Form" />
+    <EntitySet Name="FormOnlines" EntityType="Self.FormOnline" />
+    <EntitySet Name="Patients" EntityType="Self.Patient" />
+    <EntitySet Name="PriceLists" EntityType="Self.PriceList" />
+    <EntitySet Name="Staffs" EntityType="Self.Staff" />
+    <AssociationSet Name="FK__Doctor__DeptId__3552E9B6" Association="Self.FK__Doctor__DeptId__3552E9B6">
+      <End Role="Dept" EntitySet="Depts" />
+      <End Role="Doctor" EntitySet="Doctors" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PriceList__DeptI__66EA454A" Association="Self.FK__PriceList__DeptI__66EA454A">
+      <End Role="Dept" EntitySet="Depts" />
+      <End Role="PriceList" EntitySet="PriceLists" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DetailFor__FormI__69C6B1F5" Association="Self.FK__DetailFor__FormI__69C6B1F5">
+      <End Role="Form" EntitySet="Forms" />
+      <End Role="DetailForm" EntitySet="DetailForms" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DetailFor__Price__6BAEFA67" Association="Self.FK__DetailFor__Price__6BAEFA67">
+      <End Role="PriceList" EntitySet="PriceLists" />
+      <End Role="DetailForm" EntitySet="DetailForms" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DetailForm__FOId__6ABAD62E" Association="Self.FK__DetailForm__FOId__6ABAD62E">
+      <End Role="FormOnline" EntitySet="FormOnlines" />
+      <End Role="DetailForm" EntitySet="DetailForms" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DiseaseSta__DFId__6E8B6712" Association="Self.FK__DiseaseSta__DFId__6E8B6712">
+      <End Role="DetailForm" EntitySet="DetailForms" />
+      <End Role="DiseaseStatistic" EntitySet="DiseaseStatistics" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DoctorSch__Docto__7849DB76" Association="Self.FK__DoctorSch__Docto__7849DB76">
+      <End Role="Doctor" EntitySet="Doctors" />
+      <End Role="DoctorSchedule" EntitySet="DoctorSchedules" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Form__DoctorId__7C1A6C5A" Association="Self.FK__Form__DoctorId__7C1A6C5A">
+      <End Role="Doctor" EntitySet="Doctors" />
+      <End Role="Form" EntitySet="Forms" />
+    </AssociationSet>
+    <AssociationSet Name="FK__FormOnlin__Docto__7FEAFD3E" Association="Self.FK__FormOnlin__Docto__7FEAFD3E">
+      <End Role="Doctor" EntitySet="Doctors" />
+      <End Role="FormOnline" EntitySet="FormOnlines" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Form__PatientId__7B264821" Association="Self.FK__Form__PatientId__7B264821">
+      <End Role="Patient" EntitySet="Patients" />
+      <End Role="Form" EntitySet="Forms" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Form__StaffId__7D0E9093" Association="Self.FK__Form__StaffId__7D0E9093">
+      <End Role="Staff" EntitySet="Staffs" />
+      <End Role="Form" EntitySet="Forms" />
+    </AssociationSet>
+    <EntitySet Name="Roles" EntityType="DoAnCNPMModel.Role" />
+    <EntitySet Name="Users" EntityType="DoAnCNPMModel.User" />
+    <AssociationSet Name="FK__Users__RoleId__0662F0A3" Association="DoAnCNPMModel.FK__Users__RoleId__0662F0A3">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="DoAnCNPMModel.FK__Users__RoleId__0662F0A3" FromRole="Role" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Username" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="100" FixedLength="true" Unicode="false" />
+    <Property Name="FullName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Gender" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
+    <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="RoleId" Type="Int32" Nullable="false" />
+    <Property Name="CreateAt" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Role" Relationship="DoAnCNPMModel.FK__Users__RoleId__0662F0A3" FromRole="User" ToRole="Role" />
+    <Property Name="Phone" Type="String" MaxLength="11" FixedLength="true" Unicode="false" />
+    <Property Name="DOB" Type="DateTime" Precision="0" />
+    <Property Name="Address" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DOBFormatted" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="ConfirmPassword" Type="String" MaxLength="100" FixedLength="true" Unicode="false" />
+  </EntityType>
+  <Association Name="FK__Users__RoleId__0662F0A3">
+    <End Type="DoAnCNPMModel.Role" Role="Role" Multiplicity="1" />
+    <End Type="DoAnCNPMModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

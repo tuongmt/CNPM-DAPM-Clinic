@@ -1,59 +1,69 @@
 ﻿@model DoAn_CNPM.Models.Patient
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "CHI TIẾT BỆNH NHÂN";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<div class="f-detail">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/Patients/Index">Bệnh nhân</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chi tiết</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="tabular--wrapper">
+        <div class="table-container">
+            <h2 class="h2--title">@ViewBag.Title </h2>
+            <hr />
+            <dl class="row">
+                <dt class=" col-sm-4">
+                    Họ và tên:
+                </dt>
 
-<div>
-    <h4>Patient</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.FullName)
-        </dt>
+                <dd class=" col-sm-8">
+                    @Html.DisplayFor(model => model.FullName)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.FullName)
-        </dd>
+                <dt class=" col-sm-4">
+                    Giới tính:
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
+                <dd class=" col-sm-8">
+                    @Html.DisplayFor(model => model.Gender)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
+                <dt class=" col-sm-4">
+                    Số điện thoại
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Phone)
-        </dt>
+                <dd class=" col-sm-8">
+                    @Html.DisplayFor(model => model.Phone)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Phone)
-        </dd>
+                <dt class=" col-sm-4">
+                    Ngày sinh
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DOB)
-        </dt>
+                <dd class=" col-sm-8">
+                    @Model.DOB.Value.ToString("dd-MM-yyyy")
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.DOB)
-        </dd>
+                <dt class=" col-sm-4">
+                    Địa chỉ
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
+                <dd class=" col-sm-8">
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
+            </dl>
+        </div>
+    </div>
 
-    </dl>
+    <div style="text-align:center; padding: 8px">
+        <a href="@Url.Action("Edit", new { id = Model.PatientId })" class="btn btn-edit"><i class="fa-solid fa-pen-to-square"></i></a>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PatientId }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

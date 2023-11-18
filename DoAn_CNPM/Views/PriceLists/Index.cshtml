@@ -5,70 +5,121 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="f-index">
-    <div class="tabular--wrapper">
-        <h2 class="h2--title">@ViewData["Title"]</h2>
-        <hr />
-        <div class="nav--search">
-            @using (Html.BeginForm("Index", "PriceLists", FormMethod.Get))
-            {
-                <table>
-                    <tr>
-                        <td class="col sm-4">
-                            <a href="@Url.Action("Create")" class="btn btn-createnew"><i class="fa-solid fa-plus"></i></a>
-                        </td>
-                        <td class="col sm-4 search--box">
-                            <input type="text" name="SearchString" placeholder="Nhập thông tin tìm kiếm" />
-                            <button type="submit" value="Tìm tổng tiền"><i class="fa-solid fa-magnifying-glass"></i></button>
-                        </td>
-                    </tr>
-                </table>
-            }
-        </div>
-
-        <div class="table-container">
-            <table class="table table-hover table-striped table-bordered">
-                <tr>
-                    <th>
-                        Id
-                    </th>
-                    <th>
-                        Tên bảng giá khám
-                    </th>
-                    <th>
-                        Đơn giá
-                    </th>
-                    <th>
-                        Phân loại bệnh
-                    </th>
-                    <th>Chức năng Sửa - Xóa</th>
-                </tr>
-
-                @foreach (var item in Model)
+@if (Session["admin"] != null)
+{
+    <div class="f-index">
+        <div class="tabular--wrapper">
+            <a href="~/PriceLists/Index">  <h2 class="h2--title">@ViewData["Title"]</h2></a>
+            <hr />
+            <div class="nav--search">
+                @using (Html.BeginForm("Index", "PriceLists", FormMethod.Get))
                 {
-                    decimal price = Convert.ToDecimal(item.Price);
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PriceListId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PriceListName)
-                        </td>
-                        <td class="price">
-                            @price.ToString("#,##0").Replace(',', '.') VNĐ
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Category.CatName)
-                        </td>
-
-                        <td>
-                            <a href="@Url.Action("Edit", new { id = item.PriceListId })" class="btn btn-edit"><i class="fa-regular fa-pen-to-square"></i></a>
-                            <a href="@Url.Action("Delete", new { id = item.PriceListId })" class="btn btn-del"><i class="fa-regular fa-trash-can"></i></a>
-                        </td>
-                    </tr>
+                    <table>
+                        <tr>
+                            <td class="col sm-4">
+                                <a href="@Url.Action("Create")" class="btn btn-createnew"><i class="fa-solid fa-plus"></i></a>
+                            </td>
+                            <td class="col sm-4 search--box">
+                                <input type="text" name="SearchString" placeholder="Nhập thông tin tìm kiếm" />
+                                <button type="submit" value="Tìm tổng tiền"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </td>
+                        </tr>
+                    </table>
                 }
+            </div>
 
-            </table>
+            <input type="hidden" id="PriceListId" />
+
+            <div class="table-container">
+                <table class="table table-hover table-striped table-bordered">
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Tên dịch vụ
+                        </th>
+                        <th>
+                            Đơn giá
+                        </th>
+                        <th>
+                            Khoa
+                        </th>
+                        <th>Thao tác</th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        decimal price = Convert.ToDecimal(item.Price);
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PriceListId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PriceListName)
+                            </td>
+                            <td class="price" style="color:red">
+                                @price.ToString("#,##0").Replace(',', '.') VNĐ
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Dept.DeptName)
+                            </td>
+
+                            <td>
+                                <a href="@Url.Action("Edit", new { id = item.PriceListId })" class="btn btn-edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a id="showModal" class="btn btn-del" onclick="Confirm(@item.PriceListId)"><i class="fa-solid fa-trash-can"></i></a>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+}
+<!-- Delete Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="DeleteCatLabel">Xóa Đơn giá</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc muốn xóa mục có Id là <span id="ItemIdDelete" style="color:blue; font-weight:600"></span> không?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <input type="button" value="Xóa" class="btn btn-danger" id="btnDelete" />
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+
+        $("#btnDelete").click(function () {
+            var idC = $("#PriceListId").val();
+            $.ajax({
+                type: "POST",
+                url: "/PriceLists/Delete",
+                data: { id: idC },
+                success: function (result) {
+                    if (result) {
+                        $("#PriceListId").val(null);
+                        window.location.href = "/PriceLists/Index";
+                    } else {
+                        alert("Opps something wrong");
+                    }
+                }
+            });
+        });
+    });
+    var Confirm = function (id) {
+        $("#PriceListId").val(id);
+        $("#ItemIdDelete").text(id);
+        $("#DeleteModal").modal('show');
+    }
+</script>

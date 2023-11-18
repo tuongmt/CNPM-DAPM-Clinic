@@ -1,0 +1,100 @@
+﻿@model DoAn_CNPM.Models.FormOnline
+
+@{
+    ViewBag.Title = "CHI TIẾT ĐƠN KHÁM TRỰC TUYẾN";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="f-detail">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/FormOnlines/Index">Đơn khám trực tuyến</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Chi tiết</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="tabular--wrapper">
+        <div class="table-container">
+            <h2 class="h2--title">@ViewBag.Title </h2>
+            <hr />
+            <dl class="row">
+                <dt class=" col-sm-5">
+                    Họ tên
+                </dt>
+
+                <dd class=" col-sm-7">
+                    @Html.DisplayFor(model => model.FullName)
+                </dd>
+
+                <dt class=" col-sm-5">
+                    Giới Tính
+                </dt>
+
+                <dd class=" col-sm-7">
+                    @Html.DisplayFor(model => model.Gender)
+                </dd>
+
+                <dt class=" col-sm-5">
+                    Điện thoại
+                </dt>
+
+                <dd class=" col-sm-7">
+                    @Html.DisplayFor(model => model.Phone)
+                </dd>
+
+                <dt class=" col-sm-5">
+                    Ngày sinh
+                </dt>
+
+                <dd class=" col-sm-7">
+                    @if (Model.DOB.HasValue)
+                    {
+                        @Model.DOB.Value.ToString("dd-MM-yyyy")
+                    }
+                </dd>
+
+                <dt class=" col-sm-5">
+                    Địa chỉ
+                </dt>
+
+                <dd class=" col-sm-7">
+                    @Html.DisplayFor(model => model.Address)
+                </dd>
+
+                <dt class=" col-sm-5">
+                    Bác sĩ
+                </dt>
+
+                <dd class=" col-sm-7">
+                    @Html.DisplayFor(model => model.Doctor.FullName)
+                </dd>
+
+                <dt class=" col-sm-5">
+                    Ngày lập đơn
+                </dt>
+
+                <dd class=" col-sm-7">
+                    @if (Model.CreatedDay.HasValue)
+                    {
+                        @Model.CreatedDay.Value.ToString("dddd, dd-MM-yyyy HH:mm:ss", new System.Globalization.CultureInfo("vi-VN"))
+                    }
+                </dd>
+
+                <dt class=" col-sm-5">
+                    Lý do khám
+                </dt>
+
+                <dd class=" col-sm-7">
+                    @Html.DisplayFor(model => model.ReasonForVisit)
+                </dd>
+
+            </dl>
+        </div>
+    </div>
+
+    <div class="detail-a-wrapper">
+        <a href="@Url.Action("Edit", new { id = Model.FOId })" class="btn btn-edit"><i class="fa-solid fa-pen-to-square"></i></a>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+﻿@model IEnumerable<DoAn_CNPM.Models.Dept>
+
+@{
+    ViewBag.Title = "PHÂN LOẠI KHOA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@if (Session["admin"] != null)
+{
+    <div class="f-index">
+        <div class="tabular--wrapper">
+            <div class="card-header">
+                <a href="~/Categories/Index">  <h2 class="h2--title">@ViewData["Title"]</h2></a>
+            </div>
+            <hr />
+            <div class="nav--search">
+                @using (Html.BeginForm("Index", "Depts", FormMethod.Get))
+                {
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="@Url.Action("Create")" class="btn btn-createnew"><i class="fa-solid fa-plus"></i></a>
+                            </td>
+                            <td class="search--box">
+                                <input type="text" name="SearchString" style="padding-right:8px" placeholder="Nhập thông tin tìm kiếm" />
+
+                                <button type="submit" value=""><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </td>
+                        </tr>
+                    </table>
+                }
+            </div>
+
+            <input type="hidden" id="DeptId" />
+
+            <div class="table-container">
+                <table class="table table-hover table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Id
+                            </th>
+                            <th>
+                                Tên khoa
+                            </th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DeptId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DeptName)
+                                </td>
+
+                                <td>
+                                    <a href="@Url.Action("Edit", new { id = item.DeptId })" class="btn btn-edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a id="showModal" class="btn btn-del" onclick="Confirm(@item.DeptId)"><i class="fa-solid fa-trash-can"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Delete Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="DeleteCatLabel">Xóa Khoa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc muốn xóa mục có Id là <span id="ItemIdDelete" style="color:blue; font-weight:600"></span> không?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <input type="button" value="Xóa" class="btn btn-danger" id="btnDelete" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $("#btnDelete").click(function () {
+            var idC = $("#DeptId").val();
+            $.ajax({
+                type: "POST",
+                url: "/Depts/Delete",
+                data: { id: idC },
+                success: function (result) {
+                    if (result) {
+                        $("#DeptId").val(null);
+                        window.location.href = "/Depts/Index";
+                    } else {
+                        alert("Opps something wrong");
+                    }
+                }
+            });
+        }); 
+    });
+    var Confirm = function (id) {
+        $("#DeptId").val(id);
+        $("#ItemIdDelete").text(id);
+        $("#DeleteModal").modal('show');
+    }
+</script>

@@ -1,0 +1,31 @@
+﻿
+@{
+    ViewBag.Title = "ĐẶT LỊCH KHÁM THÀNH CÔNG";
+    Layout = "~/Views/Shared/_Layout_Home.cshtml";
+}
+
+@if (Session["admin"] == null)
+{
+
+
+    <div class="background" style="min-height:300px;">
+        <div class="product">
+            <img src="~/Images/Icon/true.png" alt="" style=" display: block; margin: auto; padding: 8px; width: 100px;" />
+            <h1 style="color: limegreen; font-size: xx-large; text-align: center;">Đặt lịch khám thành công! Xin cảm ơn đã sử dụng dịch vụ của chúng tôi.</h1>
+        </div>
+    </div>
+}
+else
+{
+    <div class="background" style="min-height:300px;">
+        <div class="product">
+            <img src="~/Images/Icon/true.png" alt="" style=" display: block; margin: auto; padding: 8px; width: 100px;" />
+            <h1 style="color: limegreen; font-size: xx-large; text-align: center;">Đặt lịch khám thành công! Xin cảm ơn đã sử dụng dịch vụ của chúng tôi.</h1>
+        </div>
+        <div>
+            <h3> Hãy đăng ký là thành viên của Phòng khám chúng tôi để lần tiếp theo không cần nhập lại thông tin</h3>
+            <a href="~/LoginUser/Register"> ĐĂNG KÝ TẠI ĐÂY</a>
+        </div>
+    </div>
+}
+

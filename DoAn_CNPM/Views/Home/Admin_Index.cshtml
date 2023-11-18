@@ -1,0 +1,135 @@
+﻿@model DoAn_CNPM.Controllers.HomeController
+@{
+    ViewBag.Title = "TRANG CHỦ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="f-index" style="border-right: 1px solid rgb(63,154,129);">
+    <div class="card--container">
+        <h2 style="text-align: center; padding-top: 8px; color:orangered"> CHÀO MỪNG TRỞ LẠI!</h2>
+        <hr />
+        <h3 class="main--title">Bảng thống kê dữ liệu</h3>
+        <div class="card--wrapper">
+            <div class="payment--card light-blue">
+                <div class="card--header">
+                    <div class="amount">
+                        <span class="title">
+                            Số đơn khám
+                        </span>
+                        <span class="amount-value">
+                            @ViewBag.TotalForms
+                        </span>
+                    </div>
+                    <a href="~/Forms/Index"><i class="fas fa-list icon dark-blue"></i></a>
+                </div>
+            </div>
+
+            <div class="payment--card light-purple">
+                <div class="card--header">
+                    <div class="amount">
+                        <span class="title">
+                            Số đã thăm khám
+                        </span>
+                        <span class="amount-value">
+                            @ViewBag.ExaminedCount /  @ViewBag.TotalDF
+                        </span>
+                    </div>
+                    <a href="~/DetailForms/Index"><i class="fas fa-list icon dark-purple"></i></a>
+                </div>
+            </div>
+
+            <div class="payment--card light-green">
+                <div class="card--header">
+                    <div class="amount">
+                        <span class="title">
+                            Số đã thanh toán
+                        </span>
+                        <span class="amount-value">
+                            @ViewBag.PaidCount /  @ViewBag.TotalDF
+                        </span>
+                    </div>
+                    <a href="~/DetailForms/Index"><i class="fas fa-list icon dark-green"></i></a>
+                </div>
+            </div>
+
+            <div class="payment--card light-orange">
+                <div class="card--header">
+                    <div class="amount">
+                        <span class="title">
+                            Số đơn khám trực tuyến
+                        </span>
+                        <span class="amount-value">
+                            @ViewBag.TotalFormsOnline
+                        </span>
+                    </div>
+                    <a href="~/FormOnlines/Index"><i class="fas fa-list icon dark-orange"></i></a>
+                </div>
+            </div>
+
+            <div class="payment--card light-green">
+                <div class="card--header">
+                    <div class="amount">
+                        <span class="title">
+                            Số nhân viên
+                        </span>
+                        <span class="amount-value">
+                            @ViewBag.TotalStaffs
+                        </span>
+                    </div>
+                    <a href="Staffs/Index"><i class="fas fa-list icon dark-green"></i></a>
+                </div>
+            </div>
+
+            <div class="payment--card light-purple">
+                <div class="card--header">
+                    <div class="amount">
+                        <span class="title">
+                            Số bác sĩ
+                        </span>
+                        <span class="amount-value">
+                            @ViewBag.TotalDoctors
+                        </span>
+                    </div>
+                    <a href="~/Doctors/Index"><i class="fas fa-list icon dark-purple"></i></a>
+                </div>
+            </div>
+
+            <div class="payment--card light-blue">
+                <div class="card--header">
+                    <div class="amount">
+                        <span class="title">
+                            Số bệnh nhân
+                        </span>
+                        <span class="amount-value">
+                            @ViewBag.TotalPatients
+                        </span>
+                    </div>
+                    <a href="~/Patients/Index"><i class="fas fa-list icon dark-blue"></i></a>
+                </div>
+            </div>
+
+            <div class="payment--card--money light-red">
+                <div class="card--header">
+                    <div class="amount">
+                        <span class="title">
+                            Tổng doanh thu
+                        </span>
+                        @if (ViewBag.TotalRevenue != null && (int)ViewBag.TotalRevenue > 0)
+                        {
+                            <span class="amount-value" style="color:red; font:bold">
+                                @ViewBag.TotalRevenue.ToString("#,##0").Replace(',', '.')VNĐ
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="amount-value" style="color:red; font:bold">0 VNĐ</span>
+                        }
+
+                    </div>
+                    <i class="fas fa-dollar-sign icon"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

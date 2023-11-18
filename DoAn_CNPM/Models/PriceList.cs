@@ -22,10 +22,10 @@ namespace DoAn_CNPM.Models
     
         public int PriceListId { get; set; }
         public string PriceListName { get; set; }
-        public double Price { get; set; }
-        public int CatId { get; set; }
+        public int Price { get; set; }
+        public int DeptId { get; set; }
     
-        public virtual Category Category { get; set; }
+        public virtual Dept Dept { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetailForm> DetailForms { get; set; }
     }

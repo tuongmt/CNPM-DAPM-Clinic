@@ -5,85 +5,129 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="f-index">
-    <div class="tabular--wrapper">
-        <h2 class="h2--title">@ViewData["Title"]</h2>
-        <hr />
-        <div class="nav--search">
-            @using (Html.BeginForm("Index", "Doctors", FormMethod.Get))
-            {
-                <table>
-                    <tr>
-                        <td>
-                            <a href="@Url.Action("Create")" class="btn btn-createnew"><i class="fa-solid fa-plus"></i></a>
-                        </td>
-                        <td style="font-size:18px">
-                            <a href="~/DoctorSchedules/Index">
-                                <b>Lịch khám Bác sĩ</b>
-                            </a>
-                        </td>
-                        <td class="search--box">
-                            <input type="text" name="SearchString" placeholder="Nhập thông tin tìm kiếm" />
-                            <button type="submit" value=""><i class="fa-solid fa-magnifying-glass"></i></button>
-                        </td>
-                    </tr>
-                </table>
-            }
-        </div>
-        <div>
-
-           
-
-        </div>
-        <div class="table-container">
-            <table class="table table-hover table-striped table-bordered">
-                <tr>
-                    <th>
-                        Id
-                    </th>
-
-                    <th>
-                        Họ tên Bác sĩ
-                    </th>
-
-                    <th>
-                        Giới tính
-                    </th>
-
-                    <th>
-                        Số điện thoại
-                    </th>
-                    <th>
-                        Chuyên khoa
-                    </th>
-                    <th>Thao tác Sửa - Xóa</th>
-                </tr>
-
-                @foreach (var item in Model)
+@if (Session["admin"] != null)
+{
+    <div class="f-index">
+        <div class="tabular--wrapper">
+            <a href="~/Doctors/Index">  <h2 class="h2--title">@ViewData["Title"]</h2></a>
+            <hr />
+            <div class="nav--search">
+                @using (Html.BeginForm("Index", "Doctors", FormMethod.Get))
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DoctorId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FullName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Gender)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Phone)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Specialization)
-                        </td>
-                        <td>
-                            <a href="@Url.Action("Edit", new { id = item.DoctorId })" class="btn btn-edit"><i class="fa-regular fa-pen-to-square"></i></a>
-                            <a href="@Url.Action("Delete", new { id = item.DoctorId })" class="btn btn-del"><i class="fa-regular fa-trash-can"></i></a>
-                        </td>
-                    </tr>
+                    <table>
+                        <tr class="d_flex">
+                            <td>
+                                <a href="@Url.Action("Create")" class="btn btn-createnew"><i class="fa-solid fa-plus fa-beat fa-lg"></i></a>
+                            </td>
+                            <td class="search--box">
+                                <input type="text" name="SearchString" placeholder="Nhập thông tin tìm kiếm" />
+                                <button type="submit" value=""><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </td>
+                        </tr>
+                    </table>
                 }
-            </table>
+            </div>
+
+            <input type="hidden" id="DoctorId" />
+
+            <div class="table-container">
+                <table class="table table-hover table-striped table-bordered">
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+
+                        <th>
+                            Họ tên Bác sĩ
+                        </th>
+
+                        <th>
+                            Giới tính
+                        </th>
+
+                        <th>
+                            Số điện thoại
+                        </th>
+                        <th>
+                            Chuyên khoa
+                        </th>
+                        <th>Thao tác</th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DoctorId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Gender)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Phone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Dept.DeptName)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", new { id = item.DoctorId })" class="btn btn-edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a id="showModal" class="btn btn-del" onclick="Confirm(@item.DoctorId)"><i class="fa-solid fa-trash-can"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Delete Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="DeleteCatLabel">Xóa Bác sĩ</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc muốn xóa mục có Id là <span id="ItemIdDelete" style="color:blue; font-weight:600"></span> không?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <input type="button" value="Xóa" class="btn btn-danger" id="btnDelete" />
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+
+        $("#btnDelete").click(function () {
+            var idC = $("#DoctorId").val();
+            $.ajax({
+                type: "POST",
+                url: "/Doctors/Delete",
+                data: { id: idC },
+                success: function (result) {
+                    if (result) {
+                        $("#DoctorId").val(null);
+                        window.location.href = "/Doctors/Index";
+                    } else {
+                        alert("Opps something wrong");
+                    }
+                }
+            });
+        });
+    });
+    var Confirm = function (id) {
+        $("#DoctorId").val(id);
+        $("#ItemIdDelete").text(id);
+        $("#DeleteModal").modal('show');
+    }
+</script>

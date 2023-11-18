@@ -14,15 +14,25 @@ namespace DoAn_CNPM.Models
     
     public partial class DetailForm
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public DetailForm()
+        {
+            this.DiseaseStatistics = new HashSet<DiseaseStatistic>();
+        }
+    
         public int DFId { get; set; }
-        public int Quantity { get; set; }
-        public Nullable<double> TotalMoney { get; set; }
-        public Nullable<bool> IsExamined { get; set; }
-        public Nullable<bool> IsPaid { get; set; }
-        public int FormId { get; set; }
-        public int PriceListId { get; set; }
+        public Nullable<int> Quantity { get; set; }
+        public Nullable<int> TotalMoney { get; set; }
+        public bool IsExamined { get; set; }
+        public bool IsPaid { get; set; }
+        public Nullable<int> FormId { get; set; }
+        public Nullable<int> FOId { get; set; }
+        public Nullable<int> PriceListId { get; set; }
     
         public virtual Form Form { get; set; }
         public virtual PriceList PriceList { get; set; }
+        public virtual FormOnline FormOnline { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DiseaseStatistic> DiseaseStatistics { get; set; }
     }
 }

@@ -1,0 +1,130 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>    @* Dùng để hiển thị giá trong Create DetailForms *@
+    <link href="~/Content/Home.css" rel="stylesheet" />
+    <link href="~/Content/Header.css" rel="stylesheet" />
+    <link href="~/Content/custom.css" rel="stylesheet" />
+    <link href="~/Content/CreateForm.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <section class="head">
+        <div class="container-home d_flex ">
+            <div class="left ">
+                <i class="fa fa-phone"></i>
+                <label htmlFor="">0386040650</label>
+                <i class="fa fa-envelope"></i>
+                <label htmlFor=""> InternationalClinic@gmail.com</label>
+            </div>
+            <div class="right RText">
+                @*<label>Hỏi đáp</label>
+                    <label>Cần hỗ trợ</label>*@
+                <label>🌐VN</label>
+            </div>
+        </div>
+    </section>
+
+    <section class="" style="position: sticky; top: 0; background: #fff; z-index: 100; width: 100%; background-color: #fff; box-shadow: -1px 11px 24px -11px rgba(0, 0, 0, 0.2); transition: 0.3s; ">
+        <header class="header">
+            <div class="container-home d_flex">
+                <div class="d_flex">
+                    <ul class="d_flex">
+                        <li>
+                            <a href="~/Home/Home">Trang chủ</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navlink">
+                    <ul>
+                        <li>
+                            <a href="~/Patients/CreateForm" style="font-size:18px; text-align:center"><i class="fa-solid fa-clipboard-list"></i>
+                            Đặt lịch khám</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="navlink">
+                    <ul class="d_flex">
+                        <li>
+                            <i class="fas fa-user"></i>
+                            @if (@Session["FullName"] == null)
+                            {<span> Hello </span> }
+                            else
+                            { <span> <text> Hello, </text> @Session["FullName"]</span>}
+                        </li>
+                        <li>
+                            <a href="~/LoginUser/Logout">Đăng xuất</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+    </section>
+    <div class="main--content" style="background: #E9F2F6">
+        <div style="min-height: auto">
+            @RenderBody()
+        </div>
+
+        @*@Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrap")
+            @RenderSection("scripts", required: false)*@
+        <div class="div-footer d_flex">
+            <ul>
+                <li style="font-weight:bolder">Các chính sách</li>
+                <li><div class="text-left"><a class="format-footer" href="~/Home/MedicalExaminationPolicy">Chính sách khám bệnh</a></div></li>
+                <li><div class="text-left"><a class="format-footer" href="~/Home/CustomerPolicy">Chính sách khách hàng</a></div></li>
+                <li><div class="text-left"><a class="format-footer" href="~/Home/ClinicPolicy">Chính sách phòng khám</a></div></li>
+            </ul>
+
+            <ul>
+                <li style="font-weight:bolder">Liên hệ</li>
+                <li>
+                    <div class="text-left"><i class="fa-solid fa-phone-volume"></i> 0386040650</div>
+                </li>
+                <li>
+
+                    <div class="text-left"><i class="fa-solid fa-envelope"></i> InternationalClinic@gmail.com</div>
+                </li>
+                <li><div class="text-left"><i class="fa-brands fa-facebook"></i> International Clinic</div></li>
+                <li><div class="text-left"><i class="fa-solid fa-location-dot"></i> 84 Trà Vinh</div></li>
+            </ul>
+
+            <ul>
+                <li style="font-weight:bolder">Danh mục</li>
+                <li>
+                    <div class="text-left"><a class="format-footer" href="~/Home/Index">Trang chủ</a></div>
+                </li>
+                <li>
+                    <div class="text-left"><a class="format-footer" href="~">Về chúng tôi</a></div>
+                </li>
+                <li><div class="text-left"><a class="format-footer" href="~">Tin tức</a></div></li>
+            </ul>
+            <ul>
+                <li>
+                    <i class="fa-solid fa-clock"></i>
+                    <span id="monToSat"> Thứ 2 - Thứ 7: 8:00 AM - 17:00 PM / Chủ nhật: Nghỉ</span>
+
+                </li>
+
+                <li>
+                    <span id="workStatus"></span>
+                </li>
+            </ul>
+        </div>
+        <div class="licence" style="text-align: center; background: #0f3460; border-top: 1px solid #808080; color: #fff; position: relative; width: 100%; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px; ">
+            &copy; @DateTime.Now.Year - Bản quyền thuộc về Mã Tuấn Tường
+        </div>
+    </div>
+</body>
+</html>

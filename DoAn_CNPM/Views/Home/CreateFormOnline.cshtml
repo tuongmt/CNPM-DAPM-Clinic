@@ -1,0 +1,108 @@
+﻿<link href="~/Content/CreateForm.css" rel="stylesheet" />
+@model DoAn_CNPM.Controllers.HomeController
+@{
+    ViewBag.Title = "TẠO ĐƠN KHÁM ONLINE";
+    Layout = "~/Views/Shared/_Layout_Home.cshtml";
+}
+
+<div class="order">
+    <div class="container-o">
+        <h2>Điền thông tin đơn khám</h2>
+        <hr/>
+        <form method="post" action="~/Home/CreateFormOnline">
+            <div class="d_flex">
+                <div class="input-data">
+                    <input type="text" id="fullname" name="fullname" value="" required />
+                    <label>Họ và tên </label>
+                </div>
+
+            </div>
+            <div class="d_flex">
+                <div class="input-data" style="width:29%">
+                    <select id="gender" name="gender" value="" required>
+                        <option value="">Chọn giới tính</option>
+                        <option value="Nam">Nam</option>
+                        <option value="Nữ">Nữ</option>
+                    </select>
+                </div>
+                <div class="input-data" style="width:39%">
+                    <input type="date" id="DOB" name="DOB" value="" />
+                    <label>Ngày sinh</label>
+                </div>
+                <div class="input-data" style="width:29%">
+                    <input type="text" id="phone" name="phone" value="" required />
+                    <label>Số điện thoại</label>
+                </div>
+            </div>
+            <div class="input-data">
+                <input type="text" id="address" name="address" value="" required />
+                <label>Địa Chỉ</label>
+            </div>
+
+            <div class="d_flex">
+                <div class="input-data" style="width:33%">
+                    <select id="doctorId" name="doctorId" required>
+                        <option value="">Chọn bác sĩ</option>
+                        @if (ViewBag.Doctors != null)
+                        {
+                            var doctors = ViewBag.Doctors;
+                            foreach (var doctor in doctors)
+                            {
+                                <option value="@doctor.DoctorId">@doctor.FullName</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="input-data" style="width:33%">
+                    <select id="examSession" name="examSession" required>
+                        <option value="">Chọn buổi khám</option>
+                    </select>
+                </div>
+                <div class="input-data" style="width:33%">
+                    <input type="date" id="examDate" name="examDate" value="" />
+                    <label>Ngày khám</label>
+                </div>
+            </div>
+                <div class="input-data">
+                    <input type="text" id="reason" name="reason" value="" required />
+                    <label>Lý do khám bệnh</label>
+                </div>
+                <button type="submit" name="button">Xác nhận</button>
+</form>
+    </div>
+</div>
+
+<script>
+    // Đối tượng chứa danh sách buổi khám cho từng bác sĩ
+    var examSessionsByDoctor = {
+        1: ['Sáng thứ hai', 'Sáng thứ năm'],
+        2: ['Chiều thứ hai', 'Sáng thứ bảy'],
+        3: ['Sáng thứ ba', 'Sáng thứ sáu'],
+        4: ['Chiều thứ ba', 'Chiều thứ bảy'],
+        5: ['Sáng thứ tư', 'Chiều thứ năm'],
+        6: ['Chiều thứ tư', 'Chiều thứ sáu'],
+        // Thêm thông tin buổi khám cho các bác sĩ khác ở đây
+    };
+
+    // Lắng nghe sự kiện khi chọn một bác sĩ
+    document.getElementById('doctorId').addEventListener('change', function () {
+        var selectedDoctorId = this.value;
+
+        // Đối tượng select cho buổi khám
+        var examSessionSelect = document.getElementById('examSession');
+
+        // Xóa tất cả các tùy chọn hiện có
+        examSessionSelect.innerHTML = '<option value="">Chọn buổi khám</option>';
+
+        // Hiển thị danh sách buổi khám tương ứng với bác sĩ đã chọn
+        if (selectedDoctorId) {
+            var sessions = examSessionsByDoctor[selectedDoctorId];
+            sessions.forEach(function (session) {
+                var option = document.createElement('option');
+                option.value = session;
+                option.textContent = session;
+                examSessionSelect.appendChild(option);
+            });
+        }
+    });
+</script>

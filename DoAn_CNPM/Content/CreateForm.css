@@ -1,0 +1,105 @@
+﻿.order {
+    width: 100%;
+    background: #f6f9fc;
+    padding: 50px;
+}
+.row {
+    padding: 8px;
+}
+input, select{
+    border-radius: 5px;
+}
+
+.container-o {
+    width: 700px;
+    height: auto;
+    background: white;
+    margin: auto;
+    padding: 40px 40px;
+}
+
+    .container-o button {
+        width: 50%;
+        height: 65px;
+        margin: auto;
+        display: block;
+        border-radius: 5px;
+        color: white;
+        background: #ff4141;
+        border: none;
+        font-size: 24px;
+        font-weight: 500;
+        margin-top: 30px;
+    }
+
+        .container-o button:hover {
+            scale: 1.01;
+            border: none;
+            cursor: pointer;
+        }
+
+.input-data {
+    height: 65px;
+    width: 100%;
+    position: relative;
+    margin-top: 30px;
+}
+    .input-data select {
+        height: 100%;
+        width: 100%;
+        padding-left: 20px;
+        border: none;
+        font-size: 18px;
+        outline: none;
+        color: #5c5c5c;
+        border: 1px solid #c9c9c9;
+    }
+    .input-data input {
+        height: 100%;
+        width: 100%;
+        padding-left: 20px;
+        border: none;
+        font-size: 18px;
+        outline: none;
+        color: #5c5c5c;
+        border: 1px solid #c9c9c9;
+    }
+
+        .input-data input:focus ~ label,
+        .input-data input:valid ~ label {
+            transform: translateY(-40px);
+            font-size: 15px;
+            color: #ff4141;
+        }
+
+    .input-data label {
+        position: absolute;
+        bottom: 20px;
+        padding-left: 20px;
+        left: 0px;
+        color: grey;
+        pointer-events: none;
+        transition: all 0.3s ease;
+    }
+
+    .input-data .underline {
+        position: absolute;
+        bottom: 0px;
+        height: 2px;
+        width: 100%;
+    }
+
+        .input-data .underline::before {
+            position: absolute;
+            content: "";
+            height: 100%;
+            width: 100%;
+            background: #ff4141;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+    .input-data input:focus ~ .underline::before,
+    .input-data input:valid ~ .underline::before {
+        transform: scaleX(1);
+    }

@@ -1,0 +1,95 @@
+﻿@model DoAn_CNPM.Controllers.HomeController
+@{
+    ViewBag.Title = "DANH SÁCH BÁC SĨ";
+    Layout = "~/Views/Shared/_Layout_Home.cshtml";
+}
+
+<div class="" style="background: #fff; width: 80%; margin: auto; padding: 10px;">
+    <h2 class="h2--title">@ViewBag.Title</h2>
+    <section class="search" style="padding:20px">
+        @using (Html.BeginForm("FindDoctor", "Home", FormMethod.Get))
+        {
+            <div class="container-home c_flex">
+                <div class="logo width">
+
+                </div>
+                <div class="search-box f_flex">
+
+                    <i class="fa fa-search"></i>
+                    <input type="text" name="searchString" placeholder="Tìm kiếm..." />
+                    <input type="submit" class="submit" value="Tìm kiếm" />
+
+                </div>
+
+                <div class="icon f_flex width">
+
+                </div>
+            </div>
+        }
+    </section>
+    <table style="background:#fff" class="table-bordered">
+        <tr>
+            <th>
+                Họ tên Bác sĩ
+            </th>
+
+            <th>
+                Giới tính
+            </th>
+            <th>
+                Chuyên khoa
+            </th>
+            <th>
+                Lịch khám
+            </th>
+        </tr>
+        @foreach (var item in ViewBag.Doctors)
+        {
+            <tr>
+                <td>
+                    <img src="~/Images/Doctor/@item.Image" class="image-doctor" alt="Hình ảnh" />
+                    <b>@item.FullName</b>
+                </td>
+                <td>
+                    @item.Gender
+                </td>
+                <td>
+                    @item.Dept.DeptName
+                </td>
+                <td>
+                    @{
+                        Dictionary<int, string> doctorDayOfWeekMap = new Dictionary<int, string>
+                                                {
+                            { 1, "Sáng thứ hai / Sáng thứ năm" },
+                            { 2, "Chiều thứ hai / Sáng thứ bảy" },
+                            { 3, "Sáng thứ ba / Sáng thứ sáu" },
+                            { 4, "Chiều thứ ba / Chiều thứ bảy" },
+                            { 5, "Sáng thứ tư / Chiều thứ năm" },
+                            { 6, "Chiều thứ tư / Chiều thứ sáu" },
+                            { 9, "Chiều thứ ba / Chiều thứ bảy" },
+                            { 1015, "Chiều thứ năm / Chiều thứ ba" },
+                         };
+                    }
+
+                    @try
+                    {
+                        if (item.DoctorId != null && doctorDayOfWeekMap.Keys != null)
+                        {
+                            <span> @doctorDayOfWeekMap[item.DoctorId]</span>
+                        }
+                        else
+                        {
+                            <span>Chưa có ngày khám</span>
+                        }
+                    }
+                    catch
+                    {
+                        Response.Redirect("~/Error/Index");
+                    }
+
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+

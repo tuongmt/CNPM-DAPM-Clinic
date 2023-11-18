@@ -1,0 +1,89 @@
+﻿@model IEnumerable<DoAn_CNPM.Models.User>
+
+@{
+    ViewBag.Title = "Thông tin cá nhân";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Session["admin"] != null)
+{
+    <div style="width:50%;margin:auto;padding:8px;min-height:470px">
+        <div class="tabular--wrapper">
+            <h2 class="h2--title">@ViewData["Title"]</h2>
+            <hr />
+            <div class="d_flex">
+                @foreach (var item in Model)
+                {
+                    if (item.UserId.ToString() == Session["AdminId"].ToString())
+                    {
+                        <div>
+                            <img src="~/Images/Avatar/@item.Image" class="img-avatar" alt="Hình ảnh" />
+                        </div>
+
+                        <div style="padding-left:30px;" class="">
+                            <dl class="row">
+                                <dt class="col-5 p b">
+                                    Tên tài khoản:
+                                </dt>
+                                <dd class="col-7 p">
+                                    @Html.DisplayFor(modelItem => item.Username)
+                                </dd>
+                                <dt class="col-5 p b">
+                                    Tên:
+                                </dt>
+                                <dd class="col-7 p">
+                                    @Html.DisplayFor(modelItem => item.FullName)
+                                </dd>
+                                <dt class="col-5 p b">
+                                    Giới tính:
+                                </dt>
+                                <dd class="col-7 p">
+                                    @Html.DisplayFor(modelItem => item.Gender)
+                                </dd>
+                                <dt class="col-5 p b">
+                                    Vai trò:
+                                </dt>
+                                <dd class="col-7 p">
+                                    @Html.DisplayFor(modelItem => item.Role.RoleName)
+                                </dd>
+                                <dt class="col-5 p b">
+                                    Số điện thoại:
+                                </dt>
+                                <dd class="col-7 p">
+                                    @Html.DisplayFor(modelItem => item.Phone)
+                                </dd>
+                                <dt class="col-5 p b">
+                                    Địa chỉ:
+                                </dt>
+                                <dd class="col-7 p">
+                                    @Html.DisplayFor(modelItem => item.Address)
+                                </dd>
+                                <dt class="col-5 p b">
+                                    Ngày sinh
+                                </dt>
+                                <dd class="col-7 p">
+                                    @try
+                                    {
+                                        if (item.DOB.HasValue)
+                                        {
+                                            @item.DOB.Value.ToString("dd-MM-yyyy")
+                                        }
+                                    }
+                                    catch
+                                    {
+                                        Response.Redirect("~/Error/Index");
+                                    }
+
+                                </dd>
+                                <dd class="col-12 p" style="text-align:center">
+                                    @*<a href="@Url.Action("Edit", new { id = Session["AdminUsr"].ToString().Trim() })" class="btn btn-edit"><i class="fa-solid fa-pen-to-square"></i></a>*@
+                                    <a href="@Url.Action("Edit", new { id = item.UserId })" class="btn btn-edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                                </dd>
+                            </dl>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}

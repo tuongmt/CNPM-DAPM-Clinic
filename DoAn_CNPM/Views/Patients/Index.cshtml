@@ -5,80 +5,144 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="f-index">
-    <div class="tabular--wrapper">
-        <h2 class="h2--title">@ViewData["Title"]</h2>
-        <hr />
-        <div class="nav--search">
-            @using (Html.BeginForm("Index", "Patients", FormMethod.Get))
-            {
-                <table>
-                    <tr>
-                        <td class="col sm-4">
-                            <a href="@Url.Action("Create")" class="btn btn-createnew"><i class="fa-solid fa-plus"></i></a>
-                        </td>
-                        <td class="col sm-8 search--box">
-                            <input type="text" name="SearchString" placeholder="Nhập thông tin tìm kiếm" />
-                            <button type="submit" value="Tìm kiếm"><i class="fa-solid fa-magnifying-glass"></i></button>
-                        </td>
-
-                    </tr>
-                </table>
-            }
-        </div>
-
-        <div class="table-container">
-            <table class="table table-hover table-striped table-bordered">
-                <tr>
-                    <th>
-                        Id
-                    </th>
-                    <th>
-                        Họ tên Bệnh nhân
-                    </th>
-                    <th>
-                        Giới tính
-                    </th>
-                    <th>
-                        Số điện thoại
-                    </th>
-                    <th>
-                        Ngày sinh
-                    </th>
-                    <th>
-                        Địa chỉ
-                    </th>
-                    <th>Chức năng Sửa - Xóa</th>
-                </tr>
-
-                @foreach (var item in Model)
+@if (Session["admin"] != null)
+{
+    <div class="f-index">
+        <div class="tabular--wrapper">
+            <a href="~/Patients/Index">  <h2 class="h2--title">@ViewData["Title"]</h2></a>
+            <hr />
+            <div class="nav--search">
+                @using (Html.BeginForm("Index", "Patients", FormMethod.Get))
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PatientId)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FullName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Gender)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Phone)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DOB)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Address)
-                        </td>
-                        <td>
-                            <a href="@Url.Action("Edit", new { id = item.PatientId })" class="btn btn-edit"><i class="fa-regular fa-pen-to-square"></i></a>
-                            <a href="@Url.Action("Delete", new { id = item.PatientId })" class="btn btn-del"><i class="fa-regular fa-trash-can"></i></a>
-                        </td>
-                    </tr>
+                    <table>
+                        <tr>
+                            <td class="col sm-4">
+                                <a href="@Url.Action("Create")" class="btn btn-createnew"><i class="fa-solid fa-plus"></i></a>
+                            </td>
+                            <td class="col sm-8 search--box">
+                                <input type="text" name="SearchString" placeholder="Nhập thông tin tìm kiếm" />
+                                <button type="submit" value="Tìm kiếm"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </td>
+
+                        </tr>
+                    </table>
                 }
-            </table>
+            </div>
+
+            <input type="hidden" id="PatientId" />
+
+            <div class="table-container">
+                <table class="table table-hover table-striped table-bordered">
+                    <tr>
+                        <th>
+                            Id
+                        </th>
+                        <th>
+                            Họ tên Bệnh nhân
+                        </th>
+                        <th>
+                            Giới tính
+                        </th>
+                        <th>
+                            Số điện thoại
+                        </th>
+                        <th>
+                            Ngày sinh
+                        </th>
+                        <th>
+                            Địa chỉ
+                        </th>
+                        <th>Thao tác</th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PatientId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Gender)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Phone)
+                            </td>
+                            <td>
+                                @try
+                                {
+                                    if (item.DOB.HasValue)
+                                    {
+                                        @item.DOB.Value.ToString("dd-MM-yyyy")
+                                    }
+                                }
+                                catch
+                                {
+                                    Response.Redirect("~/Error/Index");
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Details", new { id = item.PatientId })" class="btn btn-details"><i class="fa-solid fa-eye"></i></a>
+                                <a href="@Url.Action("Edit", new { id = item.PatientId })" class="btn btn-edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a id="showModal" class="btn btn-del" onclick="Confirm(@item.PatientId)"><i class="fa-solid fa-trash-can"></i></a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Delete Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="DeleteCatLabel">Xóa Bệnh nhân</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc muốn xóa mục có Id là <span id="ItemIdDelete" style="color:blue; font-weight:600"></span> không?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <input type="button" value="Xóa" class="btn btn-danger" id="btnDelete" />
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function () {
+
+        $("#btnDelete").click(function () {
+            var idC = $("#PatientId").val();
+            $.ajax({
+                type: "POST",
+                url: "/Patients/Delete",
+                data: { id: idC },
+                success: function (result) {
+                    if (result) {
+                        $("#PatientId").val(null);
+                        window.location.href = "/Patients/Index";
+                    } else {
+                        alert("Opps something wrong");
+                    }
+                }
+            });
+        });
+    });
+    var Confirm = function (id) {
+        $("#PatientId").val(id);
+        $("#ItemIdDelete").text(id);
+        $("#DeleteModal").modal('show');
+    }
+</script>

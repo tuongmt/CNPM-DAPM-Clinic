@@ -1,0 +1,114 @@
+﻿@model DoAn_CNPM.Models.User
+
+@{
+    ViewBag.Title = "CẬP NHẬT THÔNG TIN ADMIN";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid f-edit">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/Users/Index">Admin</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cập nhật</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="tabular--wrapper">
+        <div class="table-container">
+            <h2 style="text-align: center">@ViewBag.Title</h2>
+            @using (Html.BeginForm("Edit", "Users", FormMethod.Post, new
+            {
+                @enctype = "multipart/form-data"
+            }))
+            {
+                @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.UserId)
+            <div class="row">
+                <div class="col-8">
+                    <label>Tên</label>
+                    @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-4">
+                    <label> Giới tính</label>
+                    @Html.DropDownList("Gender", ViewBag.Gender as SelectList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label>Ngày sinh</label>
+                    @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control", @Value = Model.DOBFormatted } })
+                    @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <label> Số điện thoại</label>
+                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="col-6">
+                    <label> Vai trò</label>
+                    @Html.DropDownList("RoleId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.RoleId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <label>Hình ảnh</label>
+                    <input type="file" name="uploadPhoto" id="uploadPhoto" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.Image, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-6">
+                    <img src="~/Images/Avatar/@Model.Image" width="150" height="200" /> (Ảnh hiện tại)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label>Địa chỉ</label>
+                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label>Mật khẩu</label>
+                    <div class="d_flex">
+                        <div style="width: 70%">
+                            <input type="password" id="Password" name="Password" class="form-control" value="@Model.Password.ToString().Trim()" />
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                        <div>
+                            <input type="checkbox" id="ShowPassword" />
+                            <label for="ShowPassword">Hiển thị mật khẩu</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row input-wrapper">
+                <input type="submit" value="Lưu" class="btn btn-primary" , style="color:white" />
+            </div>
+        </div>
+            }
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#ShowPassword").change(function () {
+            var passwordField = $("#Password");
+            var isChecked = $(this).prop("checked");
+
+            // Toggle the password field type between "password" and "text"
+            passwordField.attr("type", isChecked ? "text" : "password");
+        });
+    });
+</script>

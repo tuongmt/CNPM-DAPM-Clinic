@@ -6,63 +6,68 @@
 }
 
 <div class="container-fluid f-create">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/Doctors/Index">Bác sĩ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tạo mới</li>
+            </ol>
+        </nav>
+    </div>
     <div class="tabular--wrapper">
         <div class="table-container">
             <h2 style="text-align: center">@ViewBag.Title</h2>
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("Create", "Doctors", FormMethod.Post, new
+            {
+                @enctype = "multipart/form-data"
+            }))
             {
                 @Html.AntiForgeryToken()
-        <div class="form-horizontal">
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="row">
-                <div class="control-label col-md-4">
-                    Họ tên Bác sĩ
-                </div>
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="row">
+                        <div class="col-12">
+                            <label>Họ tên Bác sĩ</label>
+                            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-            <div class="row">
-                <div class="control-label col-md-4">
-                    Giới tính
-                </div>
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Giới tính</label>
+                            @Html.DropDownList("Gender", ViewBag.Gender as SelectList, "Chọn giới tính", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-6">
+                            <label>Số điện thoại</label>
+                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-            <div class="row">
-                <div class="control-label col-md-4">
-                    Số điện thoại
-                </div>
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label>Chuyên khoa</label>
+                            @Html.DropDownList("DeptId", ViewBag.DeptId as SelectList, "Chọn chuyên khoa", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.DeptId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
 
-            <div class="row">
-                <div class="control-label col-md-4">
-                    Chuyên khoa
-                </div>
-                <div class="col-md-8">
-                    @Html.EditorFor(model => model.Specialization, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Specialization, "", new { @class = "text-danger" })
-                </div>
-            </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Hình</label>
+                            <input type="file" name="uploadPhoto" id="uploadPhoto" class="form-control" accept="image/*" />
 
-            <div style="text-align:center">
-                <input type="submit" value="Tạo" class="btn btn-createnew" />
-            </div>
-        </div>
+                        </div>
+                    </div>
+
+                    <div class="row input-wrapper">
+                        <input type="submit" value="Tạo" class="btn btn-success" />
+                    </div>
+                </div>
             }
         </div>
-    </div>
-    <div class="back">
-        <a href="~/Doctors/Index"><i class="fa-solid fa-arrow-left"></i></a>
     </div>
 </div>

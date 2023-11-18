@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using DoAn_CNPM.Models;
 using PagedList;
 
@@ -14,6 +15,8 @@ namespace DoAn_CNPM.Controllers
     public class DetailFormsController : Controller
     {
         private DoAnCNPMEntities3 db = new DoAnCNPMEntities3();
+        private int pageSize = 6;
+        private int pageNumber; 
 
         [HttpPost]
         public ActionResult UpdateExaminedStatus(int id)
@@ -47,34 +50,60 @@ namespace DoAn_CNPM.Controllers
             return RedirectToAction("Index");
         }
 
-        // GET: DetailForms
-        public ActionResult Index(string searchString, int? page, double min = double.MinValue, double max = double.MaxValue, int checkSort = 0)
+        public ActionResult Index(string searchString, string searchBy, int? page)      
         {
-            
             var detailForms = db.DetailForms.Include(d => d.Form).Include(d => d.PriceList);
-            //sorting
-            detailForms = detailForms.OrderBy(d => d.DFId);
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                detailForms = detailForms.Where(d => d.FormId.ToString().Contains(searchString)
-                || d.TotalMoney.ToString().Contains(searchString));
-            }
-            //if (min >= 0 && max > 0)
-            //{
-            //    detailForms = db.DetailForms.OrderByDescending(d => d.TotalMoney).Where(p => (double)p.TotalMoney >= min && (double)p.TotalMoney <= max);
-            //}
 
-            int pageSize = 6;
-
-            int pageNumber = (page ?? 1);
+            pageNumber = (page ?? 1);
 
             if (page == null) page = 1;
 
-            //return View(detailForms.ToList());
+            //sorting
+            detailForms = detailForms.OrderBy(d => d.DFId);
+
+            if (searchBy == "All")
+            {
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    detailForms = detailForms.Where(d => d.DFId.ToString().Contains(searchString)
+                    || d.FormId.ToString().Contains(searchString)
+                    || d.FOId.ToString().Contains(searchString)
+                    || d.TotalMoney.ToString().Trim().Contains(searchString)
+                    || d.IsExamined.ToString().Contains(searchString)
+                    || d.IsPaid.ToString().Contains(searchString));
+                }
+                return View("Index", detailForms.ToPagedList(pageNumber, pageSize));
+            }
+            else if(searchBy == "Id_CTĐK")
+            {
+                return View(detailForms.Where(d => d.DFId.ToString().Contains(searchString) || searchString == null).ToPagedList(pageNumber, pageSize));
+            }else if(searchBy == "Id_ĐK")
+            {
+                return View(detailForms.Where(d => d.FormId.ToString().Contains(searchString) || searchString == null).ToPagedList(pageNumber, pageSize));
+            }
+            else if (searchBy == "Id_ĐKTT")
+            {
+                return View(detailForms.Where(d => d.FOId.ToString().Contains(searchString) || searchString == null).ToPagedList(pageNumber, pageSize));
+            }else if (searchBy == "TotalMoney")
+            {
+                return View(detailForms.Where(d => d.TotalMoney.ToString().Contains(searchString) || searchString == null).ToPagedList(pageNumber, pageSize));
+            }
+            else if (searchBy == "ExamStatus")
+            {
+                return View(detailForms.Where(d => d.IsExamined.ToString().Contains(searchString) || searchString == null).ToPagedList(pageNumber, pageSize));
+            }
+            else if (searchBy == "PayStatus")
+            {
+                return View(detailForms.Where(d => d.IsPaid.ToString().Contains(searchString) || searchString == null).ToPagedList(pageNumber, pageSize));
+            }
+            else if (searchBy == "SL")
+            {
+                return View(detailForms.Where(d => d.Quantity.ToString().Contains(searchString) || searchString == null).ToPagedList(pageNumber, pageSize));
+            }
+
             return View("Index",detailForms.ToPagedList(pageNumber, pageSize));
         }
 
-        // GET: DetailForms/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -89,38 +118,42 @@ namespace DoAn_CNPM.Controllers
             return View(detailForm);
         }
 
-        // GET: DetailForms/Create
+        public double GetPrice(int priceListId)
+        {
+            var price = db.PriceLists.FirstOrDefault(p => p.PriceListId == priceListId)?.Price;
+            return price ?? 0; // Trả về 0 nếu không tìm thấy giá
+        }
+
         public ActionResult Create()
         {
             ViewBag.FormId = new SelectList(db.Forms, "FormId", "FormId");
+            ViewBag.FOId = new SelectList(db.FormOnlines, "FOId", "FOId");
             ViewBag.PriceListId = new SelectList(db.PriceLists, "PriceListId", "PriceListName");
-
-            
             return View();
         }
 
-        // POST: DetailForms/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DFId,Quantity,FormId,PriceListId,TotalMoney")] DetailForm detailForm)
+        public ActionResult Create([Bind(Include = "DFId,Quantity,FormId,FOId,PriceListId,TotalMoney")] DetailForm detailForm)
         {
-            if (ModelState.IsValid)
+            try
             {
-               
-                db.DetailForms.Add(detailForm);
-                db.SaveChanges();
-
+                if (ModelState.IsValid)
+                {
+                    ViewBag.FormId = new SelectList(db.Forms, "FormId", "FormId", detailForm.FormId);
+                    ViewBag.FOId = new SelectList(db.FormOnlines, "FOId", "FOId", detailForm.FOId);
+                    ViewBag.PriceListId = new SelectList(db.PriceLists, "PriceListId", "PriceListName", detailForm.PriceListId);
+                    db.DetailForms.Add(detailForm);
+                    db.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
-            ViewBag.FormId = new SelectList(db.Forms, "FormId", "FormId", detailForm.FormId);
-            ViewBag.PriceListId = new SelectList(db.PriceLists, "PriceListId", "PriceListName", detailForm.PriceListId);
-            ViewBag.Price = detailForm.PriceList.Price.ToString();
-            return View(detailForm);
+            catch
+            {
+                return RedirectToAction("Index","Error");
+            }
         }
 
-        // GET: DetailForms/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -133,52 +166,46 @@ namespace DoAn_CNPM.Controllers
                 return HttpNotFound();
             }
             ViewBag.FormId = new SelectList(db.Forms, "FormId", "FormId", detailForm.FormId);
+            ViewBag.FOId = new SelectList(db.FormOnlines, "FOId", "FOId", detailForm.FOId);
             ViewBag.PriceListId = new SelectList(db.PriceLists, "PriceListId", "PriceListName", detailForm.PriceListId);
             return View(detailForm);
         }
 
-        // POST: DetailForms/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DFId,Quantity,FormId,PriceListId,TotalMoney")] DetailForm detailForm)
+        public ActionResult Edit([Bind(Include = "DFId,Quantity,FormId,FOId,PriceListId,TotalMoney")] DetailForm detailForm)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(detailForm).State = EntityState.Modified;
+                if (ModelState.IsValid)
+                {
+                    db.Entry(detailForm).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+            }
+            catch
+            {
+                RedirectToAction("Index", "Error");
+            }
+            ViewBag.FormId = new SelectList(db.Forms, "FormId", "FormId", detailForm.FormId);
+            ViewBag.FOId = new SelectList(db.FormOnlines, "FOId", "FOId", detailForm.FOId);
+            ViewBag.PriceListId = new SelectList(db.PriceLists, "PriceListId", "PriceListName", detailForm.PriceListId);
+            return View(detailForm);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            try {
+                DetailForm detailForm = db.DetailForms.Find(id);
+                db.DetailForms.Remove(detailForm);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.FormId = new SelectList(db.Forms, "FormId", "FormId", detailForm.FormId);
-            ViewBag.PriceListId = new SelectList(db.PriceLists, "PriceListId", "PriceListName", detailForm.PriceListId);
-            return View(detailForm);
-        }
-
-        // GET: DetailForms/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
+            catch
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index", "Error");
             }
-            DetailForm detailForm = db.DetailForms.Find(id);
-            if (detailForm == null)
-            {
-                return HttpNotFound();
-            }
-            return View(detailForm);
-        }
-
-        // POST: DetailForms/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            DetailForm detailForm = db.DetailForms.Find(id);
-            db.DetailForms.Remove(detailForm);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

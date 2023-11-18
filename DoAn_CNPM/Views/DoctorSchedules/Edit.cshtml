@@ -1,11 +1,19 @@
 ﻿@model DoAn_CNPM.Models.DoctorSchedule
 
 @{
-    ViewBag.Title = "CẬP NHẬT LỊCH KHÁM CỦA BÁC SĨ";
+    ViewBag.Title = "CẬP NHẬT LỊCH KHÁM BÁC SĨ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container-fluid f-edit">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/DoctorSchedules/Index">Lịch khám Bác sĩ</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cập nhật</li>
+            </ol>
+        </nav>
+    </div>
     <div class="tabular--wrapper">
         <div class="table-container">
             <h2 class="h2--title">@ViewData["Title"]</h2>
@@ -18,55 +26,73 @@
                     @Html.HiddenFor(model => model.DSId)
 
                     <div class="row">
-                        <div class="control-label col-md-4">
-                            Id Bác sĩ
+                            <div class="col-12">
+                                <label>Bác sĩ</label>
+                                @Html.DropDownList("DoctorId", null, htmlAttributes: new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.DoctorId, "", new { @class = "text-danger" })
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            @Html.DropDownList("DoctorId", null, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.DoctorId, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
 
                     <div class="row">
-                        <div class="control-label col-md-4">
-                            Ngày trong tuần
-                        </div>
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.DayOfWeek, new { htmlAttributes = new { @class = "form-control" } })
+                        <div class="col-12">
+                            <label>Ngày trong tuần</label>
+                            @Html.DropDownList("DayOfWeek", ViewBag.DayOfWeek as SelectList, "Chọn ngày trong tuần", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.DayOfWeek, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="control-label col-md-4">
-                            Thời gian bắt đầu
-                        </div>
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.TimeStart, new { htmlAttributes = new { @class = "form-control" } })
+                        <div class="col-6">
+                            <label>Giờ bắt đầu</label>
+                            @Html.DropDownList("TimeStart", ViewBag.TimeStart as SelectList, "Chọn giờ bắt đầu", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.TimeStart, "", new { @class = "text-danger" })
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="control-label col-md-4">
-                            Thời gian kết thúc
-                        </div>
-                        <div class="col-md-8">
-                            @Html.EditorFor(model => model.TimeEnd, new { htmlAttributes = new { @class = "form-control" } })
+                        <div class="col-6">
+                            <label> Giờ kết thúc</label>
+                            @Html.DropDownList("TimeEnd", ViewBag.TimeEnd as SelectList, "Chọn giờ kết thúc", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.TimeEnd, "", new { @class = "text-danger" })
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-12" style="text-align:center">
+                    <div class="row input-wrapper">
                             <input type="submit" value="Lưu" class="btn btn-primary" , style="color:white" />
-                        </div>
                     </div>
                 </div>
             }
         </div>
     </div>
-    <div class="back">
-        <a href="~/DoctorSchedules/Index"><i class="fa-solid fa-arrow-left"></i></a>
-    </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $("#DayOfWeek").change(function () {
+            var selectedDayOfWeek = $(this).val();
+            var timeStartDropdown = $("#TimeStart");
+            var timeEndDropdown = $("#TimeEnd");
+
+            // Xóa options hiện tại
+            timeStartDropdown.empty();
+            timeEndDropdown.empty();
+
+            // Tạo mới options dựa trên selectedDayOfWeek
+            if (selectedDayOfWeek.includes("Sáng")) {
+                timeStartDropdown.append('<option value="8:00">8:00</option>');
+                timeStartDropdown.append('<option value="8:30">8:30</option>');
+                timeStartDropdown.append('<option value="9:00">9:0</option>');
+            } else {
+                timeStartDropdown.append('<option value="13:00">13:00</option>');
+                timeStartDropdown.append('<option value="13:30">13:30</option>');
+                timeStartDropdown.append('<option value="14:00">14:00</option>');
+            }
+
+            if (selectedDayOfWeek.includes("Sáng")) {
+                timeEndDropdown.append('<option value="10:30">10:30</option>');
+                timeEndDropdown.append('<option value="11:00">11:00</option>');
+                timeEndDropdown.append('<option value="11:30">11:30</option>');
+            } else {
+                timeEndDropdown.append('<option value="16:00">16:00</option>');
+                timeEndDropdown.append('<option value="16:30">16:30</option>');
+                timeEndDropdown.append('<option value="17:00">17:00</option>');
+            }
+        });
+    });
+</script>

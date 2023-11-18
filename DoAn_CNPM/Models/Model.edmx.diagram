@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="223d565f13864f29b1daee215b90ab52" Name="Diagram1" ZoomLevel="73">
+        <EntityTypeShape EntityType="DoAnCNPMModel.Dept" Width="1.5" PointX="0.5" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.DetailForm" Width="1.5" PointX="10.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.DiseaseStatistic" Width="1.5" PointX="12.875" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.Doctor" Width="1.5" PointX="4.625" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.DoctorSchedule" Width="1.5" PointX="2.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.Form" Width="1.5" PointX="6.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.FormOnline" Width="1.5" PointX="8.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.Patient" Width="1.5" PointX="6.625" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.PriceList" Width="1.5" PointX="2.625" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.Staff" Width="1.5" PointX="4.5" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__Doctor__DeptId__3552E9B6" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__PriceList__DeptI__66EA454A" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__DetailFor__FormI__69C6B1F5" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__DetailFor__Price__6BAEFA67" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__DetailForm__FOId__6ABAD62E" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__DiseaseSta__DFId__6E8B6712" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__DoctorSch__Docto__7849DB76" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__Form__DoctorId__7C1A6C5A" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__FormOnlin__Docto__7FEAFD3E" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__Form__PatientId__7B264821" ManuallyRouted="false" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__Form__StaffId__7D0E9093" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.Role" Width="1.5" PointX="14.625" PointY="4.625" />
+        <EntityTypeShape EntityType="DoAnCNPMModel.User" Width="1.5" PointX="12.625" PointY="4.125" />
+        <AssociationConnector Association="DoAnCNPMModel.FK__Users__RoleId__0662F0A3" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

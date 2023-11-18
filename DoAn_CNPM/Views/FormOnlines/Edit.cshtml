@@ -1,0 +1,89 @@
+﻿@model DoAn_CNPM.Models.FormOnline
+
+@{
+    ViewBag.Title = "CẬP NHẬT ĐƠN KHÁM TRỰC TUYẾN";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid f-edit">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/FormOnlines/Index">Đơn khám trực tuyến</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Cập nhật</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="tabular--wrapper">
+        <div class="table-container">
+            <h2 class="h2--title">@ViewData["Title"]</h2>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.HiddenFor(model => model.FOId)
+
+                    <div class="row">
+                        <div class="col-12">
+                            <label>Họ tên </label>
+                            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Giới tính</label>
+                            @Html.DropDownList("Gender", ViewBag.Gender as SelectList,  new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-6">
+                            <label>Số điện thoại</label>
+                            @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Ngày sinh</label>
+                            @Html.TextBoxFor(model => model.DOB, new { @class = "form-control", @Value = Model.DOBFormatted })
+                            @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-6">
+                            <label>Bác sĩ</label>
+                            @Html.DropDownList("DoctorId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.DoctorId, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <label>  Địa chỉ</label>
+                            @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <label>Lý do khám</label>
+                            @Html.EditorFor(model => model.ReasonForVisit, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ReasonForVisit, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="row input-wrapper">
+                        <input type="submit" value="Lưu" class="btn btn-primary" />
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+

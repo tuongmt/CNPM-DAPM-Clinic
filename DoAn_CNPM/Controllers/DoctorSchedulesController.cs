@@ -14,14 +14,21 @@ namespace DoAn_CNPM.Controllers
     {
         private DoAnCNPMEntities3 db = new DoAnCNPMEntities3();
 
-        // GET: DoctorSchedules
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                var dSchedules = db.DoctorSchedules.Where(ds => ds.DSId.ToString().Contains(searchString) ||
+                ds.DoctorId.ToString().Contains(searchString) ||
+                ds.DayOfWeek.Contains(searchString) ||
+                ds.TimeStart.ToString().Contains(searchString) ||
+                ds.TimeEnd.ToString().Contains(searchString));
+                return View(dSchedules.ToList());
+            }
             var doctorSchedules = db.DoctorSchedules.Include(d => d.Doctor);
             return View(doctorSchedules.ToList());
         }
 
-        // GET: DoctorSchedules/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,32 +43,58 @@ namespace DoAn_CNPM.Controllers
             return View(doctorSchedule);
         }
 
-        // GET: DoctorSchedules/Create
         public ActionResult Create()
         {
             ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FullName");
+            ViewBag.DayOfWeek = new SelectList(new List<SelectListItem>
+            {
+               new SelectListItem { Text = "Sáng thứ hai", Value = "Sáng thứ hai" },
+               new SelectListItem { Text = "Chiều thứ hai", Value = "Chiều thứ hai" },
+               new SelectListItem { Text = "Sáng thứ ba", Value = "Sáng thứ ba" },
+               new SelectListItem { Text = "Chiều thứ ba", Value = "Chiều thứ ba" },
+               new SelectListItem { Text = "Sáng thứ tư", Value = "Sáng thứ tư" },
+               new SelectListItem { Text = "Chiều thứ tư", Value = "Chiều thứ tư" },
+               new SelectListItem { Text = "Sáng thứ năm", Value = "Sáng thứ năm" },
+               new SelectListItem { Text = "Chiều thứ năm", Value = "Chiều thứ năm" },
+               new SelectListItem { Text = "Sáng thứ sáu", Value = "Sáng thứ sáu" },
+               new SelectListItem { Text = "Chiều thứ sáu", Value = "Chiều thứ sáu" },
+               new SelectListItem { Text = "Sáng thứ bảy", Value = "Sáng thứ bảy" },
+               new SelectListItem { Text = "Chiều thứ bảy", Value = "Chiều thứ bảy" },
+            }, "Value", "Text");
+            ViewBag.TimeStart = new SelectList(new List<SelectListItem>
+             {
+                  new SelectListItem { Text = "8:00", Value = "8:00" },
+            }, "Value", "Text");
+            ViewBag.TimeEnd = new SelectList(new List<SelectListItem>
+             {
+                  new SelectListItem { Text = "17:00", Value = "17:00" },
+            }, "Value", "Text");
             return View();
         }
 
-        // POST: DoctorSchedules/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "DSId,DoctorId,DayOfWeek,TimeStart,TimeEnd")] DoctorSchedule doctorSchedule)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.DoctorSchedules.Add(doctorSchedule);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+                if (ModelState.IsValid)
+                {
+                    db.DoctorSchedules.Add(doctorSchedule);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
 
-            ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FullName", doctorSchedule.DoctorId);
-            return View(doctorSchedule);
+                ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FullName", doctorSchedule.DoctorId);
+
+                return View(doctorSchedule);
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Error");
+            }           
         }
 
-        // GET: DoctorSchedules/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -74,50 +107,66 @@ namespace DoAn_CNPM.Controllers
                 return HttpNotFound();
             }
             ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FullName", doctorSchedule.DoctorId);
+            ViewBag.DayOfWeek = new SelectList(new List<SelectListItem>
+            {
+               new SelectListItem { Text = "Sáng thứ hai", Value = "Sáng thứ hai" },
+               new SelectListItem { Text = "Chiều thứ hai", Value = "Chiều thứ hai" },
+               new SelectListItem { Text = "Sáng thứ ba", Value = "Sáng thứ ba" },
+               new SelectListItem { Text = "Chiều thứ ba", Value = "Chiều thứ ba" },
+               new SelectListItem { Text = "Sáng thứ tư", Value = "Sáng thứ tư" },
+               new SelectListItem { Text = "Chiều thứ tư", Value = "Chiều thứ tư" },
+               new SelectListItem { Text = "Sáng thứ năm", Value = "Sáng thứ năm" },
+               new SelectListItem { Text = "Chiều thứ năm", Value = "Chiều thứ năm" },
+               new SelectListItem { Text = "Sáng thứ sáu", Value = "Sáng thứ sáu" },
+               new SelectListItem { Text = "Chiều thứ sáu", Value = "Chiều thứ sáu" },
+               new SelectListItem { Text = "Sáng thứ bảy", Value = "Sáng thứ bảy" },
+               new SelectListItem { Text = "Chiều thứ bảy", Value = "Chiều thứ bảy" },
+            }, "Value", "Text");
+            ViewBag.TimeStart = new SelectList(new List<SelectListItem>
+             {
+                  new SelectListItem { Text = "8:00", Value = "8:00" },
+            }, "Value", "Text");
+            ViewBag.TimeEnd = new SelectList(new List<SelectListItem>
+             {
+                  new SelectListItem { Text = "17:00", Value = "17:00" },
+            }, "Value", "Text");
             return View(doctorSchedule);
         }
 
-        // POST: DoctorSchedules/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "DSId,DoctorId,DayOfWeek,TimeStart,TimeEnd")] DoctorSchedule doctorSchedule)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Entry(doctorSchedule).State = EntityState.Modified;
+                if (ModelState.IsValid)
+                {
+                    db.Entry(doctorSchedule).State = EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FullName", doctorSchedule.DoctorId);
+                return View(doctorSchedule);
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Error");
+            }
+        }
+      
+        public ActionResult Delete(int id)
+        {
+            try
+            {
+                DoctorSchedule doctorSchedule = db.DoctorSchedules.Find(id);
+                db.DoctorSchedules.Remove(doctorSchedule);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.DoctorId = new SelectList(db.Doctors, "DoctorId", "FullName", doctorSchedule.DoctorId);
-            return View(doctorSchedule);
-        }
-
-        // GET: DoctorSchedules/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
+            catch
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return RedirectToAction("Index", "Error");
             }
-            DoctorSchedule doctorSchedule = db.DoctorSchedules.Find(id);
-            if (doctorSchedule == null)
-            {
-                return HttpNotFound();
-            }
-            return View(doctorSchedule);
-        }
-
-        // POST: DoctorSchedules/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            DoctorSchedule doctorSchedule = db.DoctorSchedules.Find(id);
-            db.DoctorSchedules.Remove(doctorSchedule);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

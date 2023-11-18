@@ -6,106 +6,136 @@
     <title>@ViewData["Title"]</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link href="~/Content/style.css" rel="stylesheet"/>
+
+
+    @* Gọi Modal *@
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="~/Content/style.css" rel="stylesheet" />
+
 </head>
 <body>
     <div class="sidebar">
-        @*@if (Session["admin"] != null)
-            {*@
-        @*<div class="logo">
+        @if (Session["admin"] != null)
+        {
+            @*<div class="logo">
                 <a style="color:yellow;font-size:18px" class="navbar-brand" href="~/Home">
                     <i class="fa-solid fa-house-chimney-medical"></i>
                     <b>CLINIC OF HUFLIT</b>
                 </a>
             </div>*@
-        <ul class="menu">
-            <li class="active">
-                <a href="~/Home">
-                    <i class="fa-solid fa-house"></i>
-                    <span>Trang chủ </span>
-                </a>
-            </li>
-            <li>
-                <a href="~/AdminUsers/Index">
-                    <i class="fas fa-user"></i>
-                    @if (@Session["AdminName"] == null)
-                    {<span> Hello </span> }
-                    else
-                    { <span> <text> Hello, </text> @Session["AdminName"]</span>}
-                </a>
-            </li>
+            <ul class="menu">
+                <li class="activeItem">
+                    <a href="~/Home">
+                        <i class="fa-solid fa-house"></i>
+                        <span>Trang chủ </span>
+                    </a>
+                </li>
 
-            <li>
-                <a href="~/Categories/Index">
-                    <img src="~/Images/category.png" alt="" class="img-icon" />
-                    <span>Phân loại bệnh</span>
-                </a>
-            </li>
+                <li>
+                    <a href="~/Depts/Index">
+                        <img src="~/Images/Icon/category.png" alt="" class="img-icon" />
+                        <span>Khoa</span>
+                    </a>
+                </li>
 
-            <li>
-                <a href="~/PriceLists/Index">
-                    <img src="~/Images/table.png" alt="" class="img-icon" />
-                    <span>Bảng giá khám</span>
-                </a>
-            </li>
+                <li>
+                    <a href="~/PriceLists/Index">
+                        <img src="~/Images/Icon/table.png" alt="" class="img-icon" />
+                        <span>Bảng giá khám</span>
+                    </a>
+                </li>
 
-            <li>
-                <a href="~/DiseaseStatisticLists/Index">
-                    <img src="~/Images/form.png" alt="" class="img-icon" />
-                    <span>Chẩn đoán</span>
-                </a>
-            </li>
-            <li>
-                <a href="~/Staffs/Index">
-                    <img src="~/Images/nurse.png" alt="" class="img-icon" />
-                    <span>Nhân viên</span>
-                </a>
-            </li>
-            <li>
-                <a href="~/Doctors/Index">
-                    <img src="~/Images/doctor.png" alt="" class="img-icon" />
-                    <span>Bác sĩ</span>
-                </a>
-            </li>
-            <li>
-                <a href="~/Patients/Index">
-                    <img src="~/Images/customer.png" alt="" class="img-icon" />
-                    <span>Bệnh nhân</span>
-                </a>
-            </li>
+                <li>
+                    <a href="~/DiseaseStatistics/Index">
+                        <img src="~/Images/Icon/form.png" alt="" class="img-icon" />
+                        <span>Chẩn đoán</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/Staffs/Index">
+                        <img src="~/Images/Icon/nurse.png" alt="" class="img-icon" />
+                        <span>Nhân viên</span>
+                    </a>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" href="~/Doctors/Index" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="~/Images/Icon/doctor.png" alt="" class="img-icon" />
+                            <span>Bác sĩ</span>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item text-center" href="~/Doctors/Index"><span style="color:#333">Thông tin</span></a>
+                            <a class="dropdown-item" href="~/DoctorSchedules/Index"><span style="color:#333">Lịch khám</span></a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="~/Patients/Index">
+                        <img src="~/Images/Icon/customer.png" alt="" class="img-icon" />
+                        <span>Bệnh nhân</span>
+                    </a>
+                </li>
 
-            <li>
-                <a href="~/Forms/Index">
-                    <img src="~/Images/form.png" alt="" class="img-icon" />
-                    <span>Đơn khám</span>
-                </a>
-            </li>
-            <li>
-                <a href="~/DetailForms/Index">
-                    <img src="~/Images/form.png" alt="" class="img-icon" />
-                    <span>Chi tiết ĐK</span>
-                </a>
-            </li>
-
-            <li class="logout">
-                <a href="~/LoginUser/Logout">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Đăng xuất</span>
-                </a>
-            </li>
-        </ul>
-        @*}*@
+                <li>
+                    <a href="~/Forms/Index">
+                        <img src="~/Images/Icon/form.png" alt="" class="img-icon" />
+                        <span>Đơn khám</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/FormOnlines/Index">
+                        <img src="~/Images/Icon/form.png" alt="" class="img-icon" />
+                        <span>ĐK trực tuyến</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="~/DetailForms/Index">
+                        <img src="~/Images/Icon/form.png" alt="" class="img-icon" />
+                        <span>Chi tiết ĐK</span>
+                    </a>
+                </li>
+            </ul>
+        }
     </div>
-    <div class="main--content">
-        <div class="row">
-            <div class="col-md-12" style="min-height:auto">
-                @RenderBody()
-            </div>
+    
+    <div class="main--content" style="background: #E9F2F6">
+        <div class="d_flex head" style="">
+            <ul class="d_flex menu">
+                <li>
+                    <a href="~/Home">
+                        <h4>TRANG ADMIN</h4>
+                    </a>
+                </li>
+            </ul>
+            <ul class="d_flex menu">
+                <li>
+                    <a href="~/Users/Index">
+                        <i class="fas fa-user"></i>
+                        @if (@Session["FullName"] == null)
+                        {<span> Hello </span> }
+                        else
+                        { <span> <text> Hello, </text> @Session["FullName"]</span>}
+                    </a>
+                </li>
+                <li>
+                    <a href="~/LoginUser/Logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Đăng xuất</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div style="padding-top:88px; min-height:560px;">
+            @RenderBody()
         </div>
         @*@Scripts.Render("~/bundles/jquery")
-            @Scripts.Render("~/bundles/bootstrap")
-            @RenderSection("scripts", required: false)*@
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)*@
         <div class="div-footer d_flex">
             <ul>
                 <li style="font-weight:bolder">Các chính sách</li>
@@ -132,25 +162,25 @@
                 <li>
                     <div class="text-left"><a class="format-footer" href="~/Home/Index">Trang chủ</a></div>
                 </li>
-                <li>
+                @*<li>
                     <div class="text-left"><a class="format-footer" href="~">Về chúng tôi</a></div>
-                </li>
-                <li><div class="text-left"><a class="format-footer" href="~">Tin tức</a></div></li>
+                </li>*@
+                <li><div class="text-left"><a class="format-footer" href="~/Home/Home">Tin tức</a></div></li>
             </ul>
             <ul>
                 <li>
                     <i class="fa-solid fa-clock"></i>
-                    <span id="monToSat"> Thứ 2 - Thứ 7: 8:00 AM - 17:00 PM / Chủ nhật: Nghỉ</span>
-                    
-                </li>
+                    <span id="monToSat"> Thứ 2 - Thứ 7: 8:00 - 11:30 / 13:30 - 17:00 / Chủ nhật: Nghỉ</span>
 
+                </li>
                 <li>
                     <span id="workStatus"></span>
                 </li>
-                <li>
-                    <b>&copy; @DateTime.Now.Year - Ma Tuan Tuong</b>
-                </li>
             </ul>
+        </div>
+
+        <div class="licence" style="text-align: center; background: #3F9A81; border-top: 1px solid #808080; color: #fff; position: relative; width:100%; left:-4px; border-bottom-right-radius: 10px;  ">
+            &copy; @DateTime.Now.Year - Bản quyền thuộc về Mã Tuấn Tường
         </div>
     </div>
 </body>
@@ -183,6 +213,6 @@
         //document.getElementById("monToSat").style.color = "red"; // Áp dụng màu đỏ
         //document.getElementById("sun").style.color = "red"; // Áp dụng màu đỏ
         document.getElementById("workStatus").innerHTML = "● Đã ngưng làm việc";
-        document.getElementById("workStatus").style.color = "red"; // Áp dụng màu đỏ
+        document.getElementById("workStatus").style.color = "darkred"; // Áp dụng màu đỏ
     }
 </script>

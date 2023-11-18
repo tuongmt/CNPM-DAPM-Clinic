@@ -1,0 +1,172 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<DoAn_CNPM.Models.FormOnline>
+
+@{
+    ViewBag.Title = "ĐƠN KHÁM TRỰC TUYẾN";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*@if (Session["admin"] != null)
+    {*@
+<div class="f-index">
+    <div class="tabular--wrapper">
+        <a href="~/FormOnlines/Index">  <h2 class="h2--title">@ViewData["Title"]</h2></a>
+        <hr />@using (Html.BeginForm("Index", "FormOnlines", FormMethod.Get))
+        {
+            <div class="nav--search d_flex">
+                <div class="create-w">
+
+                </div>
+                <div class="search_radio_wrapper">
+                    <div class="d_flex item_search">
+                        <b>Tìm kiếm: </b>
+                        <div>
+                            @Html.RadioButton("searchBy", "All", true) <text>Tất cả</text>
+                        </div>
+                        <div>
+                            @Html.RadioButton("searchBy", "Name") <text>Họ tên</text>
+                        </div>
+                        <div>
+                            @Html.RadioButton("searchBy", "Gender") <text>Giới tính</text>
+                        </div>
+                        <div>
+                            @Html.RadioButton("searchBy", "PhoneNumber") <text>Số điện thoại</text>
+                        </div>
+                        <div>
+                            @Html.RadioButton("searchBy", "Doctor") <text>Bác sĩ</text>
+                        </div>
+                        <div>
+                            @Html.RadioButton("searchBy", "Reason") <text>Lý do khám</text>
+                        </div>
+                    </div>
+                    <div class="search--box">
+                        <input type="text" name="searchString" placeholder="Nhập thông tin" />
+                        <button type="submit" value="Tìm kiếm"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </div>
+                </div>
+            </div>
+        }
+        <input type="hidden" id="FOId" />
+
+        <div class="table-container">
+            <table class="table table-hover table-striped table-bordered">
+                <tr>
+                    <th>
+                        Id
+                    </th>
+                    <th>
+                        Họ tên
+                    </th>
+                    <th>
+                        Giới tính
+                    </th>
+                    <th>
+                        Số điện thoại
+                    </th>
+                    <th>
+                        Bác sĩ
+                    </th>
+                    <th>
+                        Lý do khám
+                    </th>
+                    <th>Thao tác</th>
+                </tr>
+
+                @if (Model.Count() == 0)
+                {
+                    <tr style="text-align: center;">
+                        <td colspan="7">Không tìm thấy dữ liệu</td>
+                    </tr>
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FOId)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Gender)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Phone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Doctor.FullName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.ReasonForVisit)
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Details", new { id = item.FOId })" class="btn btn-details"><i class="fa-solid fa-eye"></i></a>
+                                <a href="@Url.Action("Edit", new { id = item.FOId })" class="btn btn-edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a class="btn btn-del" onclick="Confirm(@item.FOId)"><i class="fa-solid fa-trash-can"></i></a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>
+<div class="page">
+    <!-- Thêm đoạn mã để hiển thị số trang và số trang hiện tại -->
+    <span>
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    </span>
+    <!--Control PagedListPager: mô tả mô hình với số trang là liên kết với tham số "Index" và tham
+    số page-->
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+</div>
+}
+<!-- Delete Modal -->
+<div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="DeleteCatLabel">Xóa Đơn khám trực tuyến</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc muốn xóa mục có Id là <span id="ItemIdDelete" style="color:blue; font-weight:600"></span> không?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <input type="button" value="Xóa" class="btn btn-danger" id="btnDelete" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        $("#btnDelete").click(function () {
+            var idC = $("#FOId").val();
+            $.ajax({
+                type: "POST",
+                url: "/FormOnlines/Delete",
+                data: { id: idC },
+                success: function (result) {
+                    if (result) {
+                        $("#FOId").val(null);
+                        window.location.href = "/FormOnlines/Index";
+                    } else {
+                        alert("Opps something wrong");
+                    }
+                }
+            });
+        });
+    });
+    var Confirm = function (id) {
+        $("#FOId").val(id);
+        $("#ItemIdDelete").text(id);
+        $("#DeleteModal").modal('show');
+    }
+</script>

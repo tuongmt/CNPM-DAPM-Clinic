@@ -1,0 +1,208 @@
+﻿@model DoAn_CNPM.Models.User
+
+@{
+    ViewBag.Title = "ĐĂNG KÝ NGƯỜI DÙNG";
+    Layout = null;
+}
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+</head>
+<!--Coded with love by Mutiullah Samim-->
+<body>
+    <div class="container h-100" style="min-height:600px">
+        <div class="d-flex justify-content-center h-100">
+            <div class="user_card">
+                <div class="d-flex justify-content-center">
+                    <div class="brand_logo_container">
+                        <img src="~/Images/clinic.png" class="brand_logo" alt="Logo">
+                    </div>
+                </div>
+                <div class=" justify-content-center form_container">
+                    <h3 style="padding: 6px; text-align:center">@ViewBag.Title</h3>
+                    <form method="post" action="/LoginUser/Register">
+                        @Html.AntiForgeryToken()
+                        <div class="input-group mb-2">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" name="Username" class="form-control input_user" value="" placeholder="Tên Tài khoản (*)">
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input type="password" name="Password" class="form-control input_pass" value="" placeholder="Mật khẩu (*)">
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input type="password" name="ConfirmPassword" class="form-control input_pass" value="" placeholder="Nhập lại Mật khẩu (*)">
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                            </div>
+                            <input type="text" name="FullName" class="form-control input_user" value="" placeholder="Họ tên (*)">
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fa fa-venus-mars" aria-hidden="true"></i></span>
+                            </div>
+                            <select name="Gender" class="form-control input_user">
+                                <option value="">Chọn giới tính</option>
+                                <option value="Nam">Nam</option>
+                                <option value="Nam">Nữ</option>
+                            </select>
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                            </div>
+                            <input type="text" name="Phone" class="form-control input_pass" value="" placeholder="Số điện thoại">
+                        </div>
+                        <div class="input-group mb-2">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fa fa-birthday-cake" aria-hidden="true"></i></span>
+                            </div>
+                            <input type="date" name="DOB" class="form-control input_pass" value="" placeholder="Ngày sinh">
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customControlInline">
+                                <label class="custom-control-label" for="customControlInline" style="color:white">
+                                    <a href="~/Home/ClinicPolicy">Chấp nhận điều khoản dịch vụ</a>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3 login_container">
+                            <button type="submit" name="button" class="btn login_btn">Đăng ký</button>
+                        </div>
+                        <div>
+                            @if (ViewBag.ErrorInfo != null)
+                            {
+                                <p style="color: #c12321; padding-top: 15px; font-weight: 600; font-size:18px "> @ViewBag.ErrorInfo</p>
+                            }
+                            else
+                            {
+                                <p></p>
+                            }
+                        </div>
+                        <div>
+                            <a href="Login" style="color:#fff;text-decoration:none"> Đã có tài khoản? Đăng nhập</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<style>
+    /* Coded with love by Mutiullah Samim */
+    a{
+        color: #fff;
+        text-decoration:none;
+    }
+        a:hover {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    body,
+    html {
+        margin: 0;
+        color:#fff;
+        padding: 0;
+        height: 100%;
+        background: #60a3bc !important;
+        font-family: "Poppins", sans-serif;
+    }
+
+    .user_card {
+        height: 650px;
+        width: 350px;
+        margin-top: 80px;
+        margin-bottom: auto;
+        background: rgb(63,154,129);
+        position: relative;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        padding: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border-radius: 5px;
+    }
+
+    .brand_logo_container {
+        position: absolute;
+        height: 170px;
+        width: 170px;
+        top: -75px;
+        border-radius: 50%;
+        background: #60a3bc;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .brand_logo {
+        height: 150px;
+        width: 150px;
+        border-radius: 50%;
+        border: 2px solid white;
+    }
+
+    .form_container {
+        margin-top: 100px;
+    }
+
+    .login_btn {
+        width: 100%;
+        background: #c12321 !important;
+        color: white !important;
+    }
+
+        .login_btn:focus {
+            box-shadow: none !important;
+            outline: 0px !important;
+        }
+
+        .login_btn:hover {
+            scale: 1.02;
+        }
+
+    .login_container {
+        padding: 0 2rem;
+    }
+
+    .input-group-text {
+        background: #c12321 !important;
+        color: white !important;
+        border: 0 !important;
+        border-radius: 0.25rem 0 0 0.25rem !important;
+    }
+
+    .input_user,
+    .input_pass:focus {
+        box-shadow: none !important;
+        outline: 0px !important;
+    }
+
+    .custom-checkbox .custom-control-input:checked ~ .custom-control-label::before {
+        background-color: #c12321 !important;
+    }
+</style>

@@ -6,6 +6,14 @@
 }
 
 <div class="container-fluid f-create">
+    <div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="~/PriceLists/Index">Dịch vụ khám</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tạo mới</li>
+            </ol>
+        </nav>
+    </div>
     <div class="tabular--wrapper">
         <div class="table-container">
             <h2 style="text-align: center">@ViewBag.Title</h2>
@@ -15,47 +23,35 @@
                 @Html.AntiForgeryToken()
 
                 <div class="form-horizontal">
-
                     <hr />
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="row">
-                        <div class="control-label col-md-4">
-                            Tên bảng giá khám
-                        </div>
-                        <div class="col-md-8">
+                        <div class="col-12">
+                            <label>Tên dịch vụ</label>
                             @Html.EditorFor(model => model.PriceListName, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.PriceListName, "", new { @class = "text-danger" })
                         </div>
-                    </div>
 
+                    </div>
                     <div class="row">
-                        <div class="control-label col-md-4">
-                            Đơn giá
-                        </div>
-                        <div class="col-md-8">
+                        <div class="col-12">
+                            <label>Giá</label>
                             @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
                     <div class="row">
-                        <div class="control-label col-md-4">
-                            Phân loại bệnh
-                        </div>
-                        <div class="col-md-8">
-                            @Html.DropDownList("CatId", null, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.CatId, "", new { @class = "text-danger" })
+                        <div class="col-12">
+                            <label>   Khoa </label>
+                            @Html.DropDownList("DeptId", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.DeptId, "", new { @class = "text-danger" })
                         </div>
                     </div>
-
-                    <div style="text-align:center">
-                        <input type="submit" value="Tạo" class="btn btn-createnew" />
+                    <div class="row input-wrapper">
+                        <input type="submit" value="Tạo" class="btn btn-success" />
                     </div>
                 </div>
             }
         </div>
-    </div>
-    <div class="back">
-        <a href="~/PriceLists/Index"><i class="fa-solid fa-arrow-left"></i></a>
     </div>
 </div>
