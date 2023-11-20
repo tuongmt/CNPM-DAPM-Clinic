@@ -28,8 +28,6 @@
                     <dd class=" col-sm-7">
                         @Html.DisplayFor(model => model.FormId)
                     </dd>
-
-
                 }
                 else
                 {
@@ -58,24 +56,6 @@
                     @Html.DisplayFor(model => model.Form.Patient.FullName)
                     @Html.DisplayFor(model => model.FormOnline.FullName)
                 </dd>
-
-                @*<dt class=" col-sm-5">
-                    Thời gian đến khám
-                </dt>
-
-                <dd class=" col-sm-7">
-                    @try
-                    {
-                        if (Model.Form.ExamTime.HasValue)
-                        {
-                            @Model.Form.ExamTime.Value.ToString("dddd, dd-MM-yyyy HH:mm:ss", new System.Globalization.CultureInfo("vi-VN"))
-                        }
-                    }
-                    catch
-                    {
-                        Response.Redirect("~/Error/Index");
-                    }
-                </dd>*@
 
                 <dt class=" col-sm-5">
                     Nhân viên

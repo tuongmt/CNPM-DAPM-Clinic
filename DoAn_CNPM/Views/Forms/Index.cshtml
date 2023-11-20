@@ -1,4 +1,5 @@
-﻿@model IEnumerable<DoAn_CNPM.Models.Form>
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<DoAn_CNPM.Models.Form>
 
 @{
     ViewBag.Title = "THÔNG TIN ĐƠN KHÁM";
@@ -10,23 +11,42 @@
         <div class="tabular--wrapper">
             <a href="~/Forms/Index">  <h2 class="h2--title">@ViewData["Title"]</h2></a>
             <hr />
-            <div class="nav--search">
-                @using (Html.BeginForm("Index", "Forms", FormMethod.Get))
-                {
-                    <table>
-                        <tr>
-                            <td>
-                                <a href="@Url.Action("Create")" class="btn btn-createnew"><i class="fa-solid fa-plus"></i></a>
-                            </td>
-                            <td class="search--box">
-                                <input type="text" name="SearchString" placeholder="Nhập thông tin tìm kiếm" />
-                                <button type="submit" value=""><i class="fa-solid fa-magnifying-glass"></i></button>
-                            </td>
-                        </tr>
-                    </table>
-                }
-            </div>
+            @using (Html.BeginForm("Index", "Forms", FormMethod.Get))
+            {
+                <div class="nav--search d_flex">
+                    <div class="create-w">
+                        <a href="@Url.Action("Create")" class="btn btn-createnew"><i class="fa-solid fa-plus"></i></a>
+                    </div>
+                    <div class="search_radio_wrapper">
+                        <div class="d_flex item_search">
+                            <b>Tìm kiếm: </b>
+                            <div>
+                                @Html.RadioButton("searchBy", "All", true) <text>Tất cả</text>
+                            </div>
+                            <div>
+                                @Html.RadioButton("searchBy", "Id") <text>Id</text>
+                            </div>
+                            <div>
+                                @Html.RadioButton("searchBy", "ExamTime") <text>Thời gian khám</text>
+                            </div>
+                            <div>
+                                @Html.RadioButton("searchBy", "Patient") <text>Bệnh nhân</text>
+                            </div>
+                            <div>
+                                @Html.RadioButton("searchBy", "Doctor") <text>Bác sĩ</text>
+                            </div>
+                            <div>
+                                @Html.RadioButton("searchBy", "Staff") <text>Nhân viên</text>
+                            </div>
+                        </div>
+                        <div class="search--box">
+                            <input type="text" name="searchString" placeholder="Nhập thông tin" />
+                            <button type="submit" value="Tìm kiếm"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        </div>
+                    </div>
 
+                </div>
+            }
             <input type="hidden" id="FormId" />
 
             <div class="table-container">
@@ -62,6 +82,7 @@
                                 {
                                     @item.ExamTime.Value.ToString("dddd, dd-MM-yyyy HH:mm:ss", new System.Globalization.CultureInfo("vi-VN"))
                                 }
+
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Patient.FullName)
@@ -83,6 +104,15 @@
                 </table>
             </div>
         </div>
+    </div>
+    <div class="page">
+        <!-- Thêm đoạn mã để hiển thị số trang và số trang hiện tại -->
+        <span>
+            Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+        </span>
+        <!--Control PagedListPager: mô tả mô hình với số trang là liên kết với tham số "Index" và tham
+        số page-->
+        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
     </div>
 }
 

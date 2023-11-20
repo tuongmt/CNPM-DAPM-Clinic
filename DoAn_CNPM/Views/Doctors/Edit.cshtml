@@ -28,13 +28,18 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.DoctorId)
 
-                    <div class="row">
-                        <div class="col-12">
-                            <label>Họ tên Bác sĩ</label>
-                            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
-                        </div>
+                <div class="row">
+                    <div class="col-2">
+                        <label>Id </label>
+                        <input type="text" name="DoctorId" value="@Model.DoctorId" class="form-control" disabled />
+                        @Html.ValidationMessageFor(model => model.DoctorId, "", new { @class = "text-danger" })
                     </div>
+                    <div class="col-10">
+                        <label>Họ tên Bác sĩ</label>
+                        @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
                     <div class="row">
                         <div class="col-6">

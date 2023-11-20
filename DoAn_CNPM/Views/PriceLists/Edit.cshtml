@@ -25,13 +25,18 @@
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     @Html.HiddenFor(model => model.PriceListId)
 
-                    <div class="row">
-                        <div class="col-12">
-                            <label>Tên dịch vụ</label>
-                            @Html.EditorFor(model => model.PriceListName, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.PriceListName, "", new { @class = "text-danger" })
-                        </div>
+                <div class="row">
+                    <div class="col-2">
+                        <label>Id </label>
+                        <input type="text" name="PriceListId" value="@Model.PriceListId" class="form-control" disabled />
+                        @Html.ValidationMessageFor(model => model.PriceListId, "", new { @class = "text-danger" })
                     </div>
+                    <div class="col-10">
+                        <label>Tên dịch vụ</label>
+                        @Html.EditorFor(model => model.PriceListName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PriceListName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
                     <div class="row">
                         <div class="col-12">

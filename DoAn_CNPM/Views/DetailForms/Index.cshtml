@@ -1,15 +1,13 @@
-﻿<!-- Thêm thư viện & thay đổi mô hình để sử dụng thư viện phân trang -->
-@using PagedList.Mvc;
+﻿@using PagedList.Mvc;
 @model PagedList.IPagedList<DoAn_CNPM.Models.DetailForm>
-@*@model IEnumerable<DoAn_CNPM.Models.DetailForm>*@
 
 @{
     ViewBag.Title = "THÔNG TIN CHI TIẾT ĐƠN KHÁM";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*@if (Session["admin"] != null)
-{*@
+@if (Session["admin"] != null)
+{
     <div class="f-index">
         <div class="tabular--wrapper">
             <a href="~/DetailForms/Index">  <h2 class="h2--title">@ViewData["Title"]</h2></a>

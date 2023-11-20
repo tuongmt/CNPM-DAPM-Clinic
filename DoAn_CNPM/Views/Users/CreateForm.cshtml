@@ -1,0 +1,131 @@
+﻿<link href="~/Content/CreateForm.css" rel="stylesheet" />
+@model IEnumerable<DoAn_CNPM.Models.User>
+
+@{
+    ViewBag.Title = "TẠO ĐƠN KHÁM ONLINE";
+    Layout = "~/Views/Shared/_Layout_Patient.cshtml";
+}
+
+@if (Session["patient"] == null)
+{
+    <script type="text/javascript">
+        window.location.href = '@Url.Action("Login", "LoginUser")';
+    </script>
+}
+else
+{
+    foreach (var item in Model)
+    {
+        if (item.UserId.ToString() == Session["PatientId"].ToString())
+        {
+            <div class="order">
+                <div class="container-o">
+                    <h2>Điền thông tin đơn khám</h2>
+                    <hr />
+                    <form method="post" action="~/Users/CreateForm" class="form-wrapper">
+                        <div class="d_flex">
+                            <div class="input-data">
+                                <span>Họ và tên </span>
+                                <input type="text" id="fullname" name="fullname" value="@item.FullName" readonly />
+
+                            </div>
+
+                        </div>
+                        <div class="d_flex">
+                            <div class="input-data" style="width:29%">
+                                <span>Giới tính </span>
+                                <select id="gender" name="gender" value="" required>
+                                    <option value="@item.Gender">@item.Gender</option>
+                                </select>
+
+                            </div>
+                            <div class="input-data" style="width:39%">
+                                <span>Ngày sinh</span>
+                                <input type="text" id="DOB" name="DOB" value="@item.DOB.Value.ToString("dd/MM/yyyy")" />
+                            </div>
+                            <div class="input-data" style="width:29%">
+                                <span>Số điện thoại</span>
+                                <input type="text" id="phone" name="phone" value="@item.Phone" required />
+                            </div>
+                        </div>
+                        <div class="input-data">
+                            <span>Địa chỉ</span>
+                            <input type="text" id="address" name="address" value="@item.Address" required />
+                        </div>
+
+                        <div class="d_flex">
+                            <div class="input-data" style="width:33%">
+                                <span>Bác sĩ</span>
+                                <select id="doctorId" name="doctorId" required>
+                                    <option value="">Chọn bác sĩ</option>
+                                    @if (ViewBag.Doctors != null)
+                                    {
+                                        var doctors = ViewBag.Doctors;
+                                        foreach (var doctor in doctors)
+                                        {
+                                            <option value="@doctor.DoctorId">@doctor.FullName</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="input-data" style="width:33%">
+                                <span>Buổi khám</span>
+                                <select id="examSession" name="examSession" required>
+                                    <option value="">Chọn buổi khám</option>
+                                </select>
+                            </div>
+                            <div class="input-data" style="width:33%">
+                                <span>Ngày khám</span>
+                                <input type="date" id="examDate" name="examDate" value="" />
+                            </div>
+                        </div>
+                        <div class="input-data">
+                            <span>Lý do khám bệnh</span>
+                            <input type="text" id="reason" name="reason" value="" required />
+                        </div>
+                        <div style=" padding-top: 30px;">
+                            <button type="submit" name="button">Xác nhận</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+    }
+}
+
+
+
+<script>
+    // Đối tượng chứa danh sách buổi khám cho từng bác sĩ
+    var examSessionsByDoctor = {
+        1: ['Sáng thứ hai', 'Sáng thứ năm'],
+        2: ['Chiều thứ hai', 'Sáng thứ bảy'],
+        3: ['Sáng thứ ba', 'Sáng thứ sáu'],
+        4: ['Chiều thứ ba', 'Chiều thứ bảy'],
+        5: ['Sáng thứ tư', 'Chiều thứ năm'],
+        6: ['Chiều thứ tư', 'Chiều thứ sáu'],
+        // Thêm thông tin buổi khám cho các bác sĩ khác ở đây
+    };
+
+    // Lắng nghe sự kiện khi chọn một bác sĩ
+    document.getElementById('doctorId').addEventListener('change', function () {
+        var selectedDoctorId = this.value;
+
+        // Đối tượng select cho buổi khám
+        var examSessionSelect = document.getElementById('examSession');
+
+        // Xóa tất cả các tùy chọn hiện có
+        examSessionSelect.innerHTML = '<option value="">Chọn buổi khám</option>';
+
+        // Hiển thị danh sách buổi khám tương ứng với bác sĩ đã chọn
+        if (selectedDoctorId) {
+            var sessions = examSessionsByDoctor[selectedDoctorId];
+            sessions.forEach(function (session) {
+                var option = document.createElement('option');
+                option.value = session;
+                option.textContent = session;
+                examSessionSelect.appendChild(option);
+            });
+        }
+    });
+</script>

@@ -143,7 +143,7 @@ namespace DoAn_CNPM.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FOId,FullName,Gender,Phone,DOB,Address,DoctorId,CreatedDay,ReasonForVisit")] FormOnline formOnline)
+        public ActionResult Edit([Bind(Include = "FOId,FullName,Gender,Phone,DOB,Address,DoctorId,CreatedDay,ReasonForVisit,ExamSession,ExamDate")] FormOnline formOnline)
         {
             if (ModelState.IsValid)
             {

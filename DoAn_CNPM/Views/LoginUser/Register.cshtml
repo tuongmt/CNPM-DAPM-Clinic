@@ -24,38 +24,38 @@
             <div class="user_card">
                 <div class="d-flex justify-content-center">
                     <div class="brand_logo_container">
-                        <img src="~/Images/clinic.png" class="brand_logo" alt="Logo">
+                        <img src="~/Images/Icon/clinic.png" class="brand_logo" alt="Logo">
                     </div>
                 </div>
                 <div class=" justify-content-center form_container">
-                    <h3 style="padding: 6px; text-align:center">@ViewBag.Title</h3>
+                    <h3 style="padding:10px 0px; text-align:center">@ViewBag.Title</h3>
                     <form method="post" action="/LoginUser/Register">
                         @Html.AntiForgeryToken()
-                        <div class="input-group mb-2">
+                        <div class="input-group mb-3 w-80">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
                             <input type="text" name="Username" class="form-control input_user" value="" placeholder="Tên Tài khoản (*)">
                         </div>
-                        <div class="input-group mb-2">
+                        <div class="input-group mb-3 w-80">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
                             <input type="password" name="Password" class="form-control input_pass" value="" placeholder="Mật khẩu (*)">
                         </div>
-                        <div class="input-group mb-2">
+                        <div class="input-group mb-3 w-80">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-key"></i></span>
                             </div>
                             <input type="password" name="ConfirmPassword" class="form-control input_pass" value="" placeholder="Nhập lại Mật khẩu (*)">
                         </div>
-                        <div class="input-group mb-2">
+                        <div class="input-group mb-3 w-80">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
                             <input type="text" name="FullName" class="form-control input_user" value="" placeholder="Họ tên (*)">
                         </div>
-                        <div class="input-group mb-2">
+                        <div class="input-group mb-3 w-80">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fa fa-venus-mars" aria-hidden="true"></i></span>
                             </div>
@@ -65,19 +65,19 @@
                                 <option value="Nam">Nữ</option>
                             </select>
                         </div>
-                        <div class="input-group mb-2">
+                        <div class="input-group mb-3 w-80" >
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fas fa-phone"></i></span>
                             </div>
                             <input type="text" name="Phone" class="form-control input_pass" value="" placeholder="Số điện thoại">
                         </div>
-                        <div class="input-group mb-2">
+                        <div class="input-group mb-3 w-80">
                             <div class="input-group-append">
                                 <span class="input-group-text"><i class="fa fa-birthday-cake" aria-hidden="true"></i></span>
                             </div>
                             <input type="date" name="DOB" class="form-control input_pass" value="" placeholder="Ngày sinh">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group w-80">
                             <div class="custom-control custom-checkbox">
                                 <input type="checkbox" class="custom-control-input" id="customControlInline">
                                 <label class="custom-control-label" for="customControlInline" style="color:white">
@@ -85,7 +85,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-center mt-3 login_container">
+                        <div class="d-flex justify-content-center mt-3 login_container w-80">
                             <button type="submit" name="button" class="btn login_btn">Đăng ký</button>
                         </div>
                         <div>
@@ -111,6 +111,10 @@
 
 <style>
     /* Coded with love by Mutiullah Samim */
+    .w-80 {
+        width: 80%;
+        margin: auto;
+    }
     a{
         color: #fff;
         text-decoration:none;
@@ -132,8 +136,8 @@
     }
 
     .user_card {
-        height: 650px;
-        width: 350px;
+        height: 680px;
+        width: 50%;
         margin-top: 80px;
         margin-bottom: auto;
         background: rgb(63,154,129);
@@ -182,7 +186,7 @@
         }
 
         .login_btn:hover {
-            scale: 1.02;
+            transform: scale(1.02);
         }
 
     .login_container {

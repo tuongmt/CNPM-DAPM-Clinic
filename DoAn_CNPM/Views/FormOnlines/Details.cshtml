@@ -29,7 +29,7 @@
                 </dd>
 
                 <dt class=" col-sm-5">
-                    Giới Tính
+                    Giới tính
                 </dt>
 
                 <dd class=" col-sm-7">
@@ -83,13 +83,31 @@
                 </dd>
 
                 <dt class=" col-sm-5">
+                    Buổi khám
+                </dt>
+
+                <dd class=" col-sm-7">
+                    @Html.DisplayFor(model => model.ExamSession)
+                </dd>
+
+                <dt class=" col-sm-5">
+                    Ngày khám
+                </dt>
+
+                <dd class=" col-sm-7">
+                    @if (Model.ExamDate.HasValue)
+                    {
+                        @Model.ExamDate.Value.ToString("dd/MM/yyyy")
+                    }
+                </dd>
+
+                <dt class=" col-sm-5">
                     Lý do khám
                 </dt>
 
                 <dd class=" col-sm-7">
                     @Html.DisplayFor(model => model.ReasonForVisit)
                 </dd>
-
             </dl>
         </div>
     </div>

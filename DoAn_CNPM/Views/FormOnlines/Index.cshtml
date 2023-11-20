@@ -6,8 +6,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*@if (Session["admin"] != null)
-    {*@
+@if (Session["admin"] != null)
+    {
 <div class="f-index">
     <div class="tabular--wrapper">
         <a href="~/FormOnlines/Index">  <h2 class="h2--title">@ViewData["Title"]</h2></a>
@@ -24,7 +24,7 @@
                             @Html.RadioButton("searchBy", "All", true) <text>Tất cả</text>
                         </div>
                         <div>
-                            @Html.RadioButton("searchBy", "Name") <text>Họ tên</text>
+                            @Html.RadioButton("searchBy", "Name") <text>Bệnh nhân</text>
                         </div>
                         <div>
                             @Html.RadioButton("searchBy", "Gender") <text>Giới tính</text>
@@ -46,6 +46,7 @@
                 </div>
             </div>
         }
+
         <input type="hidden" id="FOId" />
 
         <div class="table-container">
@@ -55,7 +56,7 @@
                         Id
                     </th>
                     <th>
-                        Họ tên
+                        Bệnh nhân
                     </th>
                     <th>
                         Giới tính

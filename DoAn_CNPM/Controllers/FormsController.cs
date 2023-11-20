@@ -1,7 +1,11 @@
-﻿using System;
+﻿using DoAn_CNPM.Controllers;
+using log4net;
+using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -12,19 +16,58 @@ namespace DoAn_CNPM.Models
     public class FormsController : Controller
     {
         private DoAnCNPMEntities3 db = new DoAnCNPMEntities3();
+        private static readonly ILog log = LogManager.GetLogger(typeof(FormsController));
+        private int pageSize = 6;
+        private int pageNumber;
 
-        public ActionResult Index(string SearchString)
+        public ActionResult Index(string searchString, string searchBy, int? page)
         {
             var forms = db.Forms.Include(f => f.Patient).Include(f => f.Doctor).Include(f => f.Staff);
-            if (!String.IsNullOrEmpty(SearchString))
+
+            pageNumber = (page ?? 1);
+
+            if (page == null) page = 1;
+
+            //sorting
+            forms = forms.OrderBy(f => f.FormId);
+
+            log.Info("12321321");
+
+            if (searchBy == "All")
             {
-                forms = forms.Where(f => f.FormId.ToString().Contains(SearchString) 
-                || f.ExamTime.ToString().Contains(SearchString)
-                || f.Patient.FullName.Contains(SearchString)
-                || f.Doctor.FullName.Contains(SearchString)
-                || f.Staff.FullName.Contains(SearchString));
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    forms = forms.Where(f => f.FormId.ToString().Contains(searchString)
+                    || (f.ExamTime.HasValue && f.ExamTime.Value.ToString().Contains(searchString))
+                    || f.Patient.FullName.Contains(searchString)
+                    || f.Doctor.FullName.Contains(searchString)
+                    || f.Staff.FullName.Contains(searchString));
+
+                }
+                return View("Index", forms.ToPagedList(pageNumber, pageSize));
             }
-            return View(forms.ToList());
+            else if (searchBy == "Id")
+            {
+                return View(forms.Where(d => d.FormId.ToString().Contains(searchString) || searchString == null).ToPagedList(pageNumber, pageSize));
+            }
+            else if (searchBy == "ExamTime")
+            {
+                return View(forms.Where(d => d.ExamTime.Value.ToString().Contains(searchString) || searchString == null).ToPagedList(pageNumber, pageSize));
+            }
+            else if (searchBy == "Patient")
+            {
+                return View(forms.Where(d => d.Patient.FullName.ToString().Contains(searchString) || searchString == null).ToPagedList(pageNumber, pageSize));
+            }
+            else if (searchBy == "Doctor")
+            {
+                return View(forms.Where(d => d.Doctor.FullName.ToString().Contains(searchString) || searchString == null).ToPagedList(pageNumber, pageSize));
+            }
+            else if (searchBy == "Staff")
+            {
+                return View(forms.Where(d => d.Staff.FullName.ToString().Contains(searchString) || searchString == null).ToPagedList(pageNumber, pageSize));
+            }
+
+            return View("Index", forms.ToPagedList(pageNumber, pageSize));
         }
 
         public ActionResult Details(int? id)

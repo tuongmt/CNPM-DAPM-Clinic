@@ -9,7 +9,12 @@
 input, select{
     border-radius: 5px;
 }
+.form-wrapper{
 
+}
+.form-wrapper div{
+    padding: 10px 0px;
+}
 .container-o {
     width: 700px;
     height: auto;
@@ -39,10 +44,10 @@ input, select{
         }
 
 .input-data {
-    height: 65px;
+    height: 60px;
     width: 100%;
     position: relative;
-    margin-top: 30px;
+    margin-top: 20px;
 }
     .input-data select {
         height: 100%;
@@ -67,14 +72,14 @@ input, select{
 
         .input-data input:focus ~ label,
         .input-data input:valid ~ label {
-            transform: translateY(-40px);
+            transform: translateY(-35px);
             font-size: 15px;
             color: #ff4141;
         }
 
     .input-data label {
         position: absolute;
-        bottom: 20px;
+        bottom: 18px;
         padding-left: 20px;
         left: 0px;
         color: grey;

@@ -63,6 +63,40 @@ namespace DoAn_CNPM.Controllers
 
             return View(User);
         }
+
+        [HttpGet]
+        public ActionResult CreateForm()
+        {
+            var d = db.Doctors.ToList();
+            ViewBag.Doctors = d;
+            return View(db.Users.ToList());
+        }
+        [HttpPost]
+        public ActionResult CreateForm(string fullname, string gender, DateTime? DOB, string phone,
+            string address, int doctorId, string examSession, DateTime? examDate, string reason)
+        {
+            FormOnline fo = new FormOnline
+            {
+                FullName = fullname,
+                Gender = gender,
+                DOB = DOB,
+                Phone = phone,
+                Address = address,
+                DoctorId = doctorId,
+                ExamSession = examSession,
+                ExamDate = examDate,
+                ReasonForVisit = reason
+            };
+            db.FormOnlines.Add(fo);
+            db.SaveChanges();
+
+            return RedirectToAction("CreateFormOnlineSuccess");
+        }
+
+        public ActionResult CreateFormSuccess()
+        {
+            return View();
+        }
         
         public ActionResult Edit(int? id)
         {
@@ -121,7 +155,6 @@ namespace DoAn_CNPM.Controllers
                 user1.DOB = user.DOB;
                 if (uploadPhoto != null && uploadPhoto.ContentLength > 0)
                 {
-                    //Lấy tên file của hình được up lên
                     int randomNumber = random.Next(1, 101);
                     var fileName = Path.GetFileName(randomNumber.ToString() + uploadPhoto.FileName);
                     //Tạo đường dẫn tới file
